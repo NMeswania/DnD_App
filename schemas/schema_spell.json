@@ -1,0 +1,49 @@
+{
+    "uuid": "__UUID__",
+
+    "name": "__NAME__",
+    "level": "__LEVEL__",
+    "school": "__SCHOOL__",
+    "classes": [
+        "__CLASS_1__",
+        "__CLASS_2__",
+        "__CLASS_3__"
+    ],
+
+    "casting_time": "__CASTING_TIME__",
+    "range": {
+        "value": "__RANGE_VALUE__",
+        "unit": "__RANGE_UNIT__",
+        "aoe": "__RANGE_AOE__"
+    },
+    "components": {
+        "components": "__VSM__",
+        "materials": "__MATERIALS__"
+    },
+    "duration": {
+        "time": "__TIME__",
+        "concentration": true
+    },
+    "target": {
+        "value": "__TARGET_VALUE__",
+        "unit": "__TARGET_UNIT__",
+        "aoe": "__TARGET_AOE__"
+    },
+
+    "damage": {
+        "type": "__DAMAGE_TYPE__",
+        "base_dice": "__DAMAGE_BASE_DICE__",
+        "save": "__DAMAGE_SAVE__",
+        "higher_spell_slot_die": "__DAMAGE_HIGHER_SPELL_SLOT_DIE__",
+        "higher_spell_slot_dice": "__DAMAGE_HIGHER_SPELL_SLOT_DICE__"
+    },
+
+    "description": "__DESCRIPTION__",
+    "higher_level_description": "__HIGHER_LEVEL_DESCRIPTION__",
+
+    "tags": [
+        "__ADDITIONAL__",
+        "__SEMANTIC__",
+        "__TAGS__"
+    ]
+}
