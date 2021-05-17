@@ -1,0 +1,4 @@
+name: dnd_app
+dependencies:
+  - python=3.7
+  - jsonschema=3.2.0
