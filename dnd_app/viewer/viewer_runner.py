@@ -3,21 +3,21 @@
 # Lisence: MIT
 ###################################################################################################
 
-from dnd_app.data_manager.data_manager import DataManager
+from dnd_app.data_manager_interface.data_manager_interface import DataManagerInterface
+from dnd_app.viewer.viewer import Viewer
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class DataManagerInterface:
-
+class ViewerRunner:
   def __init__(self) -> None:
-      pass
+    self.data_manager_interface = DataManagerInterface()
+    self.viewer = Viewer(self.data_manager_interface)
 
-  def request_from_data_manager(self):
-    dm = DataManager()
-    return dm.get_data()
+  def run(self):
+    self.viewer.run()
 
 
 ###################################################################################################
