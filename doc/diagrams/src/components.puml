@@ -1,0 +1,11 @@
+@startuml component_diagram
+
+component Viewer
+component DataManager
+
+interface DataManagerInterface
+
+Viewer -( DataManagerInterface
+DataManagerInterface - DataManager
+
+@enduml
