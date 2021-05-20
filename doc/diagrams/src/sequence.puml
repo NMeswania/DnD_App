@@ -1,0 +1,46 @@
+@startuml normal_sequence
+
+actor Me
+
+participant Viewer
+queue DataManagerRequest
+queue DataManagerResponse
+participant DataManagerInterface
+queue DataManagerQueue
+participant DataManager
+database Files
+
+activate Me
+activate Viewer
+activate DataManagerInterface
+activate DataManagerRequest
+activate DataManagerResponse
+
+Me -> Viewer : 0. App, fetch me\nsome character data!
+
+Viewer -> DataManagerRequest : 1. Push (data request)
+DataManagerRequest -> DataManagerInterface : 1.1. Pull (data request)
+
+create DataManager
+DataManagerInterface -> DataManager : 1.1.1. Create new\ndata retrieval task
+activate DataManager
+
+DataManager -> Files : 1.1.1.1. Retrieve file
+Files -> DataManager : 1.1.1.1. Retrieve file
+DataManager -> DataManager : 1.1.1.2. Parse file and\nretrieve relevent data
+DataManager -> DataManagerQueue : 1.1.1. Push (relevent data)
+
+deactivate DataManager
+destroy DataManager
+
+DataManagerQueue -> DataManagerInterface : 1.1.1. Pull (relevent data)
+DataManagerInterface -> DataManagerInterface : 1.1.2. Link retrieved\ndata to request
+
+DataManagerInterface -> DataManagerResponse : 1.1. Push (requested data)
+DataManagerResponse -> Viewer : 1. Pull (requested data)
+
+Viewer -> Viewer : 2. Render data
+
+Viewer -> Me : 0. Wow, graphics!
+
+@enduml
