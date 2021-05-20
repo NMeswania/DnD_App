@@ -3,6 +3,10 @@
 # Lisence: MIT
 ###################################################################################################
 
+import multiprocessing
+
+from multiprocessing import Process, Queue, Pool
+
 from dnd_app.data_manager_interface.data_manager_interface import DataManagerInterface
 from dnd_app.viewer.viewer import Viewer
 
@@ -11,7 +15,7 @@ from dnd_app.viewer.viewer import Viewer
 ###################################################################################################
 
 
-class ViewerRunner:
+class AppRunner:
   def __init__(self) -> None:
     self.data_manager_interface = DataManagerInterface()
     self.viewer = Viewer(self.data_manager_interface)
