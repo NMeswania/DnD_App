@@ -1,5 +1,6 @@
 @startuml component_diagram
 
+component AppRunner
 component Viewer
 component DataManager
 
@@ -7,5 +8,38 @@ interface DataManagerInterface
 
 Viewer -( DataManagerInterface
 DataManagerInterface - DataManager
+
+@enduml
+
+
+
+@startuml class_diagram
+
+class AppRunner {
+  + viewer_process : multiprocessing.Process
+  + interface_process : multiprocessing.Process
+  + data_manager_request_queue : multiprocessing.Queue
+  + data_manager_response_queue : multiprocessing.Queue
+  + data_manager_pool : multiprocessing.Pool
+}
+class Viewer {
+  + data_manager_request_queue : multiprocessing.Queue
+  + data_manager_response_queue : multiprocessing.Queue
+}
+class DataManagerInterface {
+  + data_manager_request_queue : multiprocessing.Queue
+  + data_manager_response_queue : multiprocessing.Queue
+  + data_manager_pool : multiprocessing.Pool
+}
+class DataManager {
+  + data_manager_pool : multiprocessing.Pool
+}
+
+AppRunner <-- Viewer
+AppRunner <-- DataManagerInterface
+
+Viewer <- DataManagerInterface
+
+DataManager <-up- DataManagerInterface
 
 @enduml
