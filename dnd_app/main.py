@@ -5,7 +5,7 @@
 
 import logging
 
-from dnd_app.core.config import Config
+from dnd_app.core.config import ConfigParser
 from dnd_app.core.signal_handler import SignalHandler
 from dnd_app.app_runner.app_runner import AppRunner
 
@@ -24,7 +24,7 @@ def main():
   logging.getLogger().setLevel(logging.INFO)
   logging.info("Launching D&D App")
 
-  config = Config(CONFIG_FILE)
+  config = ConfigParser(CONFIG_FILE).GetConfig()
 
   app_runner = AppRunner(config)
   signal_handler = SignalHandler(app_runner)
