@@ -1,0 +1,3 @@
+dnd_app:
+  data_manager_interface:
+    - num_processes: 4

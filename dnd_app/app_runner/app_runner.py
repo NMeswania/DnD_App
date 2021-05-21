@@ -5,7 +5,9 @@
 
 import logging
 import multiprocessing
+from pathlib import Path
 
+from dnd_app.core.config import Config
 from dnd_app.data_manager_interface.data_manager_interface import DataManagerInterface
 from dnd_app.viewer.viewer_spoofer import ViewerSpoofer
 
@@ -16,14 +18,16 @@ from dnd_app.viewer.viewer_spoofer import ViewerSpoofer
 
 class AppRunner:
 
-  def __init__(self) -> None:
+  def __init__(self, config: Config) -> None:
+    self.config = config
     self.data_manager_request_queue = multiprocessing.Queue()
     self.data_manager_response_queue = multiprocessing.Queue()
 
-    self.data_manager_interface = DataManagerInterface(self.data_manager_request_queue,
+    self.data_manager_interface = DataManagerInterface(config('data_manager_interface'),
+                                                       self.data_manager_request_queue,
                                                        self.data_manager_response_queue)
     self.viewer_spoofer = ViewerSpoofer(self.data_manager_request_queue,
-                                                self.data_manager_response_queue)
+                                        self.data_manager_response_queue)
 
     self.processes = {}
 

@@ -16,8 +16,9 @@ from dnd_app.data_manager.data_manager import DataManager
 
 class DataManagerInterface:
 
-  def __init__(self, request_queue: multiprocessing.Queue,
+  def __init__(self, config: dict, request_queue: multiprocessing.Queue,
                response_queue: multiprocessing.Queue) -> None:
+    self.config = config
     self.requset_queue = request_queue
     self.response_queue = response_queue
 
@@ -34,9 +35,9 @@ class DataManagerInterface:
       # Operate on requests
       for request in requests:
         request['data'] += 2
-      
+
       time.sleep(0.5)
-      
+
       # Push to response queue
       for request in requests:
         self.response_queue.put(request)

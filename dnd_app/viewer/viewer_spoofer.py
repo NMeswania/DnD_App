@@ -37,6 +37,7 @@ class ViewerSpoofer:
       while not self.response_queue.empty():
         responses.append(self.response_queue.get())
 
+      print("got responses: ")
       print([response for response in responses])
 
 

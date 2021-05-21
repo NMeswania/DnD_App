@@ -4,40 +4,46 @@
 ###################################################################################################
 
 import logging
-
-from dnd_app.core.config import Config
-from dnd_app.core.signal_handler import SignalHandler
-from dnd_app.app_runner.app_runner import AppRunner
-
-###################################################################################################
-###################################################################################################
-###################################################################################################
-
-CONFIG_FILE = r"dnd_app\dnd_app.yaml"
+from pathlib import Path
+import sys
+import yaml
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-def main():
-  logging.getLogger().setLevel(logging.INFO)
-  logging.info("Launching D&D App")
+class Config:
 
-  config = Config(CONFIG_FILE)
+  def __init__(self, config_path: str):
+    self.config = {}
 
-  app_runner = AppRunner(config)
-  signal_handler = SignalHandler(app_runner)
-  signal_handler.assign()
-  app_runner.run()
+    config_abs_path = Path(config_path).resolve()
 
+    assert config_abs_path.is_file(), f"Config is not a file: {config_abs_path}"
+
+    with open(config_path, 'r') as stream:
+      try:
+        self.config = yaml.safe_load(stream)
+
+        if "dnd_app" not in self.config.keys():
+          logging.critical("'dnd_app' not in config file, exiting.")
+          sys.exit(0)
+
+        self.config = self.config['dnd_app']
+
+      except yaml.YAMLError as exc:
+        logging.critical(exc)
+
+    logging.info("Successfully parsed config")
 
 ###################################################################################################
-###################################################################################################
-###################################################################################################
 
-if __name__ == "__main__":
-  main()
+  def __call__(self, node: str = "") -> dict:
+    if (node != "") and (node in self.config.keys()):
+      return self.config[node]
+    return self.config
+
 
 ###################################################################################################
 ###################################################################################################
