@@ -7,18 +7,16 @@ import multiprocessing
 
 import time
 
-from dnd_app.data_manager.data_manager import DataManager
-
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class DataManagerInterface:
+class ViewerSpoofer:
 
   def __init__(self, request_queue: multiprocessing.Queue,
                response_queue: multiprocessing.Queue) -> None:
-    self.requset_queue = request_queue
+    self.request_queue = request_queue
     self.response_queue = response_queue
 
 ###################################################################################################
@@ -26,20 +24,20 @@ class DataManagerInterface:
   def __call__(self):
     while True:
       requests = []
+      for i in range(0, 4):
+        new_data = 3 + i * 2
+        requests.append({"ID": i, "data": new_data})
 
-      # Pull from request queue until empty
-      while not self.requset_queue.empty():
-        requests.append(self.requset_queue.get())
+      for request in requests:
+        self.request_queue.put(request)
 
-      # Operate on requests
-      for request in requests:
-        request['data'] += 2
-      
-      time.sleep(0.5)
-      
-      # Push to response queue
-      for request in requests:
-        self.response_queue.put(request)
+      time.sleep(0.3)
+
+      responses = []
+      while not self.response_queue.empty():
+        responses.append(self.response_queue.get())
+
+      print([response for response in responses])
 
 
 ###################################################################################################

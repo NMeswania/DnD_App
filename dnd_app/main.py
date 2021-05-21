@@ -3,7 +3,10 @@
 # Lisence: MIT
 ###################################################################################################
 
-from dnd_app.viewer.viewer_runner import ViewerRunner
+import logging
+
+from dnd_app.core.signal_handler import SignalHandler
+from dnd_app.app_runner.app_runner import AppRunner
 
 ###################################################################################################
 ###################################################################################################
@@ -11,8 +14,13 @@ from dnd_app.viewer.viewer_runner import ViewerRunner
 
 
 def main():
-  viewer_runner = ViewerRunner()
-  viewer_runner.run()
+  logging.getLogger().setLevel(logging.INFO)
+  logging.info("Launching D&D App")
+
+  app_runner = AppRunner()
+  signal_handler = SignalHandler(app_runner)
+  signal_handler.assign()
+  app_runner.run()
 
 
 ###################################################################################################

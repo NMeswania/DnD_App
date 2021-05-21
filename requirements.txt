@@ -1,5 +1,6 @@
 attrs @ file:///tmp/build/80754af9/attrs_1620827162558/work
 certifi==2020.12.5
+dnd-app==0.0.0
 docutils @ file:///D:/bld/docutils_1618676443316/work
 importlib-metadata @ file:///C:/ci/importlib-metadata_1617877486026/work
 jsonschema @ file:///tmp/build/80754af9/jsonschema_1602607155483/work
