@@ -8,7 +8,7 @@ import kivy
 from kivy.app import App
 from kivy.uix.label import Label
 
-from dnd_app.data_manager_interface.data_manager_interface import DataManagerInterface
+from dnd_app.request_handler_manager.request_handler_manager import RequestHandlerManager
 
 ###################################################################################################
 ###################################################################################################
@@ -16,12 +16,12 @@ from dnd_app.data_manager_interface.data_manager_interface import DataManagerInt
 
 
 class Viewer(App):
-  def __init__(self, data_manager_interface: DataManagerInterface):
+  def __init__(self, request_handler_manager: RequestHandlerManager):
     super().__init__()
-    self.data_manager_interface = data_manager_interface
+    self.request_handler_manager = request_handler_manager
 
   def build(self):
-    data = self.data_manager_interface.request_from_data_manager()
+    data = self.request_handler_manager.request_from_request_handler()
     return Label(text=f"Got data: {str(data)}")
 
 

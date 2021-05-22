@@ -3,9 +3,11 @@
 # Lisence: MIT
 ###################################################################################################
 
-import multiprocessing
+from multiprocessing import Queue
 
 import time
+
+from dnd_app.core.request import Request
 
 ###################################################################################################
 ###################################################################################################
@@ -14,19 +16,20 @@ import time
 
 class ViewerSpoofer:
 
-  def __init__(self, request_queue: multiprocessing.Queue,
-               response_queue: multiprocessing.Queue) -> None:
+  def __init__(self, request_queue: Queue, response_queue: Queue) -> None:
     self.request_queue = request_queue
     self.response_queue = response_queue
 
 ###################################################################################################
 
-  def __call__(self):
+  def run(self):
     while True:
-      requests = []
-      for i in range(0, 4):
-        new_data = 3 + i * 2
-        requests.append({"ID": i, "data": new_data})
+      requests = [
+        Request(type="spell", value="Fireball"),
+        Request(type="item", value="Ring of Protection"),
+        Request(type="feat", value="Pole-arm Master"),
+        Request(type="spell", value="Shatter")
+      ]
 
       for request in requests:
         self.request_queue.put(request)
@@ -38,7 +41,8 @@ class ViewerSpoofer:
         responses.append(self.response_queue.get())
 
       print("got responses: ")
-      print([response for response in responses])
+      for response in responses:
+        print(response)
 
 
 ###################################################################################################

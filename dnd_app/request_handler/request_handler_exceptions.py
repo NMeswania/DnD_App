@@ -3,32 +3,27 @@
 # Lisence: MIT
 ###################################################################################################
 
-from dnd_app.core.request import Request
-
-###################################################################################################
-###################################################################################################
-###################################################################################################
-
-
-class Response:
-
-  def __init__(self, request: Request, repsonse_data: dict):
-    self.response_data = repsonse_data
-    self.request = request
+class RequestHandlerException(Exception):
+  """ Base class exceptions for the RequestHandler class. """
+  pass
 
 ###################################################################################################
 
-  def data(self) -> dict:
-    return self.response_data
+class UnknownRequestType(RequestHandlerException):
+  """ When the type of request is unknown. """
+  def __init__(self, request_type: str):
+    self.type = request_type
+    self.message = "Unknown request type."
+    super().__init__(self.message)
+
+  def __str__(self):
+    return f"{self.message} Type: {self.type}"
 
 ###################################################################################################
 
-  def __str__(self) -> str:
-    s = "Reponse:"
-    s += f"\n{str(self.request)}"
-    s += f"\n\tData: {self.response_data}"
-    return s
-
+class FailedToProcessRequest(RequestHandlerException):
+  """ Generic unable to process request exception. """
+  pass
 
 ###################################################################################################
 ###################################################################################################

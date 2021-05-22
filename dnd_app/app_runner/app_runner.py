@@ -5,10 +5,9 @@
 
 import logging
 import multiprocessing
-from pathlib import Path
 
 from dnd_app.core.config import Config
-from dnd_app.data_manager_interface.data_manager_interface import DataManagerInterface
+from dnd_app.request_handler_manager.request_handler_manager import RequestHandlerManager
 from dnd_app.viewer.viewer_spoofer import ViewerSpoofer
 
 ###################################################################################################
@@ -20,14 +19,14 @@ class AppRunner:
 
   def __init__(self, config: Config) -> None:
     self.config = config
-    self.data_manager_request_queue = multiprocessing.Queue()
-    self.data_manager_response_queue = multiprocessing.Queue()
+    self.request_handler_request_queue = multiprocessing.Queue()
+    self.request_handler_response_queue = multiprocessing.Queue()
 
-    self.data_manager_interface = DataManagerInterface(config('data_manager_interface'),
-                                                       self.data_manager_request_queue,
-                                                       self.data_manager_response_queue)
-    self.viewer_spoofer = ViewerSpoofer(self.data_manager_request_queue,
-                                        self.data_manager_response_queue)
+    self.request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
+                                                         self.request_handler_request_queue,
+                                                         self.request_handler_response_queue)
+    self.viewer_spoofer = ViewerSpoofer(self.request_handler_request_queue,
+                                        self.request_handler_response_queue)
 
     self.processes = {}
 
@@ -38,20 +37,21 @@ class AppRunner:
 
 ###################################################################################################
 
-  def LaunchDataManagerInterfaceProcess(self):
-    self.processes['data_manager_interface'] = multiprocessing.Process(target=self.data_manager_interface)
-    self.processes['data_manager_interface'].start()
+  def LaunchRequestHandlerManagerProcess(self):
+    self.processes['request_handler_manager'] = multiprocessing.Process(
+        target=self.request_handler_manager.run)
+    self.processes['request_handler_manager'].start()
 
 ###################################################################################################
 
   def LaunchViewerSpooferProcess(self):
-    self.processes['spoofer'] = multiprocessing.Process(target=self.viewer_spoofer)
+    self.processes['spoofer'] = multiprocessing.Process(target=self.viewer_spoofer.run)
     self.processes['spoofer'].start()
 
 ###################################################################################################
 
   def run(self):
-    self.LaunchDataManagerInterfaceProcess()
+    self.LaunchRequestHandlerManagerProcess()
     self.LaunchViewerSpooferProcess()
 
 ###################################################################################################

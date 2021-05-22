@@ -2,12 +2,12 @@
 
 component AppRunner
 component Viewer
-component DataManager
+component RequestHandler
 
-interface DataManagerInterface
+interface RequestHandlerManager
 
-Viewer -( DataManagerInterface
-DataManagerInterface - DataManager
+Viewer -( RequestHandlerManager
+RequestHandlerManager - RequestHandler
 
 @enduml
 
@@ -18,28 +18,28 @@ DataManagerInterface - DataManager
 class AppRunner {
   + viewer_process : multiprocessing.Process
   + interface_process : multiprocessing.Process
-  + data_manager_request_queue : multiprocessing.Queue
-  + data_manager_response_queue : multiprocessing.Queue
-  + data_manager_pool : multiprocessing.Pool
+  + request_handler_request_queue : multiprocessing.Queue
+  + request_handler_response_queue : multiprocessing.Queue
+  + request_handler_pool : multiprocessing.Pool
 }
 class Viewer {
-  + data_manager_request_queue : multiprocessing.Queue
-  + data_manager_response_queue : multiprocessing.Queue
+  + request_handler_request_queue : multiprocessing.Queue
+  + request_handler_response_queue : multiprocessing.Queue
 }
-class DataManagerInterface {
-  + data_manager_request_queue : multiprocessing.Queue
-  + data_manager_response_queue : multiprocessing.Queue
-  + data_manager_pool : multiprocessing.Pool
+class RequestHandlerManager {
+  + request_handler_request_queue : multiprocessing.Queue
+  + request_handler_response_queue : multiprocessing.Queue
+  + request_handler_pool : multiprocessing.Pool
 }
-class DataManager {
-  + data_manager_pool : multiprocessing.Pool
+class RequestHandler {
+  + request_handler_pool : multiprocessing.Pool
 }
 
 AppRunner <-- Viewer
-AppRunner <-- DataManagerInterface
+AppRunner <-- RequestHandlerManager
 
-Viewer <- DataManagerInterface
+Viewer <- RequestHandlerManager
 
-DataManager <-up- DataManagerInterface
+RequestHandler <-up- RequestHandlerManager
 
 @enduml

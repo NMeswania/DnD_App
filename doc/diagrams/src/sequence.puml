@@ -3,41 +3,41 @@
 actor Me
 
 participant Viewer
-queue DataManagerRequest
-queue DataManagerResponse
-participant DataManagerInterface
-queue DataManagerQueue
-participant DataManager
+queue RequestHandlerRequest
+queue RequestHandlerResponse
+participant RequestHandlerManager
+queue RequestHandlerQueue
+participant RequestHandler
 database Files
 
 activate Me
 activate Viewer
-activate DataManagerInterface
-activate DataManagerRequest
-activate DataManagerResponse
+activate RequestHandlerManager
+activate RequestHandlerRequest
+activate RequestHandlerResponse
 
 Me -> Viewer : 0. App, fetch me\nsome character data!
 
-Viewer -> DataManagerRequest : 1. Push (data request)
-DataManagerRequest -> DataManagerInterface : 1.1. Pull (data request)
+Viewer -> RequestHandlerRequest : 1. Push (data request)
+RequestHandlerRequest -> RequestHandlerManager : 1.1. Pull (data request)
 
-create DataManager
-DataManagerInterface -> DataManager : 1.1.1. Create new\ndata retrieval task
-activate DataManager
+create RequestHandler
+RequestHandlerManager -> RequestHandler : 1.1.1. Create new\ndata retrieval task
+activate RequestHandler
 
-DataManager -> Files : 1.1.1.1. Retrieve file
-Files -> DataManager : 1.1.1.1. Retrieve file
-DataManager -> DataManager : 1.1.1.2. Parse file and\nretrieve relevent data
-DataManager -> DataManagerQueue : 1.1.1. Push (relevent data)
+RequestHandler -> Files : 1.1.1.1. Retrieve file
+Files -> RequestHandler : 1.1.1.1. Retrieve file
+RequestHandler -> RequestHandler : 1.1.1.2. Parse file and\nretrieve relevent data
+RequestHandler -> RequestHandlerQueue : 1.1.1. Push (relevent data)
 
-deactivate DataManager
-destroy DataManager
+deactivate RequestHandler
+destroy RequestHandler
 
-DataManagerQueue -> DataManagerInterface : 1.1.1. Pull (relevent data)
-DataManagerInterface -> DataManagerInterface : 1.1.2. Link retrieved\ndata to request
+RequestHandlerQueue -> RequestHandlerManager : 1.1.1. Pull (relevent data)
+RequestHandlerManager -> RequestHandlerManager : 1.1.2. Link retrieved\ndata to request
 
-DataManagerInterface -> DataManagerResponse : 1.1. Push (requested data)
-DataManagerResponse -> Viewer : 1. Pull (requested data)
+RequestHandlerManager -> RequestHandlerResponse : 1.1. Push (requested data)
+RequestHandlerResponse -> Viewer : 1. Pull (requested data)
 
 Viewer -> Viewer : 2. Render data
 
