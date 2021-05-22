@@ -13,13 +13,23 @@ import uuid
 class Request:
 
   def __init__(self, type: str = "", value: str = ""):
-    self.data = {"type": type, "value": value}
+    self.data = {'type': type, 'value': value}
     self.id_ = uuid.uuid4()
 
 ###################################################################################################
 
   def id(self) -> str:
     return str(self.id_)
+
+###################################################################################################
+
+  def __str__(self):
+    s = "Request:"
+    s += f"\n\tID: {self.id()}"
+    s += "\n\tData:"
+    s += f"\n\t\tType: {self.data['type']}"
+    s += f"\n\t\tValue: {self.data['value']}"
+    return s
 
 
 ###################################################################################################
