@@ -1,6 +1,6 @@
 dnd_app:
   common:
-    - queue_put_timeout: 1
-    - queue_get_timeout: 1
+    queue_put_timeout: 1
+    queue_get_timeout: 1
   request_handler_manager:
-    - num_processes: 4
+    num_processes: 4
