@@ -4,3 +4,5 @@ dnd_app:
     queue_get_timeout: 1
   request_handler_manager:
     num_processes: 4
+  viewer:
+    text_size: 16

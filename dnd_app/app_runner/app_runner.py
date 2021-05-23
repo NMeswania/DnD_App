@@ -8,7 +8,7 @@ import multiprocessing
 
 from dnd_app.core.config import Config
 from dnd_app.request_handler_manager.request_handler_manager import RequestHandlerManager
-from dnd_app.viewer.viewer_spoofer import ViewerSpoofer
+from dnd_app.viewer.viewer import Viewer
 
 ###################################################################################################
 ###################################################################################################
@@ -25,8 +25,8 @@ class AppRunner:
     self.request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
                                                          self.request_handler_request_queue,
                                                          self.request_handler_response_queue)
-    self.viewer_spoofer = ViewerSpoofer(self.request_handler_request_queue,
-                                        self.request_handler_response_queue)
+    self.viewer = Viewer(config('viewer'), self.request_handler_request_queue,
+                         self.request_handler_response_queue)
 
     self.processes = {}
 
@@ -44,15 +44,16 @@ class AppRunner:
 
 ###################################################################################################
 
-  def LaunchViewerSpooferProcess(self):
-    self.processes['spoofer'] = multiprocessing.Process(target=self.viewer_spoofer.run)
+  def LaunchViewerProcess(self):
+    self.processes['spoofer'] = multiprocessing.Process(target=self.viewer.run)
     self.processes['spoofer'].start()
 
 ###################################################################################################
 
   def run(self):
     self.LaunchRequestHandlerManagerProcess()
-    self.LaunchViewerSpooferProcess()
+    # self.LaunchViewerProcess()
+    self.viewer.run()
 
 ###################################################################################################
 
