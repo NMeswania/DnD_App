@@ -55,20 +55,23 @@ class Viewer(App):
 
   def _RequestData(self, instance):
     request = Request(type="spell", value="Mass Suggestion")
-    logging.info(f"Adding request to queue: {request}")
+    logging.info(f"Adding request to queue: {request.id()}")
 
     try:
-      self.request_queue.put(request, block=False, timeout=self.dnd_config.get_common("queue_put_timeout"))
+      self.request_queue.put(request,
+                             block=False,
+                             timeout=self.dnd_config.get_common("queue_put_timeout"))
 
     except queue.Full:
       logging.critical(f"Failed to put request in queue. Request id: {request.id()}")
 
     self.responses.clear()
+    self._UpdateLabelText("")
 
 ###################################################################################################
 
   def _CheckResponseQueue(self, dt):
-    while True:
+    while not self.response_queue.empty():
       try:
         response = self.response_queue.get(block=False,
                                           timeout=self.dnd_config.get_common("queue_get_timeout"))
@@ -77,12 +80,11 @@ class Viewer(App):
       except queue.Empty:
         logging.critical(f"Failed to get response from queue.")
 
-      if self.response_queue.empty():
-        break
-
-      response_text = [f"{str(response)}\n" for response in self.responses]
-      response_text_full = f"Recived data: {response_text}"
-      self._UpdateLabelText(response_text_full)
+      else:
+        response_text = [f"{str(response)}\n" for response in self.responses]
+        response_text_full = f"Recived data: {response_text}"
+        print(response_text_full)
+        self._UpdateLabelText(response_text_full)
 
 ###################################################################################################
 
