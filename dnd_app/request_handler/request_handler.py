@@ -9,9 +9,11 @@ import queue
 from multiprocessing import Queue
 
 from dnd_app.core.config import Config
+from dnd_app.core.json_parser import JSONParser
 from dnd_app.core.request import Request
 from dnd_app.core.response import Response
-from dnd_app.request_handler.request_handler_exceptions import RequestHandlerException
+from dnd_app.request_handler.request_handler_exceptions import RequestHandlerException, \
+                                                               FailedToProcessRequest
 
 ###################################################################################################
 ###################################################################################################
@@ -52,9 +54,26 @@ class RequestHandler:
 ###################################################################################################
 
   def _ProcessNewRequest(self, request: Request):
-    response_data = f"Done the thing for: {request.data['value']}"
+    try:
+      data_dir = self.config.get_common("data_dir")
+      glob_pattern = f"{request.type()}/{request.value()}.json"
+      found_files = sorted(data_dir.glob(glob_pattern))
+      if len(found_files) == 0:
+        logging.critical(f"No matching pattern '{glob_pattern}'")
+        raise FailedToProcessRequest
 
-    return Response(request, {'value': response_data})
+      elif len(found_files) > 1:
+        logging.warning(
+            f"Found {len(found_files)} matching pattern '{glob_pattern}', using first match")
+
+      response_data = JSONParser(found_files[0]).ParseData()
+
+    except Exception as err:
+      logging.error(f"Failed to process request: {request.id()}. Got exception: {err}")
+      return Response(request, repsonse_data={}, fulfilled=False)
+
+    else:
+      return Response(request, response_data)
 
 
 ###################################################################################################

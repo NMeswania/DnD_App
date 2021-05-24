@@ -3,33 +3,23 @@
 # Lisence: MIT
 ###################################################################################################
 
-from dnd_app.core.request import Request
+import json
+import jsonschema
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
+class JSONParser:
 
-class Response:
-
-  def __init__(self, request: Request, repsonse_data: dict, fulfilled: bool=True):
-    self.response_data = repsonse_data
-    self.request = request
-    self.fulfilled = fulfilled
+  def __init__(self, file):
+    self.file = file
 
 ###################################################################################################
-
-  def data(self) -> dict:
-    return self.response_data
-
-###################################################################################################
-
-  def __str__(self) -> str:
-    s = "Reponse:"
-    s += f"\n{str(self.request)}"
-    s += f"\n\tData: {self.response_data}"
-    return s
-
+  
+  def ParseData(self) -> dict:
+    with open(self.file, 'r') as reader:
+      return json.load(reader)
 
 ###################################################################################################
 ###################################################################################################

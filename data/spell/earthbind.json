@@ -1,0 +1,7 @@
+{
+  "name": "Earthbind",
+  "range": "300 feet",
+  "casting_time": "1 action",
+  "components": "V",
+  "duration": "Concentration, up to 1 minute"
+}
