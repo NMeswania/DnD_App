@@ -1,0 +1,6 @@
+- Add queue wrappers for putting/ getting from queues, no more try-excepts!! 
+- Make all private variables with preceeding underscore
+- Figure out renderer architecture, render+logic+builder is too complicated, maybe only for the character sheet selection (completely seperate moduel maybe??)
+- Remove viewer spoofer
+- Fix hanging on closing window
+- Tests!!
