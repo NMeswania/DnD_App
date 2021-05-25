@@ -12,12 +12,12 @@ class RequestHandlerException(Exception):
 class UnknownRequestType(RequestHandlerException):
   """ When the type of request is unknown. """
   def __init__(self, request_type: str):
-    self.type = request_type
-    self.message = "Unknown request type."
-    super().__init__(self.message)
+    self._type = request_type
+    self._message = "Unknown request type."
+    super().__init__(self._message)
 
   def __str__(self):
-    return f"{self.message} Type: {self.type}"
+    return f"{self._message} Type: {self._type}"
 
 ###################################################################################################
 

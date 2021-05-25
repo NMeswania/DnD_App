@@ -18,49 +18,49 @@ from dnd_app.viewer.viewer import Viewer
 class AppRunner:
 
   def __init__(self, config: Config) -> None:
-    self.config = config
-    self.request_handler_request_queue = multiprocessing.Queue()
-    self.request_handler_response_queue = multiprocessing.Queue()
+    self._config = config
+    self._request_handler_request_queue = multiprocessing.Queue()
+    self._request_handler_response_queue = multiprocessing.Queue()
 
-    self.request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
-                                                         self.request_handler_request_queue,
-                                                         self.request_handler_response_queue)
-    self.viewer = Viewer(config('viewer'), self.request_handler_request_queue,
-                         self.request_handler_response_queue)
+    self._request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
+                                                          self._request_handler_request_queue,
+                                                          self._request_handler_response_queue)
+    self._viewer = Viewer(config('viewer'), self._request_handler_request_queue,
+                          self._request_handler_response_queue)
 
-    self.processes = {}
+    self._processes = {}
 
 ###################################################################################################
 
   def __del__(self):
-    self._shutdown()
-
-###################################################################################################
-
-  def LaunchRequestHandlerManagerProcess(self):
-    self.processes['request_handler_manager'] = multiprocessing.Process(
-        target=self.request_handler_manager.run)
-    self.processes['request_handler_manager'].start()
-
-###################################################################################################
-
-  def LaunchViewerProcess(self):
-    self.processes['spoofer'] = multiprocessing.Process(target=self.viewer.run)
-    self.processes['spoofer'].start()
+    self._Shutdown()
 
 ###################################################################################################
 
   def run(self):
-    self.LaunchRequestHandlerManagerProcess()
-    # self.LaunchViewerProcess()
-    self.viewer.run()
+    self._LaunchRequestHandlerManagerProcess()
+    # self._LaunchViewerProcess()
+    self._viewer.run()
 
 ###################################################################################################
 
-  def _shutdown(self):
+  def _LaunchRequestHandlerManagerProcess(self):
+    self._processes['request_handler_manager'] = multiprocessing.Process(
+        target=self._request_handler_manager.run)
+    self._processes['request_handler_manager'].start()
+
+###################################################################################################
+
+  def _LaunchViewerProcess(self):
+    self._processes['spoofer'] = multiprocessing.Process(target=self._viewer.run)
+    self._processes['spoofer'].start()
+
+###################################################################################################
+
+  def _Shutdown(self):
     logging.info(f"Shutting down gracefully, "
                  f"num active processes = {len(multiprocessing.active_children())}")
-    for process in self.processes.values():
+    for process in self._processes.values():
       process.terminate()
       process.join()
 

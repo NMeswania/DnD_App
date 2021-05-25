@@ -13,12 +13,12 @@ import jsonschema
 class JSONParser:
 
   def __init__(self, file):
-    self.file = file
+    self._file = file
 
 ###################################################################################################
   
   def ParseData(self) -> dict:
-    with open(self.file, 'r') as reader:
+    with open(self._file, 'r') as reader:
       return json.load(reader)
 
 ###################################################################################################

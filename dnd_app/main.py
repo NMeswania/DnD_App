@@ -29,7 +29,7 @@ def main():
 
   app_runner = AppRunner(config)
   signal_handler = SignalHandler(app_runner)
-  signal_handler.assign()
+  signal_handler.Assign()
   app_runner.run()
 
 

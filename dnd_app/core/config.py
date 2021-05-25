@@ -18,35 +18,35 @@ import dnd_app.core.config_exceptions as config_exceptions
 class Config:
 
   def __init__(self, config: dict, common: dict, data_dir: Path):
-    self.config = config
-    self.common = common
-    self.data_dir = data_dir
+    self._config = config
+    self._common = common
+    self._data_dir = data_dir
 
 ###################################################################################################
 
-  def __call__(self, node: str=""):
-    if (node != "") and (node in self.config.keys()):
-      return Config(self.config[node], self.common, self.data_dir)
+  def __call__(self, node: str = ""):
+    if (node != "") and (node in self._config.keys()):
+      return Config(self._config[node], self._common, self._data_dir)
     return self
 
 ###################################################################################################
 
-  def get(self, node: str=""):
-    return self._get(self.config, node)
+  def get(self, node: str = ""):
+    return self._get(self._config, node)
 
 ###################################################################################################
 
-  def get_common(self, node: str=""):
-    return self._get(self.common, node)
+  def get_common(self, node: str = ""):
+    return self._get(self._common, node)
 
 ###################################################################################################
 
   def get_data_dir(self) -> Path:
-    return self.data_dir
+    return self._data_dir
 
 ###################################################################################################
 
-  def _get(self, config, node: str=""):
+  def _get(self, config, node: str = ""):
     if node in config.keys():
       return config[node]
     else:
@@ -75,9 +75,9 @@ class ConfigParser:
           logging.critical("'dnd_app' not in config file, exiting.")
           sys.exit(0)
 
-        self.config = config['dnd_app']
-        self.common_config = self.config['common']
-        self.data_dir = data_dir_abs_path
+        self._config = config['dnd_app']
+        self._common_config = self._config['common']
+        self._data_dir = data_dir_abs_path
 
       except yaml.YAMLError as exc:
         logging.critical(exc)
@@ -87,7 +87,7 @@ class ConfigParser:
 ###################################################################################################
 
   def GetConfig(self):
-    return Config(self.config, self.common_config, self.data_dir)
+    return Config(self._config, self._common_config, self._data_dir)
 
 
 ###################################################################################################

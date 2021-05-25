@@ -14,17 +14,17 @@ import sys
 class SignalHandler:
 
   def __init__(self, main_task):
-    self.main_task = main_task
+    self._main_task = main_task
 
 ###################################################################################################
 
-  def assign(self):
-    signal.signal(signal.SIGINT, self.handle_signal)
+  def Assign(self):
+    signal.signal(signal.SIGINT, self._HandleSignal)
 
 ###################################################################################################
 
-  def handle_signal(self, sig, frame):
-    del self.main_task
+  def _HandleSignal(self, sig, frame):
+    del self._main_task
     sys.exit(0)
 
 

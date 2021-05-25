@@ -13,12 +13,12 @@ class ConfigError(Exception):
 class NoNode(ConfigError):
   """ No node existing in config. """
   def __init__(self, node_name):
-    self.node_name = node_name
-    self.message = "No node exists in config."
-    super().__init__(self.message)
+    self._node_name = node_name
+    self._message = "No node exists in config."
+    super().__init__(self._message)
   
   def __str__(self):
-    return f"{self.message} Node: {self.node_name}"
+    return f"{self._message} Node: {self._node_name}"
 
 ###################################################################################################
 ###################################################################################################

@@ -13,23 +13,23 @@ import uuid
 class Request:
 
   def __init__(self, type: str = "", value: str = ""):
-    self.data = {'type': type, 'value': value}
-    self.id_ = uuid.uuid4()
+    self._data = {'type': type, 'value': value}
+    self._id = uuid.uuid4()
 
 ###################################################################################################
 
   def type(self):
-    return self.data['type']
+    return self._data['type']
 
 ###################################################################################################
 
   def value(self):
-    return self.data['value']
+    return self._data['value']
 
 ###################################################################################################
 
   def id(self) -> str:
-    return str(self.id_)
+    return str(self._id)
 
 ###################################################################################################
 
@@ -37,8 +37,8 @@ class Request:
     s = "Request:"
     s += f"\n\tID: {self.id()}"
     s += "\n\tData:"
-    s += f"\n\t\tType: {self.data['type']}"
-    s += f"\n\t\tValue: {self.data['value']}"
+    s += f"\n\t\tType: {self._data['type']}"
+    s += f"\n\t\tValue: {self._data['value']}"
     return s
 
 

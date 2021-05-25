@@ -13,8 +13,8 @@ from dnd_app.core.request import Request
 class Response:
 
   def __init__(self, request: Request, repsonse_data: dict, fulfilled: bool=True):
-    self.response_data = repsonse_data
     self.request = request
+    self.response_data = repsonse_data
     self.fulfilled = fulfilled
 
 ###################################################################################################

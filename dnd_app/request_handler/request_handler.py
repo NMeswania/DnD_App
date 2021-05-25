@@ -23,23 +23,23 @@ from dnd_app.request_handler.request_handler_exceptions import RequestHandlerExc
 class RequestHandler:
 
   def __init__(self, config: Config, request_queue: Queue, response_queue: Queue) -> None:
-    self.config = config
-    self.request_queue = request_queue
-    self.response_queue = response_queue
+    self._config = config
+    self._request_queue = request_queue
+    self._response_queue = response_queue
 
 ###################################################################################################
 
   def __call__(self):
     while True:
       try:
-        request = self.request_queue.get(block=True,
-                                         timeout=self.config.get_common("queue_put_timeout"))
+        request = self._request_queue.get(block=True,
+                                         timeout=self._config.get_common("queue_put_timeout"))
         response = self._ProcessNewRequest(request)
 
         try:
-          self.response_queue.put(response,
+          self._response_queue.put(response,
                                   block=True,
-                                  timeout=self.config.get_common("queue_get_timeout"))
+                                  timeout=self._config.get_common("queue_get_timeout"))
 
         except queue.Full:
           logging.critical(
@@ -55,7 +55,7 @@ class RequestHandler:
 
   def _ProcessNewRequest(self, request: Request):
     try:
-      data_dir = self.config.get_data_dir()
+      data_dir = self._config.get_data_dir()
       glob_pattern = f"{request.type()}/{request.value()}.json"
       found_files = sorted(data_dir.glob(glob_pattern))
       if len(found_files) == 0:
