@@ -14,7 +14,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 
 from dnd_app.core.request import Request
-from dnd_app.renderers.spell_renderer import SpellRenderer
+from dnd_app.viewer_widgets.spell_renderer import SpellRenderer
 from dnd_app.core.config import Config as DNDConfig
 
 ###################################################################################################
