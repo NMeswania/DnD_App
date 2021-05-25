@@ -55,7 +55,7 @@ class RequestHandler:
 
   def _ProcessNewRequest(self, request: Request):
     try:
-      data_dir = self.config.get_common("data_dir")
+      data_dir = self.config.get_data_dir()
       glob_pattern = f"{request.type()}/{request.value()}.json"
       found_files = sorted(data_dir.glob(glob_pattern))
       if len(found_files) == 0:
