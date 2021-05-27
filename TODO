@@ -1,6 +1,9 @@
-- Add queue wrappers for putting/ getting from queues, no more try-excepts!! 
-- Make all private variables with preceeding underscore
+Now
+- Fix pickling(?) issue in request queue
+
+Later
+- Add queue wrappers for putting/ getting from queues, no more try-excepts!!
 - Figure out renderer architecture, render+logic+builder is too complicated, maybe only for the character sheet selection (completely seperate moduel maybe??)
-- Remove viewer spoofer
+- Re-do queues to be pipes to better handle requests and responses going to/ coming from the same source and repurpose request_handler_manager to connect pipes 
 - Fix hanging on closing window
 - Tests!!

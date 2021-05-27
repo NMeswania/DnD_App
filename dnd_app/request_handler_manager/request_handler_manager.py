@@ -3,6 +3,8 @@
 # Lisence: MIT
 ###################################################################################################
 
+import logging
+
 from multiprocessing import Process, Queue
 
 from dnd_app.core.config import Config

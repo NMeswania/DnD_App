@@ -33,13 +33,13 @@ class RequestHandler:
     while True:
       try:
         request = self._request_queue.get(block=True,
-                                         timeout=self._config.get_common("queue_put_timeout"))
+                                          timeout=self._config.get_common("queue_put_timeout"))
         response = self._ProcessNewRequest(request)
 
         try:
           self._response_queue.put(response,
-                                  block=True,
-                                  timeout=self._config.get_common("queue_get_timeout"))
+                                   block=True,
+                                   timeout=self._config.get_common("queue_get_timeout"))
 
         except queue.Full:
           logging.critical(

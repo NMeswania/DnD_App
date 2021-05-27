@@ -9,6 +9,7 @@ import multiprocessing
 from dnd_app.core.config import Config
 from dnd_app.request_handler_manager.request_handler_manager import RequestHandlerManager
 from dnd_app.viewer.viewer import Viewer
+from dnd_app.viewer_widgets.widget_manager import WidgetManager
 
 ###################################################################################################
 ###################################################################################################
@@ -19,14 +20,16 @@ class AppRunner:
 
   def __init__(self, config: Config) -> None:
     self._config = config
-    self._request_handler_request_queue = multiprocessing.Queue()
-    self._request_handler_response_queue = multiprocessing.Queue()
+    self._request_queue = multiprocessing.Queue()
+    self._response_queue = multiprocessing.Queue()
 
     self._request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
-                                                          self._request_handler_request_queue,
-                                                          self._request_handler_response_queue)
-    self._viewer = Viewer(config('viewer'), self._request_handler_request_queue,
-                          self._request_handler_response_queue)
+                                                          self._request_queue,
+                                                          self._response_queue)
+    self._widget_manager = WidgetManager(config(), self._request_queue, self._response_queue,
+                                         "subs")
+    self._viewer = Viewer(config('viewer'), self._widget_manager, self._request_queue,
+                          self._response_queue)
 
     self._processes = {}
 
@@ -39,7 +42,8 @@ class AppRunner:
 
   def run(self):
     self._LaunchRequestHandlerManagerProcess()
-    # self._LaunchViewerProcess()
+    self._LaunchWidgetManager()
+    self._LaunchViewer()
     self._viewer.run()
 
 ###################################################################################################
@@ -51,9 +55,13 @@ class AppRunner:
 
 ###################################################################################################
 
-  def _LaunchViewerProcess(self):
-    self._processes['spoofer'] = multiprocessing.Process(target=self._viewer.run)
-    self._processes['spoofer'].start()
+  def _LaunchViewer(self):
+    self._viewer.run()
+
+###################################################################################################
+
+  def _LaunchWidgetManager(self):
+    self._widget_manager.run()
 
 ###################################################################################################
 

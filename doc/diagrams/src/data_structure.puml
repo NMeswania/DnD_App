@@ -1,0 +1,18 @@
+@startjson character
+
+{
+  "character": {
+    "meta": "path/to/meta.json",
+    "spell_list": {
+      "cantrip": ["cantrip_1", "cantrip_2", "cantrip_3"],
+      "level_1": ["spell_1", "spell_2", "spell_3"],
+      "level_2": ["spell_1", "spell_2", "spell_3"]
+    },
+    "equipment": "path/to/equipment.json",
+    "abilities": "path/to/abilities.json",
+    "combat": "path/to/combat.json"
+  }
+
+}
+
+@endjson

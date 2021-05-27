@@ -43,3 +43,50 @@ Viewer <- RequestHandlerManager
 RequestHandler <-up- RequestHandlerManager
 
 @enduml
+
+
+
+@startuml viewer_structure
+
+package app_runner {
+class AppRunner
+}
+
+package viewer {
+class Viewer
+}
+
+package viewer_widgets {
+class WidgetManager {
+  + GetRenderers() : list
+  - _widgets : list
+}
+abstract WidgetBase {
+  + {abstract} renderer() : Renderer
+  - _renderer : Renderer
+}
+abstract WidgetRendererBase {
+  + {abstract} build() : Renderer
+  - _widget : Widget
+}
+
+package spell_list {
+class SpellList
+class SpellListRenderer
+}
+
+}
+
+AppRunner <-- WidgetManager
+AppRunner <-- Viewer
+
+Viewer <- WidgetManager
+
+WidgetManager <-- SpellList
+
+WidgetBase <|-up- SpellList
+WidgetRendererBase <|-up- SpellListRenderer
+
+SpellList <- SpellListRenderer
+
+@enduml

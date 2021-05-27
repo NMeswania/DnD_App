@@ -14,6 +14,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 
 from dnd_app.core.request import Request
+from dnd_app.viewer_widgets.widget_manager import WidgetManager
 from dnd_app.viewer_widgets.spell_renderer import SpellRenderer
 from dnd_app.core.config import Config as DNDConfig
 
@@ -24,9 +25,11 @@ from dnd_app.core.config import Config as DNDConfig
 
 class Viewer(App):
 
-  def __init__(self, config: DNDConfig, _request_queue: Queue, _response_queue: Queue) -> None:
+  def __init__(self, config: DNDConfig, widget_manager: WidgetManager, _request_queue: Queue,
+               _response_queue: Queue) -> None:
     super().__init__()
     self._dnd_config = config
+    self._widget_manager = widget_manager
     self._request_queue = _request_queue
     self._response_queue = _response_queue
     self._responses = []
@@ -36,10 +39,9 @@ class Viewer(App):
 ###################################################################################################
 
   def build(self):
-    layout = BoxLayout(orientation="vertical")
-    self._renderers['spell'] = SpellRenderer()
-    layout.add_widget(self._renderers['spell'])
-    layout.add_widget(self._AddButtons())
+    layout = BoxLayout(orientation="vertical", size_hint=(1, 1))
+    for renderer in self._widget_manager.GetRenderers():
+      layout.add_widget(renderer)
     return layout
 
 ###################################################################################################
@@ -85,12 +87,12 @@ class Viewer(App):
   def _CheckResponseQueue(self, dt):
     while not self._response_queue.empty():
       try:
-        response = self._response_queue.get(block=False,
-                                          timeout=self._dnd_config.get_common("queue_get_timeout"))
+        response = self._response_queue.get(
+            block=False, timeout=self._dnd_config.get_common("queue_get_timeout"))
         self._responses.append(response)
 
       except queue.Empty:
-        logging.critical(f"Failed to get response from queue.")
+        logging.debug(f"Failed to get response from queue.")
 
       else:
         self._UpdateRenderers()
