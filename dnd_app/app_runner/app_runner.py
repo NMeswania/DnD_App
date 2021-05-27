@@ -7,7 +7,7 @@ import logging
 import multiprocessing
 
 from dnd_app.core.config import Config
-from dnd_app.request_handler_manager.request_handler_manager import RequestHandlerManager
+from dnd_app.request_handler.request_handler_manager import RequestHandlerManager
 from dnd_app.viewer.viewer import Viewer
 from dnd_app.viewer_widgets.widget_manager import WidgetManager
 
