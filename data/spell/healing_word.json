@@ -1,0 +1,7 @@
+{
+  "name": "Healing Word",
+  "range": "60 feet",
+  "casting_time": "1 bonus action",
+  "components": "V",
+  "duration": "Instananeous"
+}

@@ -1,7 +1,7 @@
 {
-  "name": "Earthbind",
-  "range": "300 feet",
+  "name": "Bane",
+  "range": "30 feet",
   "casting_time": "1 action",
-  "components": "V",
+  "components": "VSM (drop of blood)",
   "duration": "Concentration, up to 1 minute"
 }

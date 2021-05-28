@@ -1,0 +1,7 @@
+{
+  "name": "Mage Hand",
+  "range": "30 feet",
+  "casting_time": "1 action",
+  "components": "VS",
+  "duration": "1 minute"
+}
