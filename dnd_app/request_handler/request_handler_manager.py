@@ -58,6 +58,7 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
   def Request(self, request: Request) -> Receipt:
     conn_1, conn_2 = Pipe()
 
+    request_id = request._id
     request_dispatch = RequestDispatch(request, conn_2)
 
     try:
@@ -68,7 +69,10 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
     except queue.Full:
       logging.critical(f"Failed to put request in job queue ({request.id()})")
 
-    return Receipt(request._id, conn_1)
+    else:
+      logging.info(f"Sent request for {request_id}")
+
+    return Receipt(request_id, conn_1)
 
 ###################################################################################################
 
@@ -93,6 +97,8 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
       self._processes_handlers[f'process_{i}']['handler'] = request_handler
 
       p.start()
+
+    logging.info(f"Launched {self._config.get('num_processes')} RequestHandler processes.")
 
 
 ###################################################################################################

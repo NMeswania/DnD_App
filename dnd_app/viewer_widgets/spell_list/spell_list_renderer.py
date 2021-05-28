@@ -66,7 +66,12 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpellButton(self, spell_name: str) -> Button:
-    btn = Button(text=StrFieldToReadable(spell_name), size_hint=(0.9, 1))
+    btn = Button(text=StrFieldToReadable(spell_name),
+                 size_hint=(0.9, 1),
+                 font_size="15sp",
+                 halign="left",
+                 valign="middle")
+    btn.text_size=btn.size
     btn.bind(on_press=partial(self._widget.RequestSpellCallback, spell_name))
     return btn
 
