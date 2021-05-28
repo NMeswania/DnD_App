@@ -39,7 +39,7 @@ class SpellList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestSpellCallback(self, instance, spell_name: str):
+  def RequestSpellCallback(self, spell_name: str, instance):
     request = Request(type="spell", value=spell_name)
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
@@ -50,7 +50,6 @@ class SpellList(WidgetBase):
     if self._receipt is not None:
       if self._receipt.IsResponseReady():
         response = self._receipt.GetRepsonse()
-        print(response)
         self._receipt = None
 
 ###################################################################################################
