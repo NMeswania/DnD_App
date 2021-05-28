@@ -21,15 +21,11 @@ class AppRunner:
   def __init__(self, config: Config) -> None:
     self._config = config
     self._request_queue = multiprocessing.Queue()
-    self._response_queue = multiprocessing.Queue()
 
     self._request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
-                                                          self._request_queue,
-                                                          self._response_queue)
-    self._widget_manager = WidgetManager(config(), self._request_queue, self._response_queue,
-                                         "subs")
-    self._viewer = Viewer(config('viewer'), self._widget_manager, self._request_queue,
-                          self._response_queue)
+                                                          self._request_queue)
+    self._widget_manager = WidgetManager(config(), self._request_queue, "subs")
+    self._viewer = Viewer(config('viewer'), self._widget_manager, self._request_queue)
 
     self._processes = {}
 
@@ -44,7 +40,6 @@ class AppRunner:
     self._LaunchRequestHandlerManagerProcess()
     self._LaunchWidgetManager()
     self._LaunchViewer()
-    self._viewer.run()
 
 ###################################################################################################
 

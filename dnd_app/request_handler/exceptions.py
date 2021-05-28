@@ -3,45 +3,45 @@
 # Lisence: MIT
 ###################################################################################################
 
-from multiprocessing import Queue
-
-from kivy.app import App
-from kivy.clock import Clock
-from kivy.uix.boxlayout import BoxLayout
-
-from dnd_app.viewer_widgets.widget_manager import WidgetManager
-from dnd_app.core.config import Config as DNDConfig
+import uuid
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class Viewer(App):
+class RequestResponseIDsNotMatching(Exception):
 
-  def __init__(self, config: DNDConfig, widget_manager: WidgetManager, request_queue: Queue):
-    super().__init__()
-    self._dnd_config = config
-    self._widget_manager = widget_manager
-    self._request_queue = request_queue
-    self._responses = []
-    Clock.schedule_interval(self._PollRenderers, 0.25)
-    self._renderers = {}
+  def __init__(self, request_id: uuid.UUID, repsonse_id: uuid.UUID):
+    self._message = f"Request ID: {str(request_id)}, Response ID: {str(repsonse_id)}"
+    super().__init__(self._message)
+
+  def __str__(self):
+    return self._message
 
 ###################################################################################################
 
-  def build(self):
-    layout = BoxLayout(orientation="vertical", size_hint=(1, 1))
-    for renderer in self._widget_manager.GetRenderers():
-      layout.add_widget(renderer)
-    return layout
+class RequestHandlerException(Exception):
+  """ Base class exceptions for the RequestHandler class. """
+  pass
 
 ###################################################################################################
 
-  def _PollRenderers(self, _):
-    for renderer in self._widget_manager.GetRenderers():
-      renderer.CheckForUpdates()
+class UnknownRequestType(RequestHandlerException):
+  """ When the type of request is unknown. """
+  def __init__(self, request_type: str):
+    self._type = request_type
+    self._message = "Unknown request type."
+    super().__init__(self._message)
 
+  def __str__(self):
+    return f"{self._message} Type: {self._type}"
+
+###################################################################################################
+
+class FailedToProcessRequest(RequestHandlerException):
+  """ Generic unable to process request exception. """
+  pass
 
 ###################################################################################################
 ###################################################################################################

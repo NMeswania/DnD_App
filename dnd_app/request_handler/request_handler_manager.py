@@ -4,23 +4,44 @@
 ###################################################################################################
 
 import logging
+import queue
+import threading
 
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Pipe
+from multiprocessing.connection import Connection
 
 from dnd_app.core.config import Config
+from dnd_app.request_handler.receipt import Receipt
+from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler import RequestHandler
+from dnd_app.request_handler.internal.request_dispatch import RequestDispatch
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
+class ThreadSafeSingleton(type):
+
+  _instances = {}
+  _lock = threading.Lock()
+
+  def __call__(cls, *args, **kwargs):
+    if cls not in cls._instances:
+      with cls._lock:
+        cls._instances[cls] = super(ThreadSafeSingleton, cls).__call__(*args, **kwargs)
+
+    return cls._instances[cls]
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class RequestHandlerManager:
+class RequestHandlerManager(metaclass=ThreadSafeSingleton):
 
-  def __init__(self, config: Config, request_queue: Queue, response_queue: Queue) -> None:
+  def __init__(self, config: Config, request_queue: Queue) -> None:
     self._config = config
     self._request_queue = request_queue
-    self._response_queue = response_queue
 
 ###################################################################################################
 
@@ -32,6 +53,22 @@ class RequestHandlerManager:
   def run(self):
     self._LaunchProcesses()
 
+###################################################################################################
+
+  def Request(self, request: Request) -> Receipt:
+    conn_1, conn_2 = Pipe()
+
+    request_dispatch = RequestDispatch(request, conn_2)
+
+    try:
+      self._request_queue.put(request_dispatch,
+                              block=False,
+                              timeout=self._config.get_common("queue_put_timeout"))
+
+    except queue.Full:
+      logging.critical(f"Failed to put request in job queue ({request.id()})")
+
+    return Receipt(request._id, conn_1)
 
 ###################################################################################################
 
@@ -49,7 +86,7 @@ class RequestHandlerManager:
     for i in range(self._config.get("num_processes")):
       self._processes_handlers[f'process_{i}'] = {}
 
-      request_handler = RequestHandler(self._config(), self._request_queue, self._response_queue)
+      request_handler = RequestHandler(self._config(), self._request_queue)
       p = Process(target=request_handler)
 
       self._processes_handlers[f'process_{i}']['process'] = p
@@ -57,6 +94,13 @@ class RequestHandlerManager:
 
       p.start()
 
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
+def GetRequestHandlerManagerSingleton():
+  return RequestHandlerManager(None, None)
 
 ###################################################################################################
 ###################################################################################################

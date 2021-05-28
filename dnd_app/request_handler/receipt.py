@@ -3,52 +3,40 @@
 # Lisence: MIT
 ###################################################################################################
 
-from abc import ABC, abstractmethod
+import uuid
 
-from pathlib import Path
+from multiprocessing.connection import Connection
 
-###################################################################################################
-###################################################################################################
-###################################################################################################
-
-
-class WidgetRendererBase(ABC):
-
-  @abstractmethod
-  def Terminate(self):
-    ...
-
-  @abstractmethod
-  def CheckForUpdates(self):
-    ...
-
+from dnd_app.request_handler.exceptions import RequestResponseIDsNotMatching
+from dnd_app.request_handler.response import Response
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class WidgetBase(ABC):
+class Receipt:
 
-  @abstractmethod
-  def renderer(self):
-    ...
+  def __init__(self, request_id: uuid.UUID, pipe_connection: Connection):
+    self._request_id = request_id
+    self._pipe_connection = pipe_connection
 
-  @abstractmethod
-  def RequestSpellCallback(self, file_path: Path):
-    ...
+###################################################################################################
 
-  @abstractmethod
-  def CheckForUpdates(self):
-    ...
+  def IsResponseReady(self) -> bool:
+    return self._pipe_connection.poll()
 
-  @abstractmethod
-  def _LoadData(self):
-    ...
+###################################################################################################
 
-  @abstractmethod
-  def _BuildRenderer(self):
-    ...
+  def GetRepsonse(self) -> Response:
+    response = self._pipe_connection.recv()
+
+    if response.request.id() != str(self._request_id):
+      raise RequestResponseIDsNotMatching(response.request.id(), self._request_id)
+
+    self._pipe_connection.close()
+
+    return response
 
 
 ###################################################################################################

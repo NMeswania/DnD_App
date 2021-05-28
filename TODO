@@ -3,7 +3,6 @@ Now
 
 Later
 - Add queue wrappers for putting/ getting from queues, no more try-excepts!!
-- Figure out renderer architecture, render+logic+builder is too complicated, maybe only for the character sheet selection (completely seperate moduel maybe??)
-- Re-do queues to be pipes to better handle requests and responses going to/ coming from the same source and repurpose request_handler_manager to connect pipes 
+- Error handling using thread safe singleton signal_handler which shutdowns all processes
 - Fix hanging on closing window
 - Tests!!
