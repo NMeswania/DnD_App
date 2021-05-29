@@ -3,6 +3,7 @@
 # Lisence: MIT
 ###################################################################################################
 
+from re import MULTILINE
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -44,14 +45,18 @@ class DetailRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpellName(self):
-    label = Label(text="", font_size="18sp")
+    label = Label(text="", font_size="18sp", size_hint=(1, 0.3))
     label.id = "name"
     self.add_widget(label)
 
 ###################################################################################################
 
   def _AddBasicData(self):
-    layout = GridLayout(rows=2, cols=4, row_force_default=True, row_default_height=40)
+    layout = GridLayout(rows=4,
+                        cols=2,
+                        row_force_default=True,
+                        row_default_height=40,
+                        size_hint=(1, 0.5))
 
     for field in ["range", "casting_time", "components", "duration"]:
       layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="15sp"))

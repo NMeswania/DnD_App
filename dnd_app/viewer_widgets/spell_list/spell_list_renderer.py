@@ -65,7 +65,7 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpells(self) -> GridLayout:
-    layout = GridLayout(rows=2, cols=5, size_hint=(0.7, 1))
+    layout = GridLayout(rows=2, cols=5)
     levels = [f"level_{n}" for n in np.arange(1, 10)]
     levels.insert(0, "cantrip")
     for spell_level in levels:
