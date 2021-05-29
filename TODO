@@ -1,8 +1,4 @@
-Now
-- Fix pickling(?) issue in request queue
-
-Later
-- Add queue wrappers for putting/ getting from queues, no more try-excepts!!
+- Make spell details generate layout based on schema
 - Error handling using thread safe singleton signal_handler which shutdowns all processes
 - Fix hanging on closing window
 - Tests!!
