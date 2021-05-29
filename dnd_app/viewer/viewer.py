@@ -25,7 +25,7 @@ class Viewer(App):
     self._widget_manager = widget_manager
     self._request_queue = request_queue
     self._responses = []
-    Clock.schedule_interval(self._PollRenderers, 0.25)
+    Clock.schedule_interval(self._widget_manager.CheckForUpdates, 0.25)
     self._renderers = {}
 
 ###################################################################################################
@@ -35,12 +35,6 @@ class Viewer(App):
     for renderer in self._widget_manager.GetRenderers():
       layout.add_widget(renderer)
     return layout
-
-###################################################################################################
-
-  def _PollRenderers(self, _):
-    for renderer in self._widget_manager.GetRenderers():
-      renderer.CheckForUpdates()
 
 
 ###################################################################################################

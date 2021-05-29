@@ -28,7 +28,7 @@ class Receipt:
 
 ###################################################################################################
 
-  def GetRepsonse(self) -> Response:
+  def GetResponse(self) -> Response:
     response = self._pipe_connection.recv()
 
     if response.request.id() != str(self._request_id):

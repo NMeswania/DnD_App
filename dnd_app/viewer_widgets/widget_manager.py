@@ -32,6 +32,12 @@ class WidgetManager:
     self._widgets = self._LoadWidgets()
 
 ###################################################################################################
+  
+  def CheckForUpdates(self, _):
+    for widget in self._widgets.values():
+      widget.CheckForUpdates()
+
+###################################################################################################
 
   def GetRenderers(self) -> list:
     renderers = [widget.renderer() for widget in self._widgets.values()]
@@ -41,14 +47,9 @@ class WidgetManager:
 
   def _GetCharacterData(self, character: str="") -> dict:
     request = Request(type="characters", value=f"{character}/{character}")
-
     request_manager_singleton = GetRequestHandlerManagerSingleton()
-    receipt = request_manager_singleton.Request(request)
-
-    while True:
-      if receipt.IsResponseReady():
-        response = receipt.GetRepsonse()
-        return response.data()
+    response = request_manager_singleton.RequestAndBlock(request)
+    return response.data()
 
 ###################################################################################################
 

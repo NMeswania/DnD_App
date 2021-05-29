@@ -7,6 +7,7 @@ import logging
 
 from pathlib import Path
 
+from kivy.clock import Clock
 from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
@@ -22,9 +23,9 @@ class SpellList(WidgetBase):
 
   def __init__(self, config: Config, spell_list_path: Path):
     self._dnd_config = config
-    self._spell_data = self._LoadData(spell_list_path)
-    self._renderer = self._BuildRenderer()
     self._receipt = None
+    self._LoadData(spell_list_path)
+    self._renderer = self._BuildRenderer()
 
 ###################################################################################################
 
@@ -49,7 +50,8 @@ class SpellList(WidgetBase):
   def CheckForUpdates(self):
     if self._receipt is not None:
       if self._receipt.IsResponseReady():
-        response = self._receipt.GetRepsonse()
+        response = self._receipt.GetResponse()
+        self._renderer.DisplayResponse(response)
         self._receipt = None
 
 ###################################################################################################
@@ -58,16 +60,11 @@ class SpellList(WidgetBase):
     request = Request(type="characters", value="subs/spell_list")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
-    
-    while True:
-      if self._receipt.IsResponseReady():
-        response = self._receipt.GetRepsonse()
-        return response.data()
 
 ###################################################################################################
 
   def _BuildRenderer(self) -> SpellListRenderer:
-    return SpellListRenderer(self._dnd_config, self, self._spell_data)
+    return SpellListRenderer(self._dnd_config, self)
 
 
 ###################################################################################################

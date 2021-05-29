@@ -31,9 +31,8 @@ class RequestHandler:
     while True:
       try:
         request_dispatch = self._request_queue.get(
-            block=True, timeout=self._config.get_common("queue_put_timeout"))
+            block=True, timeout=self._config.get_common("queue_get_timeout"))
         response = self._ProcessNewRequest(request_dispatch.request)
-
         request_dispatch.pipe_connection.send(response)
 
       except queue.Empty:
@@ -58,6 +57,7 @@ class RequestHandler:
             f"Found {len(found_files)} matching pattern '{glob_pattern}', using first match")
 
       response_data = JSONParser(found_files[0]).ParseData()
+
 
     except Exception as err:
       logging.error(f"Failed to process request: {request.id()}. Got exception: {err}")

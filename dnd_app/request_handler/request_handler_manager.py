@@ -3,6 +3,7 @@
 # Lisence: MIT
 ###################################################################################################
 
+from dnd_app.request_handler.response import Response
 import logging
 import queue
 import threading
@@ -32,6 +33,14 @@ class ThreadSafeSingleton(type):
 
     return cls._instances[cls]
 
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
+def GetRequestHandlerManagerSingleton():
+  return RequestHandlerManager(None, None)
+
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
@@ -59,6 +68,8 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
     conn_1, conn_2 = Pipe()
 
     request_id = request._id
+    request_type = request.type()
+    request_value = request.value()
     request_dispatch = RequestDispatch(request, conn_2)
 
     try:
@@ -70,9 +81,17 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
       logging.critical(f"Failed to put request in job queue ({request.id()})")
 
     else:
-      logging.info(f"Sent request for {request_id}")
+      logging.info(f"Sent request for {request_type}:{request_value}, {request_id}")
 
     return Receipt(request_id, conn_1)
+
+###################################################################################################
+
+  def RequestAndBlock(self, request: Request) -> Response:
+    receipt = self.Request(request)
+    while True:
+      if receipt.IsResponseReady():
+        return receipt.GetResponse()
 
 ###################################################################################################
 
@@ -100,13 +119,6 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
 
     logging.info(f"Launched {self._config.get('num_processes')} RequestHandler processes.")
 
-
-###################################################################################################
-###################################################################################################
-###################################################################################################
-
-def GetRequestHandlerManagerSingleton():
-  return RequestHandlerManager(None, None)
 
 ###################################################################################################
 ###################################################################################################
