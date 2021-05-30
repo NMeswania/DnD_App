@@ -75,7 +75,7 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpellLevel(self, level: str) -> GridLayout:
-    layout = GridLayout(cols=1, row_force_default=True, row_default_height=40)
+    layout = GridLayout(cols=1, row_force_default=True, row_default_height=40, padding=5)
     layout.id = level
     layout.add_widget(Label(text=StrFieldToReadable(level), size_hint=(1, 1)))
     return layout
@@ -91,7 +91,10 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpellButton(self, spell_name: str) -> Button:
-    btn = Button(text=StrFieldToReadable(spell_name), size_hint=(0.9, 1), font_size="15sp")
+    btn = Button(text=StrFieldToReadable(spell_name),
+                 size_hint=(0.9, 1),
+                 font_size="13sp",
+                 padding=(3, 3))
     AlignWidgetLabelChildren(btn)
     btn.bind(on_press=partial(self._widget.RequestSpellCallback, spell_name))  # pylint: disable=no-member
     return btn

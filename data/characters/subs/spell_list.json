@@ -1,7 +1,7 @@
 {
-  "cantrip": ["mage_hand"],
-  "level_1": ["healing_word", "bane"],
-  "level_2": [],
+  "cantrip": ["mage_hand", "minor_illusion", "vicious_mockery"],
+  "level_1": ["healing_word", "bane", "disonant_whispers", "thunderwave"],
+  "level_2": ["blindness_deafness", "hold_person", "silence", "pass_without_trace"],
   "level_3": [],
   "level_4": [],
   "level_5": [],
