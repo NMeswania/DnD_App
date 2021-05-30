@@ -3,7 +3,6 @@
 # Lisence: MIT
 ###################################################################################################
 
-from re import MULTILINE
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -18,7 +17,7 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 class DetailRenderer(BoxLayout):
 
   def __init__(self):
-    super().__init__(orientation="vertical")
+    super().__init__(orientation="vertical", size_hint=(0.3, 1))
     self._AddSpellName()
     self._AddBasicData()
     self._AddDescriptions()
@@ -59,8 +58,8 @@ class DetailRenderer(BoxLayout):
                         size_hint=(1, 0.5))
 
     for field in ["range", "casting_time", "components", "duration"]:
-      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="15sp"))
-      label = Label(text="", font_size="15sp")
+      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="13sp"))
+      label = Label(text="", font_size="13sp")
       label.id = field
       layout.add_widget(label)
 
