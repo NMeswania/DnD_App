@@ -27,12 +27,15 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 class SpellListRenderer(BoxLayout):
 
   def __init__(self, config: Config, widget):
-    super().__init__(orientation="horizontal")
+    super().__init__(orientation="vertical")
     self._dnd_config = config
     self._widget = widget
     self._detail_renderer = DetailRenderer()
-    self.add_widget(self._AddSpells())
-    self.add_widget(self._detail_renderer)
+    self.add_widget(self._AddTitle())
+    self._main_layout = BoxLayout(orientation="horizontal")
+    self._main_layout.add_widget(self._AddSpells())
+    self._main_layout.add_widget(self._detail_renderer)
+    self.add_widget(self._main_layout)
 
 ###################################################################################################
 
@@ -61,6 +64,11 @@ class SpellListRenderer(BoxLayout):
           for spell in v:
             child.add_widget(self._AddSpell(spell_name=spell))
           break
+
+###################################################################################################
+
+  def _AddTitle(self) -> Label:
+    return Label(text="Spells", font_size="20sp", size_hint=(1, 0.05))
 
 ###################################################################################################
 
