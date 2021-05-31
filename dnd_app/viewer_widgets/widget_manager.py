@@ -3,11 +3,6 @@
 # Lisence: MIT
 ###################################################################################################
 
-import logging
-import queue
-
-from multiprocessing import Queue
-
 from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
@@ -20,9 +15,8 @@ from dnd_app.viewer_widgets.spell_list.spell_list import SpellList
 
 class WidgetManager:
 
-  def __init__(self, config: Config, request_queue: Queue, character: str = ""):
+  def __init__(self, config: Config, character: str=""):
     self._dnd_config = config
-    self._request_queue = request_queue
     self._character = character
 
 ###################################################################################################
@@ -32,7 +26,7 @@ class WidgetManager:
     self._widgets = self._LoadWidgets()
 
 ###################################################################################################
-  
+
   def CheckForUpdates(self, _):
     for widget in self._widgets.values():
       widget.CheckForUpdates()
@@ -46,7 +40,7 @@ class WidgetManager:
 ###################################################################################################
 
   def _GetCharacterData(self, character: str="") -> dict:
-    request = Request(type="characters", value=f"{character}/{character}")
+    request = Request(type="character", value=f"{character}/main")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     response = request_manager_singleton.RequestAndBlock(request)
     return response.data()
@@ -55,8 +49,7 @@ class WidgetManager:
 
   def _LoadWidgets(self) -> dict:
     widgets = {}
-    widgets['spell_list'] = SpellList(self._dnd_config,
-                                      self._character_data['character']['spell_list'])
+    widgets['spell_list'] = SpellList(self._dnd_config, self._character_data['spell_list'])
     return widgets
 
 

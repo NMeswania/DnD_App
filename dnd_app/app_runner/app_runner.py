@@ -24,7 +24,7 @@ class AppRunner:
 
     self._request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
                                                           self._request_queue)
-    self._widget_manager = WidgetManager(config(), self._request_queue, "subs")
+    self._widget_manager = WidgetManager(config(), "subs")
     self._viewer = Viewer(config('viewer'), self._widget_manager, self._request_queue)
 
     self._processes = {}

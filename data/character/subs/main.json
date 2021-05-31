@@ -1,0 +1,7 @@
+{
+  "meta": "",
+  "spell_list": ".\\subs\\spell_list.json",
+  "equipment": "path/to/equipment.json",
+  "abilities": "path/to/abilities.json",
+  "combat": "path/to/combat.json"
+}

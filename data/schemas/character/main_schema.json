@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "character_main_schema",
+  "description": "Schema for representing characters",
+  "type": "object",
+  "required": [
+    "spell_list"
+  ],
+  "properties": {
+    "spell_list": {
+      "description": "Path to spell list",
+      "type": "string"
+    },
+    "equipment": {
+      "description": "Path to spell list",
+      "type": "string"
+    },
+    "abilities": {
+      "description": "Path to spell list",
+      "type": "string"
+    },
+    "combat": {
+      "description": "Path to spell list",
+      "type": "string"
+    }
+  }
+}

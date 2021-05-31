@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "character_spell_list_schema",
+  "description": "Schema for representing characters known spells",
+  "type": "object",
+  "properties": {
+    "cantrip": {"type":"array", "items": { "type": "string"}},
+    "level_1": {"type":"array", "items": { "type": "string"}},
+    "level_2": {"type":"array", "items": { "type": "string"}},
+    "level_3": {"type":"array", "items": { "type": "string"}},
+    "level_4": {"type":"array", "items": { "type": "string"}},
+    "level_5": {"type":"array", "items": { "type": "string"}},
+    "level_6": {"type":"array", "items": { "type": "string"}},
+    "level_7": {"type":"array", "items": { "type": "string"}},
+    "level_8": {"type":"array", "items": { "type": "string"}},
+    "level_9": {"type":"array", "items": { "type": "string"}}
+  }
+}

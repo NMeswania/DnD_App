@@ -26,18 +26,24 @@ class DetailRenderer(BoxLayout):
 
   def Clear(self):
     for widget in self.walk():
-      if isinstance(widget, Label):
+      if hasattr(widget, "id"):
         widget.text = ""
 
 ###################################################################################################
 
   def Update(self, spell_data: dict):
+    self.Clear()
+    self._UpdateInternal(spell_data)
+
+###################################################################################################
+
+  def _UpdateInternal(self, spell_data: dict):
     for k, v in spell_data.items():
       if isinstance(v, dict):
-        self.Update(v)
+        self._UpdateInternal(v)
       else:
         for child in self.walk():
-          if hasattr(child, 'id') and child.id == k:
+          if hasattr(child, "id") and child.id == k:
             child.text = v
             break
 
@@ -71,7 +77,7 @@ class DetailRenderer(BoxLayout):
 
   def _AddDescriptions(self):
     layout = BoxLayout(orientation="vertical")
-    for section in ["description", "higher_level"]:
+    for section in ["spell_description", "higher_level_description"]:
       label = Label(text="", font_size="12sp")
       label.id = section
       layout.add_widget(label)

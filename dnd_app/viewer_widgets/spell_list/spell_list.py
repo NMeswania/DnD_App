@@ -57,7 +57,7 @@ class SpellList(WidgetBase):
 ###################################################################################################
 
   def _LoadData(self, spell_list_path: Path):
-    request = Request(type="characters", value="subs/spell_list")
+    request = Request(type="character", value="subs/spell_list")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 

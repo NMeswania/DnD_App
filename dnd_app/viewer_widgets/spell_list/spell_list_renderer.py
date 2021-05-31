@@ -49,7 +49,7 @@ class SpellListRenderer(BoxLayout):
     if response_type == "spell":
       self._detail_renderer.Update(response.data())
 
-    elif response_type == "characters":
+    elif response_type == "character":
       self.Update(response.data())
 
     else:

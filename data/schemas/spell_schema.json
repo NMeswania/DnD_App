@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "spell_schema",
+  "description": "Schema for representing spell information",
+  "type": "object",
+  "required": [
+    "name",
+    "basic_data",
+    "spell_description"
+  ],
+  "properties": {
+    "name": {
+      "description": "Readable name of the spell",
+      "type": "string"
+    },
+    "basic_data": {
+      "description": "Basic spell information in key-value pairs",
+      "type": "object",
+      "ref": "#/definitions/basic_data"
+    },
+    "spell_description": {
+      "description": "Main spell description",
+      "type": "string"
+    },
+    "higher_level_description": {
+      "description": "Spell description for higher-levels",
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "basic_data": {
+      "type": "object",
+      "required": [
+        "range",
+        "casting_time",
+        "components",
+        "duration"
+      ],
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "casting_time": {
+          "type": "string"
+        },
+        "components": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
