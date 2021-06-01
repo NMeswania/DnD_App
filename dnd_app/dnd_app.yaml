@@ -9,4 +9,4 @@ dnd_app:
   widget_manager:
     widgets:
       - ability_scores
-      # - spell_list
+      - spell_list

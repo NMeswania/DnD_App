@@ -5,6 +5,7 @@
 
 import logging
 
+from kivy.graphics import Color
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.gridlayout import GridLayout
@@ -27,8 +28,7 @@ class AbilityScoresRenderer(BoxLayout):
     self._dnd_config = config
     self._widget = widget
     self.add_widget(self._AddTitle())
-    self.add_widget(self._AddInspiration())
-    self.add_widget(self._AddProficiencyBonus())
+    self.add_widget(self._AddInspirationAndProficiencyBonus())
     main_layout = BoxLayout(orientation="horizontal")
     main_layout.add_widget(self._AddAbilityScores())
     main_layout.add_widget(self._AddSaves())
@@ -77,6 +77,21 @@ class AbilityScoresRenderer(BoxLayout):
 
 ###################################################################################################
 
+  def _AddInspirationAndProficiencyBonus(self) -> BoxLayout:
+    layout = BoxLayout(orientation="horizontal", size_hint=(1, 0.1))
+    checkbox = CheckBox(active=False, size_hint=(0.1, 1))
+    checkbox.id = "inspiration"
+    proficiency_bonus_modifer_label = Label(text="", size_hint=(0.2, 1), font_size="20sp")
+    proficiency_bonus_modifer_label.id = "proficiency_bonus"
+    AlignWidgetLabelChildren(proficiency_bonus_modifer_label, valign="center")
+    layout.add_widget(checkbox)
+    layout.add_widget(Label(text="Inspiration", size_hint=(0.4, 1), font_size="18sp"))
+    layout.add_widget(proficiency_bonus_modifer_label)
+    layout.add_widget(Label(text="Proficiency Bonus", size_hint=(0.3, 1), font_size="18sp"))
+    return layout
+
+###################################################################################################
+
   def _AddAbilityScores(self) -> BoxLayout:
     layout = BoxLayout(orientation="vertical")
     layout.add_widget(Label(text="Ability Scores", size_hint=(1, 0.05), font_size="15sp"))
@@ -98,26 +113,6 @@ class AbilityScoresRenderer(BoxLayout):
     base_number.id = f"ability_scores_{ability_score}_base_number"
     layout.add_widget(modifier)
     layout.add_widget(base_number)
-    return layout
-
-###################################################################################################
-
-  def _AddInspiration(self) -> BoxLayout:
-    layout = BoxLayout(orientation="horizontal", size_hint=(1, 0.1))
-    layout.add_widget(Label(text="Inspiration", size_hint=(0.9, 1), font_size="18sp"))
-    checkbox = CheckBox(active=False, size_hint=(0.1, 1))
-    checkbox.id = "inspiration"
-    layout.add_widget(checkbox)
-    return layout
-
-###################################################################################################
-
-  def _AddProficiencyBonus(self) -> BoxLayout:
-    layout = BoxLayout(orientation="horizontal", size_hint=(1, 0.1))
-    proficiency_bonus_modifer_label = Label(text="", size_hint=(0.2, 1), font_size="20sp")
-    proficiency_bonus_modifer_label.id = "proficiency_bonus"
-    layout.add_widget(proficiency_bonus_modifer_label)
-    layout.add_widget(Label(text="Proficiency Bonus", size_hint=(0.8, 1), font_size="18sp"))
     return layout
 
 ###################################################################################################
