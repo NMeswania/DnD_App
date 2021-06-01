@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "ability_scores_schema",
+  "description": "Schema for representing ability scores, saving throws and skills",
+  "type": "object",
+  "required": [
+    "inspiration",
+    "proficiency_bonus",
+    "ability_scores",
+    "saving_throws",
+    "skills"
+  ],
+  "properties": {
+    "inspiration": {
+      "type": "boolean"
+    },
+    "proficiency_bonus": {
+      "type": "integer"
+    },
+    "ability_scores": {
+      "type": "object",
+      "ref": "#/definitions/ability_scores"
+    },
+    "saving_throws": {
+      "type": "object",
+      "ref": "#/definitions/saving_throws"
+    },
+    "skills":{
+      "type": "object",
+      "ref": "#/definitions/skills"
+    }
+  },
+  "definitions": {
+    "ability_scores": {
+      "type": "object",
+      "required": [
+        "strength",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "wisdom",
+        "charisma"
+      ],
+      "properties": {
+        "strength": { "type": "object", "ref": "#definitions/ability_score" },
+        "dexterity": { "type": "object", "ref": "#definitions/ability_score" },
+        "constitution": { "type": "object", "ref": "#definitions/ability_score" },
+        "intelligence": { "type": "object", "ref": "#definitions/ability_score" },
+        "wisdom": { "type": "object", "ref": "#definitions/ability_score" },
+        "charisma": { "type": "object", "ref": "#definitions/ability_score" }
+      }
+    },
+    "saving_throws": {
+      "type": "object",
+      "required": [
+        "strength",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "wisdom",
+        "charisma"
+      ],
+      "properties": {
+        "strength": { "type": "object", "ref": "#definitions/saving_throw" },
+        "dexterity": { "type": "object", "ref": "#definitions/saving_throw" },
+        "constitution": { "type": "object", "ref": "#definitions/saving_throw" },
+        "intelligence": { "type": "object", "ref": "#definitions/saving_throw" },
+        "wisdom": { "type": "object", "ref": "#definitions/saving_throw" },
+        "charisma": { "type": "object", "ref": "#definitions/saving_throw" }
+      }
+    },
+    "skills": {
+      "type": "object",
+      "required": [
+        "acrobatics",
+        "animal_handling",
+        "arcana",
+        "athletics",
+        "deception",
+        "history",
+        "insight",
+        "intimidation",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "performance",
+        "persuasion",
+        "religion",
+        "slight_of_hand",
+        "stealth",
+        "survival"
+      ],
+      "properties": {
+        "acrobatics": { "type": "object", "ref": "#definitions/skill" },
+        "animal_handling": { "type": "object", "ref": "#definitions/skill" },
+        "arcana": { "type": "object", "ref": "#definitions/skill" },
+        "athletics": { "type": "object", "ref": "#definitions/skill" },
+        "deception": { "type": "object", "ref": "#definitions/skill" },
+        "history": { "type": "object", "ref": "#definitions/skill" },
+        "insight": { "type": "object", "ref": "#definitions/skill" },
+        "intimidation": { "type": "object", "ref": "#definitions/skill" },
+        "investigation": { "type": "object", "ref": "#definitions/skill" },
+        "medicine": { "type": "object", "ref": "#definitions/skill" },
+        "nature": { "type": "object", "ref": "#definitions/skill" },
+        "perception": { "type": "object", "ref": "#definitions/skill" },
+        "performance": { "type": "object", "ref": "#definitions/skill" },
+        "persuasion": { "type": "object", "ref": "#definitions/skill" },
+        "religion": { "type": "object", "ref": "#definitions/skill" },
+        "slight_of_hand": { "type": "object", "ref": "#definitions/skill" },
+        "stealth": { "type": "object", "ref": "#definitions/skill" },
+        "survival": { "type": "object", "ref": "#definitions/skill" }
+      }
+    },
+    "ability_score": {
+      "type": "object",
+      "required": [ "modifier", "base_number" ],
+      "properties": {
+        "modifier": { "type": "integer" },
+        "base_number": { "type": "integer" }
+      }
+    },
+    "saving_throw": {
+      "type": "object",
+      "required": [ "modifier", "proficiency" ],
+      "properties": {
+        "modifier": { "type": "integer" },
+        "proficiency": { "type": "boolean" }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "required": [ "modifier", "proficiency", "ability" ],
+      "properties": {
+        "modifier": { "type": "integer" },
+        "proficiency": { "type": "boolean" },
+        "ability": { "type": "string" }
+      }
+    }
+  }
+}

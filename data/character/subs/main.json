@@ -2,6 +2,6 @@
   "meta": "",
   "spell_list": ".\\subs\\spell_list.json",
   "equipment": "path/to/equipment.json",
-  "abilities": "path/to/abilities.json",
+  "ability_scores": ".\\subs\\ability_scores.json",
   "combat": "path/to/combat.json"
 }

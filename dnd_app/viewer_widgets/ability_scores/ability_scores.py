@@ -3,59 +3,58 @@
 # Lisence: MIT
 ###################################################################################################
 
+from pathlib import Path
+
 from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
-from dnd_app.viewer_widgets.ability_scores.ability_scores import AbilityScores
-from dnd_app.viewer_widgets.spell_list.spell_list import SpellList
+from dnd_app.viewer_widgets.ability_scores.ability_scores_renderer import AbilityScoresRenderer
+from dnd_app.viewer_widgets.widget_base import WidgetBase
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class WidgetManager:
+class AbilityScores(WidgetBase):
 
-  def __init__(self, config: Config, character: str=""):
+  def __init__(self, config: Config, ability_score_path: Path):
     self._dnd_config = config
-    self._character = character
+    self._receipt = None
+    self._LoadData(ability_score_path)
+    self._renderer = self._BuildRenderer()
 
 ###################################################################################################
 
-  def run(self):
-    self._character_data = self._GetCharacterData(self._character)
-    self._widgets = self._LoadWidgets()
+  def __del__(self):
+    self._renderer.Terminate()
+    del self._renderer
 
 ###################################################################################################
 
-  def CheckForUpdates(self, _):
-    for widget in self._widgets.values():
-      widget.CheckForUpdates()
+  def renderer(self) -> AbilityScoresRenderer:
+    return self._renderer
 
 ###################################################################################################
 
-  def GetRenderers(self) -> list:
-    renderers = [widget.renderer() for widget in self._widgets.values()]
-    return renderers
+  def CheckForUpdates(self):
+    if self._receipt is not None:
+      if self._receipt.IsResponseReady():
+        response = self._receipt.GetResponse()
+        self._renderer.DisplayResponse(response)
+        self._receipt = None
 
 ###################################################################################################
 
-  def _GetCharacterData(self, character: str="") -> dict:
-    request = Request(type="character", value=f"{character}/main")
+  def _LoadData(self, ability_score_path: Path):
+    request = Request(type="character", value="subs/ability_scores")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
-    response = request_manager_singleton.RequestAndBlock(request)
-    return response.data()
+    self._receipt = request_manager_singleton.Request(request)
 
 ###################################################################################################
 
-  def _LoadWidgets(self) -> dict:
-    widgets = {}
-    widgets_to_load = self._dnd_config.get("widgets")
-    if "ability_scores" in widgets_to_load:
-      widgets['ability_scores'] = AbilityScores(self._dnd_config, self._character_data['ability_scores'])
-    if "spell_list" in widgets_to_load:
-      widgets['spell_list'] = SpellList(self._dnd_config, self._character_data['spell_list'])
-    return widgets
+  def _BuildRenderer(self) -> AbilityScoresRenderer:
+    return AbilityScoresRenderer(self._dnd_config, self)
 
 
 ###################################################################################################

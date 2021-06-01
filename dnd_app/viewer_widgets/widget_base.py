@@ -31,10 +31,6 @@ class WidgetBase(ABC):
     ...
 
   @abstractmethod
-  def RequestSpellCallback(self, file_path: Path):
-    ...
-
-  @abstractmethod
   def CheckForUpdates(self):
     ...
 

@@ -6,3 +6,7 @@ dnd_app:
     num_processes: 4
   viewer:
     text_size: 16
+  widget_manager:
+    widgets:
+      - ability_scores
+      # - spell_list

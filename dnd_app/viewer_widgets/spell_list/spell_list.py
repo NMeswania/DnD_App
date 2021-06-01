@@ -3,11 +3,8 @@
 # Lisence: MIT
 ###################################################################################################
 
-import logging
-
 from pathlib import Path
 
-from kivy.clock import Clock
 from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton

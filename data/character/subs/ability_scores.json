@@ -1,0 +1,40 @@
+{
+  "inspiration": true,
+  "proficiency_bonus": 3,
+  "ability_scores": {
+    "strength": { "modifier": 0, "base_number": 10 },
+    "dexterity": { "modifier": 3, "base_number": 17 },
+    "constitution": { "modifier": 1, "base_number": 12 },
+    "intelligence": { "modifier": -2, "base_number": 7 },
+    "wisdom": { "modifier": 0, "base_number": 10 },
+    "charisma": { "modifier": 5, "base_number": 20 }
+  },
+  "saving_throws": {
+    "strength": { "modifier": 0, "proficiency": false },
+    "dexterity": { "modifier": 6, "proficiency": true },
+    "constitution": { "modifier": 1, "proficiency": false },
+    "intelligence": { "modifier": -1, "proficiency": false },
+    "wisdom": { "modifier": 0, "proficiency": false },
+    "charisma": { "modifier": 8, "proficiency": true }
+  },
+  "skills": {
+    "acrobatics": { "modifier": 3, "proficiency": false, "ability": "dexterity" },
+    "animal_handling": { "modifier": 3, "proficiency": true, "ability": "wisdom" },
+    "arcana": { "modifier": -2, "proficiency": false, "ability": "intelligence" },
+    "athletics": { "modifier": 0, "proficiency": false, "ability": "strength" },
+    "deception": { "modifier": 8, "proficiency": true, "ability": "charisma" },
+    "history": { "modifier": -2, "proficiency": false, "ability": "intelligence" },
+    "insight": { "modifier": 3, "proficiency": true, "ability": "wisdom" },
+    "intimidation": { "modifier": 11, "proficiency": true, "ability": "charisma" },
+    "investigation": { "modifier": 1, "proficiency": true, "ability": "intelligence" },
+    "medicine": { "modifier": 0, "proficiency": false, "ability": "wisdom" },
+    "nature": { "modifier": -2, "proficiency": false, "ability": "intelligence" },
+    "perception": { "modifier": 3, "proficiency": true, "ability": "wisdom" },
+    "performance": { "modifier": 5, "proficiency": false, "ability": "charisma" },
+    "persuasion": { "modifier": 8, "proficiency": true, "ability": "charisma" },
+    "religion": { "modifier": -2, "proficiency": false, "ability": "intelligence" },
+    "slight_of_hand": { "modifier": 3, "proficiency": false, "ability": "dexterity" },
+    "stealth": { "modifier": 6, "proficiency": true, "ability": "dexterity" },
+    "survival": { "modifier": 6, "proficiency": true, "ability": "wisdom" }
+  }
+}
