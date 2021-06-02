@@ -28,9 +28,10 @@ def AlignWidgetLabelChildren(widget, halign: str="left", valign: str="middle"):
   """Aligns the text of all Label instaces in a kivy widget with the given halign/ valign."""
   for w in widget.walk():
     if isinstance(w, Label):
-      w.text_size = w.size
       w.halign = halign
       w.valign = valign
+      w.text_size = w.size
+      w.bind(size=w.setter('text_size'))
 
 ###################################################################################################
 ###################################################################################################
