@@ -32,10 +32,7 @@ class SpellListRenderer(BoxLayout):
     self._widget = widget
     self._detail_renderer = DetailRenderer()
     self.add_widget(self._AddTitle())
-    self._main_layout = BoxLayout(orientation="horizontal")
-    self._main_layout.add_widget(self._AddSpells())
-    self._main_layout.add_widget(self._detail_renderer)
-    self.add_widget(self._main_layout)
+    self.add_widget(self._AddContent())
 
 ###################################################################################################
 
@@ -57,13 +54,28 @@ class SpellListRenderer(BoxLayout):
 
 ###################################################################################################
 
+  def Clear(self):
+    self._spell_layout.clear_widgets()
+
+###################################################################################################
+
   def Update(self, data: dict):
+    self.Clear()
     for k, v in data.items():
-      for child in self.walk():
-        if hasattr(child, 'id') and child.id == k:
-          for spell in v:
-            child.add_widget(self._AddSpell(spell_name=spell))
-          break
+      if isinstance(v, list) and len(v) > 0:
+        level_layout = self._AddSpellLevel(k)
+        for spell in v:
+          level_layout.add_widget(self._AddSpell(spell_name=spell))
+        self._spell_layout.add_widget(level_layout)
+
+###################################################################################################
+
+  def _AddContent(self):
+    self._main_layout = BoxLayout(orientation="horizontal")
+    self._spell_layout = self._AddSpells()
+    self._main_layout.add_widget(self._spell_layout)
+    self._main_layout.add_widget(self._detail_renderer)
+    return self._main_layout
 
 ###################################################################################################
 
@@ -73,11 +85,7 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpells(self) -> GridLayout:
-    layout = GridLayout(rows=2, cols=5)
-    levels = [f"level_{n}" for n in np.arange(1, 10)]
-    levels.insert(0, "cantrip")
-    for spell_level in levels:
-      layout.add_widget(self._AddSpellLevel(spell_level))
+    layout = GridLayout(cols=5)
     return layout
 
 ###################################################################################################
@@ -102,7 +110,7 @@ class SpellListRenderer(BoxLayout):
     btn = Button(text=StrFieldToReadable(spell_name),
                  size_hint=(0.9, 1),
                  font_size="13sp",
-                 padding=(3, 3))
+                 padding=(5, 5))
     AlignWidgetLabelChildren(btn)
     btn.bind(on_press=partial(self._widget.RequestSpellCallback, spell_name))  # pylint: disable=no-member
     return btn
