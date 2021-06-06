@@ -6,6 +6,7 @@
 from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
+from dnd_app.utilities.container_utils import FlattenList
 from dnd_app.viewer_widgets.ability_scores.ability_scores import AbilityScores
 from dnd_app.viewer_widgets.spell_list.spell_list import SpellList
 
@@ -35,8 +36,8 @@ class WidgetManager:
 ###################################################################################################
 
   def GetRenderers(self) -> list:
-    renderers = [widget.renderer() for widget in self._widgets.values()]
-    return renderers
+    renderers = [widget.renderers() for widget in self._widgets.values()]
+    return FlattenList(renderers)
 
 ###################################################################################################
 
