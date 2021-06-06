@@ -3,9 +3,13 @@
 # Lisence: MIT
 ###################################################################################################
 
+from functools import partial
+
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 
 from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChildren
 
@@ -14,13 +18,20 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 ###################################################################################################
 
 
-class DetailRenderer(BoxLayout):
+class DetailRenderer(Popup):
 
-  def __init__(self):
-    super().__init__(orientation="vertical", size_hint=(0.3, 1))
-    self._AddSpellName()
-    self._AddBasicData()
-    self._AddDescriptions()
+  def __init__(self, widget):
+    super().__init__()
+    self._widget = widget
+    self.title = "Spell Details"
+    self.content = self._AddContent()
+    self._is_open = False
+    self.size_hint = (0.6, 0.6)
+
+###################################################################################################
+
+  def Terminate(self):
+    self._widget = None
 
 ###################################################################################################
 
@@ -32,7 +43,11 @@ class DetailRenderer(BoxLayout):
 ###################################################################################################
 
   def Update(self, spell_data: dict):
-    self.Clear()
+    if not self._is_open:
+      self.open()
+      self._is_open = True
+    else:
+      self.Clear()
     self._UpdateInternal(spell_data)
 
 ###################################################################################################
@@ -49,40 +64,72 @@ class DetailRenderer(BoxLayout):
 
 ###################################################################################################
 
-  def _AddSpellName(self):
-    label = Label(text="", font_size="18sp", size_hint=(1, 0.3))
-    label.id = "name"
-    self.add_widget(label)
+  def _Close(self, instance):
+    self._is_open = False
+    self.dismiss()
 
 ###################################################################################################
 
-  def _AddBasicData(self):
+  def _AddContent(self):
+    layout = BoxLayout(orientation="vertical")
+    layout.add_widget(self._AddButtonBar(0.1))
+    layout.add_widget(self._AddSpellName(0.1))
+    layout.add_widget(self._AddBasicData(0.4))
+    layout.add_widget(self._AddDescriptions(0.4))
+    return layout
+
+###################################################################################################
+
+  def _AddButtonBar(self, h: float):
+    layout = BoxLayout(orientation="horizontal", size_hint=(1, h))
+    prev_button = Button(text="<", size_hint=(0.4, 1), font_size="13sp", padding=(5, 5))
+    prev_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, -1))    # pylint: disable=no-member
+
+    close_button = Button(text="Close", size_hint=(0.2, 1), font_size="13sp", padding=(5, 5))
+    close_button.bind(on_press=self._Close)    # pylint: disable=no-member
+
+    next_button = Button(text=">", size_hint=(0.4, 1), font_size="13sp", padding=(5, 5))
+    next_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, 1))    # pylint: disable=no-member
+
+    layout.add_widget(prev_button)
+    layout.add_widget(close_button)
+    layout.add_widget(next_button)
+    return layout
+
+###################################################################################################
+
+  def _AddSpellName(self, h: float):
+    label = Label(text="", font_size="18sp", size_hint=(1, h))
+    label.id = "name"
+    return label
+
+###################################################################################################
+
+  def _AddBasicData(self, h: float):
     layout = GridLayout(rows=4,
                         cols=2,
-                        row_force_default=True,
-                        row_default_height=40,
-                        size_hint=(1, 0.5))
+                        size_hint=(1, h))
 
     for field in ["range", "casting_time", "components", "duration"]:
-      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="13sp"))
-      label = Label(text="", font_size="13sp")
+      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="13sp", size_hint=(0.4, 0.25)))
+      label = Label(text="", font_size="13sp", size_hint=(0.6, 0.25))
       label.id = field
       layout.add_widget(label)
 
     AlignWidgetLabelChildren(layout)
 
-    self.add_widget(layout)
+    return layout
 
 ###################################################################################################
 
-  def _AddDescriptions(self):
-    layout = BoxLayout(orientation="vertical")
+  def _AddDescriptions(self, h: float):
+    layout = BoxLayout(orientation="vertical", size_hint=(1, h))
     for section in ["spell_description", "higher_level_description"]:
       label = Label(text="", font_size="12sp")
       label.id = section
       layout.add_widget(label)
     AlignWidgetLabelChildren(layout, valign="top")
-    self.add_widget(layout)
+    return layout
 
 
 ###################################################################################################

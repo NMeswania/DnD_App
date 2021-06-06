@@ -3,9 +3,6 @@
 # Lisence: MIT
 ###################################################################################################
 
-import logging
-import numpy as np
-
 from functools import partial
 
 from kivy.uix.boxlayout import BoxLayout
@@ -15,8 +12,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
-from dnd_app.request_handler.response import Response
-from dnd_app.viewer_widgets.spell_list.detail_renderer import DetailRenderer
 from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChildren
 
 ###################################################################################################
@@ -30,9 +25,9 @@ class SpellListRenderer(BoxLayout):
     super().__init__(orientation="vertical")
     self._dnd_config = config
     self._widget = widget
-    self._detail_renderer = DetailRenderer()
     self.add_widget(self._AddTitle())
     self.add_widget(self._AddContent())
+    self._spells = []
 
 ###################################################################################################
 
@@ -41,21 +36,9 @@ class SpellListRenderer(BoxLayout):
 
 ###################################################################################################
 
-  def DisplayResponse(self, response: Response):
-    response_type = response.request.type()
-    if response_type == "spell":
-      self._detail_renderer.Update(response.data())
-
-    elif response_type == "character":
-      self.Update(response.data())
-
-    else:
-      logging.critical(f"Unknown response type in SpellListRenderer: {response_type}")
-
-###################################################################################################
-
   def Clear(self):
     self._spell_layout.clear_widgets()
+    self._spells = []
 
 ###################################################################################################
 
@@ -70,11 +53,16 @@ class SpellListRenderer(BoxLayout):
 
 ###################################################################################################
 
+  def GetNextSpellAndIndex(self, index: int) -> list:
+    idx = index % len(self._spells)
+    return [self._spells[idx], idx]
+
+###################################################################################################
+
   def _AddContent(self):
     self._main_layout = BoxLayout(orientation="horizontal")
     self._spell_layout = self._AddSpells()
     self._main_layout.add_widget(self._spell_layout)
-    self._main_layout.add_widget(self._detail_renderer)
     return self._main_layout
 
 ###################################################################################################
@@ -99,6 +87,7 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSpell(self, spell_name: str) -> BoxLayout:
+    self._spells.append(spell_name)
     layout = BoxLayout(orientation="horizontal", size=(100, 1))
     layout.add_widget(self._AddSpellCheckBox())
     layout.add_widget(self._AddSpellButton(spell_name))
@@ -112,7 +101,7 @@ class SpellListRenderer(BoxLayout):
                  font_size="13sp",
                  padding=(5, 5))
     AlignWidgetLabelChildren(btn)
-    btn.bind(on_press=partial(self._widget.RequestSpellCallback, spell_name))  # pylint: disable=no-member
+    btn.bind(on_press=partial(self._widget.RequestSpellCallback, spell_name, len(self._spells)))    # pylint: disable=no-member
     return btn
 
 ###################################################################################################
