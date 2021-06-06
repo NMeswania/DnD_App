@@ -13,7 +13,7 @@ from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
 from dnd_app.request_handler.response import Response
-from dnd_app.utilities.dict_utils import FlattenDict
+from dnd_app.utilities.container_utils import FlattenDict
 from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChildren
 
 ###################################################################################################

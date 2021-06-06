@@ -22,7 +22,7 @@ class AbilityScores(WidgetBase):
     self._dnd_config = config
     self._receipt = None
     self._LoadData(ability_score_path)
-    self._renderer = self._BuildRenderer()
+    self._BuildRenderers()
 
 ###################################################################################################
 
@@ -32,7 +32,7 @@ class AbilityScores(WidgetBase):
 
 ###################################################################################################
 
-  def renderer(self) -> AbilityScoresRenderer:
+  def renderers(self) -> AbilityScoresRenderer:
     return self._renderer
 
 ###################################################################################################
@@ -53,8 +53,8 @@ class AbilityScores(WidgetBase):
 
 ###################################################################################################
 
-  def _BuildRenderer(self) -> AbilityScoresRenderer:
-    return AbilityScoresRenderer(self._dnd_config, self)
+  def _BuildRenderers(self) -> AbilityScoresRenderer:
+    self._renderer = AbilityScoresRenderer(self._dnd_config, self)
 
 
 ###################################################################################################

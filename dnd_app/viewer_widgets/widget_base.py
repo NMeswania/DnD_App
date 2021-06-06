@@ -27,7 +27,7 @@ class WidgetRendererBase(ABC):
 class WidgetBase(ABC):
 
   @abstractmethod
-  def renderer(self):
+  def renderers(self):
     ...
 
   @abstractmethod
@@ -39,7 +39,7 @@ class WidgetBase(ABC):
     ...
 
   @abstractmethod
-  def _BuildRenderer(self):
+  def _BuildRenderers(self):
     ...
 
 
