@@ -1,5 +1,7 @@
 {
   "name": "Earthbind",
+  "level": "Level 2",
+  "school": "Transmutation",
   "basic_data": {
     "range": "300 feet",
     "casting_time": "1 action",

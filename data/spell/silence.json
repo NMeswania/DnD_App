@@ -1,5 +1,7 @@
 {
   "name": "Silence",
+  "level": "Level 2",
+  "school": "Illusion (ritual)",
   "basic_data": {
     "range": "120 feet",
     "casting_time": "1 action",

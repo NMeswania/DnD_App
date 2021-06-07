@@ -1,5 +1,7 @@
 {
   "name": "Mass Sugestion",
+  "level": "Level 6",
+  "school": "Enchantment",
   "basic_data": {
     "range": "60 feet",
     "casting_time": "1 action",

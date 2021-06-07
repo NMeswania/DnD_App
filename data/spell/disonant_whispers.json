@@ -1,5 +1,7 @@
 {
   "name": "Disonant Whispers",
+  "level": "Level 1",
+  "school": "Enchantment",
   "basic_data": {
     "range": "60 feet",
     "casting_time": "1 action",

@@ -1,5 +1,7 @@
 {
   "name": "Healing Word",
+  "level": "Level 1",
+  "school": "Evocation",
   "basic_data": {
     "range": "60 feet",
     "casting_time": "1 bonus action",

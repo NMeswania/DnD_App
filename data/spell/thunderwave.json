@@ -1,5 +1,7 @@
 {
   "name": "Thunderwave",
+  "level": "Level 1",
+  "school": "Evocation",
   "basic_data": {
     "range": "Self (15-foot cone)",
     "casting_time": "1 action",

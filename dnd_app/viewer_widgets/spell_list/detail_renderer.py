@@ -74,21 +74,22 @@ class DetailRenderer(Popup):
     layout = BoxLayout(orientation="vertical")
     layout.add_widget(self._AddButtonBar(0.1))
     layout.add_widget(self._AddSpellName(0.1))
-    layout.add_widget(self._AddBasicData(0.4))
-    layout.add_widget(self._AddDescriptions(0.4))
+    layout.add_widget(self._AddSpellLevel(0.1))
+    layout.add_widget(self._AddBasicData(0.3))
+    layout.add_widget(self._AddDescriptions(0.3))
     return layout
 
 ###################################################################################################
 
   def _AddButtonBar(self, h: float):
     layout = BoxLayout(orientation="horizontal", size_hint=(1, h))
-    prev_button = Button(text="<", size_hint=(0.4, 1), font_size="13sp", padding=(5, 5))
+    prev_button = Button(text="<", size_hint=(0.4, 1), font_size="15sp", padding=(5, 5))
     prev_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, -1))    # pylint: disable=no-member
 
-    close_button = Button(text="Close", size_hint=(0.2, 1), font_size="13sp", padding=(5, 5))
+    close_button = Button(text="Close", size_hint=(0.2, 1), font_size="15sp", padding=(5, 5))
     close_button.bind(on_press=self._Close)    # pylint: disable=no-member
 
-    next_button = Button(text=">", size_hint=(0.4, 1), font_size="13sp", padding=(5, 5))
+    next_button = Button(text=">", size_hint=(0.4, 1), font_size="15sp", padding=(5, 5))
     next_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, 1))    # pylint: disable=no-member
 
     layout.add_widget(prev_button)
@@ -105,14 +106,25 @@ class DetailRenderer(Popup):
 
 ###################################################################################################
 
+  def _AddSpellLevel(self, h: float):
+    layout = BoxLayout(orientation="horizontal", size_hint=(1, h))
+
+    for field in ["level", "school"]:
+      label = Label(text="", italic=True, font_size="13sp", size_hint=(1, 0.2))
+      label.id = field
+      layout.add_widget(label)
+    return layout
+
+###################################################################################################
+
   def _AddBasicData(self, h: float):
     layout = GridLayout(rows=4,
                         cols=2,
                         size_hint=(1, h))
 
     for field in ["range", "casting_time", "components", "duration"]:
-      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="13sp", size_hint=(0.4, 0.25)))
-      label = Label(text="", font_size="13sp", size_hint=(0.6, 0.25))
+      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="13sp", size_hint=(0.3, 0.22)))
+      label = Label(text="", font_size="13sp", size_hint=(0.7, 0.22))
       label.id = field
       layout.add_widget(label)
 
