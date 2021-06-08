@@ -43,7 +43,15 @@
         "Transmutation",
         "Divination",
         "Enchantment",
-        "Illusion"
+        "Illusion",
+        "Conjuration (ritual)",
+        "Necromancy (ritual)",
+        "Evocation (ritual)",
+        "Abjuration (ritual)", 
+        "Transmutation (ritual)",
+        "Divination (ritual)",
+        "Enchantment (ritual)",
+        "Illusion (ritual)"
       ]
     },
     "basic_data": {

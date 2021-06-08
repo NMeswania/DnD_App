@@ -72,29 +72,11 @@ class DetailRenderer(Popup):
 
   def _AddContent(self):
     layout = BoxLayout(orientation="vertical")
-    layout.add_widget(self._AddButtonBar(0.1))
     layout.add_widget(self._AddSpellName(0.1))
     layout.add_widget(self._AddSpellLevel(0.1))
     layout.add_widget(self._AddBasicData(0.3))
     layout.add_widget(self._AddDescriptions(0.3))
-    return layout
-
-###################################################################################################
-
-  def _AddButtonBar(self, h: float):
-    layout = BoxLayout(orientation="horizontal", size_hint=(1, h))
-    prev_button = Button(text="<", size_hint=(0.4, 1), font_size="15sp", padding=(5, 5))
-    prev_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, -1))    # pylint: disable=no-member
-
-    close_button = Button(text="Close", size_hint=(0.2, 1), font_size="15sp", padding=(5, 5))
-    close_button.bind(on_press=self._Close)    # pylint: disable=no-member
-
-    next_button = Button(text=">", size_hint=(0.4, 1), font_size="15sp", padding=(5, 5))
-    next_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, 1))    # pylint: disable=no-member
-
-    layout.add_widget(prev_button)
-    layout.add_widget(close_button)
-    layout.add_widget(next_button)
+    layout.add_widget(self._AddButtonBar(0.1))
     return layout
 
 ###################################################################################################
@@ -118,12 +100,12 @@ class DetailRenderer(Popup):
 ###################################################################################################
 
   def _AddBasicData(self, h: float):
-    layout = GridLayout(rows=4,
-                        cols=2,
-                        size_hint=(1, h))
+    layout = GridLayout(rows=4, cols=2, size_hint=(1, h))
 
     for field in ["range", "casting_time", "components", "duration"]:
-      layout.add_widget(Label(text=StrFieldToReadable(field), bold=True, font_size="13sp", size_hint=(0.3, 0.22)))
+      layout.add_widget(
+          Label(text=StrFieldToReadable(field), bold=True, font_size="13sp",
+                size_hint=(0.3, 0.22)))
       label = Label(text="", font_size="13sp", size_hint=(0.7, 0.22))
       label.id = field
       layout.add_widget(label)
@@ -141,6 +123,24 @@ class DetailRenderer(Popup):
       label.id = section
       layout.add_widget(label)
     AlignWidgetLabelChildren(layout, valign="top")
+    return layout
+
+###################################################################################################
+
+  def _AddButtonBar(self, h: float):
+    layout = BoxLayout(orientation="horizontal", size_hint=(1, h))
+    prev_button = Button(text="<", size_hint=(0.4, 1), font_size="15sp", padding=(5, 5))
+    prev_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, -1))    # pylint: disable=no-member
+
+    close_button = Button(text="Close", size_hint=(0.2, 1), font_size="15sp", padding=(5, 5))
+    close_button.bind(on_press=self._Close)    # pylint: disable=no-member
+
+    next_button = Button(text=">", size_hint=(0.4, 1), font_size="15sp", padding=(5, 5))
+    next_button.bind(on_press=partial(self._widget.RequestNextSpellCallback, 1))    # pylint: disable=no-member
+
+    layout.add_widget(prev_button)
+    layout.add_widget(close_button)
+    layout.add_widget(next_button)
     return layout
 
 
