@@ -1,6 +1,5 @@
 Now
-- Make spell details generate layout based on schema
-- add new spell popup
+- Weapon list JSON fix list to have name/ATK/DMG for each weapon as a list
 
 Later
 - Error handling using thread safe singleton signal_handler which shutdowns all processes

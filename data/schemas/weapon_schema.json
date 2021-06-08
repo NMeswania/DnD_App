@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "weapon_schema",
+  "description": "Schema for representing weapon information",
+  "type": "object",
+  "required": [
+    "name",
+    "weapon_description",
+    "tags"
+  ],
+  "properties": {
+    "name": {
+      "description": "Readable name of the weapon",
+      "type": "string"
+    },
+    "weapon_description": {
+      "description": "Main weapon description",
+      "type": "string"
+    },
+    "tags": {
+      "description": "List of properties for the weapon",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

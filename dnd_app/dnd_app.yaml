@@ -10,3 +10,4 @@ dnd_app:
     widgets:
       - ability_scores
       - spell_list
+      - weapon_list
