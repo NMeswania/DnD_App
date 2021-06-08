@@ -3,8 +3,6 @@
 # Lisence: MIT
 ###################################################################################################
 
-import pprint
-
 from functools import partial
 
 from kivy.uix.boxlayout import BoxLayout
@@ -45,7 +43,6 @@ class WeaponListRenderer(BoxLayout):
     self.Clear()
     for v in data.values():
       for weapon in v:
-        pprint.PrettyPrinter(indent=2).pprint(weapon)
         if isinstance(weapon, list):
           self._weapon_layout.add_widget(self._AddWeapon(weapon))
 
