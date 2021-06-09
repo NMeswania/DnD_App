@@ -3,8 +3,6 @@
 # Lisence: MIT
 ###################################################################################################
 
-from functools import partial
-
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
@@ -18,16 +16,15 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 ###################################################################################################
 
 
-class WeaponDetailRenderer(Popup):
+class WeaponAttributeRenderer(Popup):
 
   def __init__(self, widget):
     super().__init__()
     self._widget = widget
-    self.title = "Weapon Details"
+    self.title = "Weapon Attribute"
     self.content = self._AddContent()
     self._is_open = False
-    self.size_hint = (0.6, 0.6)
-    self._tags = []
+    self.size_hint = (0.4, 0.4)
 
 ###################################################################################################
 
@@ -37,8 +34,6 @@ class WeaponDetailRenderer(Popup):
 ###################################################################################################
 
   def Clear(self):
-    self._tags = []
-    self._tags_layout.clear_widgets()
     for widget in self.walk():
       if hasattr(widget, "id") and isinstance(widget, Label):
         widget.text = ""
@@ -57,13 +52,10 @@ class WeaponDetailRenderer(Popup):
 
   def _UpdateInternal(self, weapon_data: dict):
     for k, v in weapon_data.items():
-      if isinstance(v, list) and k == "tags":
-        self._UpdateTags(v)
-      else:
-        for child in self.walk():
-          if hasattr(child, "id") and child.id == k:
-            child.text = v
-            break
+      for child in self.walk():
+        if hasattr(child, "id") and child.id == k:
+          child.text = v
+          break
 
 ###################################################################################################
 
@@ -75,9 +67,8 @@ class WeaponDetailRenderer(Popup):
 
   def _AddContent(self):
     layout = BoxLayout(orientation="vertical")
-    layout.add_widget(self._AddWeaponName(0.1))
-    layout.add_widget(self._AddDescription(0.4))
-    layout.add_widget(self._AddTags(0.4))
+    layout.add_widget(self._AddWeaponName(0.2))
+    layout.add_widget(self._AddDescription(0.7))
     layout.add_widget(self._AddButtonBar(0.1))
     return layout
 
@@ -92,19 +83,9 @@ class WeaponDetailRenderer(Popup):
 
   def _AddDescription(self, h: float) -> Label:
     label = Label(text="", font_size="12sp", size_hint=(1, h))
-    label.id = "weapon_description"
+    label.id = "attribute_description"
     AlignWidgetLabelChildren(label, valign="top")
     return label
-
-###################################################################################################
-
-  def _AddTags(self, h: float) -> GridLayout:
-    self._tags_layout = GridLayout(cols=4,
-                                   size_hint=(1, h),
-                                   row_force_default=True,
-                                   row_default_height=40)
-    self._tags_layout.id = "tags"
-    return self._tags_layout
 
 ###################################################################################################
 
@@ -112,24 +93,6 @@ class WeaponDetailRenderer(Popup):
     close_button = Button(text="Close", size_hint=(1, h), font_size="15sp", padding=(5, 5))
     close_button.bind(on_press=self._Close)    # pylint: disable=no-member
     return close_button
-
-###################################################################################################
-
-  def _UpdateTags(self, tags: list):
-    self._tags_layout.clear_widgets()
-    for tag in tags:
-      self._tags.append(tag)
-      self._tags_layout.add_widget(self._AddTag(tag))
-
-###################################################################################################
-
-  def _AddTag(self, tag_name) -> Button:
-    btn = Button(text=StrFieldToReadable(tag_name),
-                 size_hint=(0.3, 1),
-                 font_size="13sp",
-                 padding=(5, 5))
-    btn.bind(on_press=partial(self._widget.RequestCallback, "weapon_attribute", tag_name))    # pylint: disable=no-member
-    return btn
 
 
 ###################################################################################################

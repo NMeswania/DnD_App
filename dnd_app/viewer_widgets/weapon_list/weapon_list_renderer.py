@@ -87,7 +87,7 @@ class WeaponListRenderer(BoxLayout):
                  font_size="13sp",
                  padding=(5, 5))
     AlignWidgetLabelChildren(btn)
-    btn.bind(on_press=partial(self._widget.RequestWeaponCallback, weapon_name))    # pylint: disable=no-member
+    btn.bind(on_press=partial(self._widget.RequestCallback, "weapon", weapon_name))    # pylint: disable=no-member
     return btn
 
 

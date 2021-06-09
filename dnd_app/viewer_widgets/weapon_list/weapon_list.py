@@ -13,6 +13,7 @@ from dnd_app.request_handler.request_handler_manager import GetRequestHandlerMan
 from dnd_app.viewer_widgets.widget_base import WidgetBase
 from dnd_app.viewer_widgets.weapon_list.weapon_list_renderer import WeaponListRenderer
 from dnd_app.viewer_widgets.weapon_list.weapon_detail_renderer import WeaponDetailRenderer
+from dnd_app.viewer_widgets.weapon_list.weapon_attribute_renderer import WeaponAttributeRenderer
 
 ###################################################################################################
 ###################################################################################################
@@ -32,8 +33,10 @@ class WeaponList(WidgetBase):
   def __del__(self):
     self._weapon_list_renderer.Terminate()
     self._weapon_detail_renderer.Terminate()
+    self._weapon_attribute_renderer.Terminate()
     del self._weapon_list_renderer
     del self._weapon_detail_renderer
+    del self._weapon_attribute_renderer
 
 ###################################################################################################
 
@@ -42,8 +45,8 @@ class WeaponList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestWeaponCallback(self, weapon_name: str, instance):
-    request = Request(type="weapon", value=weapon_name)
+  def RequestCallback(self, type: str, value: str, instance):
+    request = Request(type=type, value=value)
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 
@@ -60,6 +63,9 @@ class WeaponList(WidgetBase):
 
         elif response_type == "weapon":
           self._weapon_detail_renderer.Update(response.data())
+
+        elif response_type == "weapon_attribute":
+          self._weapon_attribute_renderer.Update(response.data())
 
         else:
           logging.critical(
@@ -79,6 +85,7 @@ class WeaponList(WidgetBase):
   def _BuildRenderers(self):
     self._weapon_list_renderer = self._BuildWeaponListRenderer()
     self._weapon_detail_renderer = self._BuildWeaponDetailRenderer()
+    self._weapon_attribute_renderer = self._BuildWeaponAttributeRenderer()
 
 ###################################################################################################
 
@@ -89,6 +96,11 @@ class WeaponList(WidgetBase):
 
   def _BuildWeaponDetailRenderer(self) -> WeaponDetailRenderer:
     return WeaponDetailRenderer(self)
+
+###################################################################################################
+
+  def _BuildWeaponAttributeRenderer(self) -> WeaponAttributeRenderer:
+    return WeaponAttributeRenderer(self)
 
 
 ###################################################################################################

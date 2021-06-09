@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "weapon_attributes__schema",
+  "description": "Schema for representing weapon attributes",
+  "type": "object",
+  "required": [
+    "name",
+    "attribute_description"
+  ],
+  "properties": {
+    "name": {
+      "description": "Readable name of the attribute",
+      "type": "string"
+    },
+    "attribute_description": {
+      "description": "Attribute description",
+      "type": "string"
+    }
+  }
+}
