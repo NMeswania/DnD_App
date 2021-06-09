@@ -1,5 +1,5 @@
 Now
-- Weapon list JSON fix list to have name/ATK/DMG for each weapon as a list
+- Make weapon attribute popup a hover item, rather than popup 
 
 Later
 - Error handling using thread safe singleton signal_handler which shutdowns all processes
