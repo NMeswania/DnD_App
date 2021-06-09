@@ -1,0 +1,18 @@
+{
+  "armor_class": 14,
+  "initiative": 3,
+  "speed": 30,
+  "hit_points": {
+    "max": 41,
+    "current": 41,
+    "temporary": 0
+  },
+  "hit_die": {
+    "total": "7d8",
+    "current": "7d8"
+  },
+  "death_saves": {
+    "successes": 0,
+    "failures": 0
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "combat_schema",
+  "description": "Schema for representing combat stats",
+  "type": "object",
+  "required": [
+    "armor_class",
+    "initiative",
+    "speed",
+    "hit_points",
+    "hit_die",
+    "death_saves"
+  ],
+  "properties": {
+    "armor_class": {
+      "type": "integer"
+    },
+    "initiative": {
+      "type": "integer"
+    },
+    "speed": {
+      "type": "integer"
+    },
+    "hit_points": {
+      "type": "object",
+      "ref": "#/definitions/hit_points"
+    },
+    "hit_die": {
+      "type": "object",
+      "ref": "#/definitions/hit_die"
+    },
+    "death_saves": {
+      "type": "object",
+      "ref": "#/definitions/death_saves"
+    }
+  },
+  "definitions": {
+    "hit_points": {
+      "required": [
+        "max",
+        "current",
+        "temporary"
+      ],
+      "properties": {
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current": {
+          "type": "integer"
+        },
+        "temporary": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "hit_die": {
+      "required": [
+        "total",
+        "current"
+      ],
+      "properties": {
+        "total": {
+          "type": "string",
+          "minLength": 3
+        },
+        "current": {
+          "type": "string",
+          "minLength": 3
+        }
+      }
+    },
+    "death_saves": {
+      "required": [
+        "successes",
+        "failures"
+      ],
+      "properties": {
+        "successes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "failures": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        }
+      }
+    }
+  }
+}

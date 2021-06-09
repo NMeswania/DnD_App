@@ -9,5 +9,6 @@ dnd_app:
   widget_manager:
     widgets:
       - ability_scores
+      - combat
       - spell_list
       - weapon_list
