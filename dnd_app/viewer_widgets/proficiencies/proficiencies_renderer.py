@@ -34,12 +34,7 @@ class ProficienciesRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk():
-      if hasattr(widget, "id"):
-        if isinstance(widget, Label):
-          widget.text = ""
-        elif isinstance(widget, CheckBox):
-          widget.active = False
+    self._main_layout.clear_widgets()
 
 ###################################################################################################
 
