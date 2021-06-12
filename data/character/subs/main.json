@@ -4,5 +4,6 @@
   "equipment": "path/to/equipment.json",
   "ability_scores": ".\\subs\\ability_scores.json",
   "combat": "\\subs\\combat.json",
-  "weapon_list": "\\subs\\weapon_list.json"
+  "weapon_list": "\\subs\\weapon_list.json",
+  "proficiencies": "\\subs\\proficiencies.json"
 }

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "proficiencies_schema",
+  "description": "Schema for representing characters proficiencies",
+  "type": "object",
+  "properties": {
+    "armor": {"type":"array", "items": { "type": "string"}},
+    "weapons": {"type":"array", "items": { "type": "string"}},
+    "tools": {"type":"array", "items": { "type": "string"}},
+    "languages": {"type":"array", "items": { "type": "string"}}
+  }
+}

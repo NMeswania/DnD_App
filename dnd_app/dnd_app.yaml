@@ -10,5 +10,6 @@ dnd_app:
     widgets:
       - ability_scores
       - combat
+      - proficiencies
       - spell_list
       - weapon_list

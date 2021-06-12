@@ -1,0 +1,25 @@
+{
+  "armor": [
+    "light_armor"
+  ],
+  "weapons": [
+    "simple_weapons",
+    "hand_crossbows",
+    "longswords",
+    "rapiers",
+    "shortswords"
+  ],
+  "tools": [
+    "lute",
+    "triangle",
+    "ocarina",
+    "navigators_tools",
+    "hammock"
+  ],
+  "languages": [
+    "common",
+    "elvish",
+    "abyssal",
+    "draconic"
+  ]
+}
