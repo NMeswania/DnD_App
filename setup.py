@@ -16,7 +16,7 @@ setup(name='dnd_app',
       entry_points={
           'console_scripts': ['dnd_app = dnd_app.main:main',],
       },
-      description='D&D app to manae character sheets',
+      description='D&D app to manage character sheets',
       long_description=readme,
       author='Neal Meswania',
       url='https://github.com/NMeswania/DnD_App',
