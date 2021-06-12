@@ -1,5 +1,9 @@
 name: dnd_app
+channels:
+  - defaults
 dependencies:
-  - python=3.7
   - jsonschema=3.2.0
+  - python=3.7
   - kivy=2.0.0
+  - pyyaml
+  - numpy
