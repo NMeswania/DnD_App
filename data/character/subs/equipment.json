@@ -1,0 +1,15 @@
+{
+  "equipment": [
+    "lute",
+    "entertainers_pack",
+    "leather_armor",
+    "navigators_tools"
+  ],
+  "money": {
+    "platinum": 0,
+    "gold": 0,
+    "electrum": 0,
+    "silver": 5,
+    "copper": 24
+  }
+}

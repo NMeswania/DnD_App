@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "equipment_schema",
+  "description": "Schema for listing characters equipment",
+  "type": "object",
+  "required": [
+    "equipment",
+    "money"
+  ],
+  "properties": {
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "money": {
+        "type": "object",
+        "ref": "#/definitions/money"
+      }
+    }
+  },
+  "definitions": {
+    "money": {
+      "type": "object",
+      "required": [
+        "platinum",
+        "gold",
+        "electrum",
+        "silver",
+        "copper"
+      ],
+      "properties": {
+        "platinum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gold": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "electrum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "siler": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "copper": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}
