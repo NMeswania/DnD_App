@@ -18,17 +18,17 @@
         "meta": {
             "description": "Top-level info for the spell",
             "type": "object",
-            "ref": "#/definitions/meta"
+            "$ref": "#/definitions/meta"
         },
         "attr": {
             "description": "Attributes for the spell",
             "type": "object",
-            "ref": "#/definitions/attr"
+            "$ref": "#/definitions/attr"
         },
         "desc": {
             "description": "Descriptions for the spell",
             "type": "object",
-            "ref": "#/definitions/desc"
+            "$ref": "#/definitions/desc"
         }
     },
     "definitions": {
@@ -49,10 +49,10 @@
                     "maximum": 9
                 },
                 "school": {
-                    "ref": "schema_magic_school.json#/school"
+                    "$ref": "schema_magic_school.json#/school"
                 },
                 "classes": {
-                    "ref": "schema_classes.json#/name"
+                    "$ref": "schema_classes.json#/name"
                 }
             }
         },

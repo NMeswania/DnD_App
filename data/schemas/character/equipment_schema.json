@@ -16,7 +16,7 @@
       },
       "money": {
         "type": "object",
-        "ref": "#/definitions/money"
+        "$ref": "#/definitions/money"
       }
     }
   },

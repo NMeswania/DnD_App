@@ -57,7 +57,7 @@
     "basic_data": {
       "description": "Basic spell information in key-value pairs",
       "type": "object",
-      "ref": "#/definitions/basic_data"
+      "$ref": "#/definitions/basic_data"
     },
     "spell_description": {
       "description": "Main spell description",

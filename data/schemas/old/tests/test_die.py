@@ -22,6 +22,9 @@ def ValidateJSON(json_schema, json_obj):
 schema_file = r'C:\User Data\DOCUMENTS\Projects (old)\Creative\D&D_App\code\data\schemas\old\schema_die.json'
 json_file = r'C:\User Data\DOCUMENTS\Projects (old)\Creative\D&D_App\code\data\schemas\old\tests\test_die.json'
 
+schema_file = r"C:\User Data\DOCUMENTS\Projects (old)\Creative\D&D_App\code\data\schemas\character\main_schema.json"
+json_file = r"C:\User Data\DOCUMENTS\Projects (old)\Creative\D&D_App\code\data\character\subs\main.json"
+
 schema = GetJSON(schema_file) 
 json_obj = GetJSON(json_file)
 

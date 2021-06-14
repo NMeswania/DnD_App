@@ -5,11 +5,11 @@
   "description": "Schema for representing ability source information",
   "type": "object",
   "oneOf": [
-    { "type": "object", "ref": "#/definitions/background" },
-    { "type": "object", "ref": "#/definitions/class" },
-    { "type": "object", "ref": "#/definitions/feat" },
-    { "type": "object", "ref": "#/definitions/item" },
-    { "type": "object", "ref": "#/definitions/race" }
+    { "type": "object", "$ref": "#/definitions/background" },
+    { "type": "object", "$ref": "#/definitions/class" },
+    { "type": "object", "$ref": "#/definitions/feat" },
+    { "type": "object", "$ref": "#/definitions/item" },
+    { "type": "object", "$ref": "#/definitions/race" }
   ],
   "definitions": {
     "background": {
@@ -21,7 +21,7 @@
       "properties": {
         "category": {
           "type": "string",
-          "ref": "#/definitions/category"
+          "$ref": "#/definitions/category"
         },
         "name": {
           "type": "string"
@@ -40,11 +40,11 @@
       "properties": {
         "category": {
           "type": "string",
-          "ref": "#/definitions/category"
+          "$ref": "#/definitions/category"
         },
         "name": {
           "type": "string",
-          "ref": "class_schema.json#"
+          "$ref": "class_schema.json#"
         },
         "subtype": {
           "type": "string"
@@ -60,7 +60,7 @@
       "properties": {
         "category": {
           "type": "string",
-          "ref": "#/definitions/category"
+          "$ref": "#/definitions/category"
         },
         "name": {
           "type": "string"
@@ -76,7 +76,7 @@
       "properties": {
         "category": {
           "type": "string",
-          "ref": "#/definitions/category"
+          "$ref": "#/definitions/category"
         },
         "name": {
           "type": "string"
@@ -92,7 +92,7 @@
       "properties": {
         "category": {
           "type": "string",
-          "ref": "#/definitions/category"
+          "$ref": "#/definitions/category"
         },
         "name": {
           "type": "string"

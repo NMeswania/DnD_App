@@ -24,15 +24,15 @@
     },
     "hit_points": {
       "type": "object",
-      "ref": "#/definitions/hit_points"
+      "$ref": "#/definitions/hit_points"
     },
     "hit_die": {
       "type": "object",
-      "ref": "#/definitions/hit_die"
+      "$ref": "#/definitions/hit_die"
     },
     "death_saves": {
       "type": "object",
-      "ref": "#/definitions/death_saves"
+      "$ref": "#/definitions/death_saves"
     }
   },
   "definitions": {

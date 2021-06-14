@@ -17,11 +17,37 @@
     "source": {
       "description": "Source of the ability",
       "type": "object",
-      "ref": "ability_source_schema.json#"
+      "$ref": "#/definitions/source"
     },
     "ability_description": {
       "description": "Main ability description",
       "type": "string"
+    }
+  },
+  "definitions": {
+    "source": {
+      "type": "object",
+      "required": [
+        "category",
+        "name"
+      ],
+      "properties": {
+        "category": { "type": "string", "$ref": "#/definitions/category" },
+        "name": { "type": "string" },
+        "subtype": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "category": {
+      "type": "string",
+      "enum": [
+        "Background",
+        "Class",
+        "Feat",
+        "Item",
+        "Race"
+      ]
     }
   }
 }

@@ -20,15 +20,15 @@
     },
     "ability_scores": {
       "type": "object",
-      "ref": "#/definitions/ability_scores"
+      "$ref": "#/definitions/ability_scores"
     },
     "saving_throws": {
       "type": "object",
-      "ref": "#/definitions/saving_throws"
+      "$ref": "#/definitions/saving_throws"
     },
     "skills":{
       "type": "object",
-      "ref": "#/definitions/skills"
+      "$ref": "#/definitions/skills"
     }
   },
   "definitions": {
@@ -43,12 +43,12 @@
         "charisma"
       ],
       "properties": {
-        "strength": { "type": "object", "ref": "#definitions/ability_score" },
-        "dexterity": { "type": "object", "ref": "#definitions/ability_score" },
-        "constitution": { "type": "object", "ref": "#definitions/ability_score" },
-        "intelligence": { "type": "object", "ref": "#definitions/ability_score" },
-        "wisdom": { "type": "object", "ref": "#definitions/ability_score" },
-        "charisma": { "type": "object", "ref": "#definitions/ability_score" }
+        "strength": { "type": "object", "$ref": "#definitions/ability_score" },
+        "dexterity": { "type": "object", "$ref": "#definitions/ability_score" },
+        "constitution": { "type": "object", "$ref": "#definitions/ability_score" },
+        "intelligence": { "type": "object", "$ref": "#definitions/ability_score" },
+        "wisdom": { "type": "object", "$ref": "#definitions/ability_score" },
+        "charisma": { "type": "object", "$ref": "#definitions/ability_score" }
       }
     },
     "saving_throws": {
@@ -62,12 +62,12 @@
         "charisma"
       ],
       "properties": {
-        "strength": { "type": "object", "ref": "#definitions/saving_throw" },
-        "dexterity": { "type": "object", "ref": "#definitions/saving_throw" },
-        "constitution": { "type": "object", "ref": "#definitions/saving_throw" },
-        "intelligence": { "type": "object", "ref": "#definitions/saving_throw" },
-        "wisdom": { "type": "object", "ref": "#definitions/saving_throw" },
-        "charisma": { "type": "object", "ref": "#definitions/saving_throw" }
+        "strength": { "type": "object", "$ref": "#definitions/saving_throw" },
+        "dexterity": { "type": "object", "$ref": "#definitions/saving_throw" },
+        "constitution": { "type": "object", "$ref": "#definitions/saving_throw" },
+        "intelligence": { "type": "object", "$ref": "#definitions/saving_throw" },
+        "wisdom": { "type": "object", "$ref": "#definitions/saving_throw" },
+        "charisma": { "type": "object", "$ref": "#definitions/saving_throw" }
       }
     },
     "skills": {
@@ -93,24 +93,24 @@
         "survival"
       ],
       "properties": {
-        "acrobatics": { "type": "object", "ref": "#definitions/skill" },
-        "animal_handling": { "type": "object", "ref": "#definitions/skill" },
-        "arcana": { "type": "object", "ref": "#definitions/skill" },
-        "athletics": { "type": "object", "ref": "#definitions/skill" },
-        "deception": { "type": "object", "ref": "#definitions/skill" },
-        "history": { "type": "object", "ref": "#definitions/skill" },
-        "insight": { "type": "object", "ref": "#definitions/skill" },
-        "intimidation": { "type": "object", "ref": "#definitions/skill" },
-        "investigation": { "type": "object", "ref": "#definitions/skill" },
-        "medicine": { "type": "object", "ref": "#definitions/skill" },
-        "nature": { "type": "object", "ref": "#definitions/skill" },
-        "perception": { "type": "object", "ref": "#definitions/skill" },
-        "performance": { "type": "object", "ref": "#definitions/skill" },
-        "persuasion": { "type": "object", "ref": "#definitions/skill" },
-        "religion": { "type": "object", "ref": "#definitions/skill" },
-        "slight_of_hand": { "type": "object", "ref": "#definitions/skill" },
-        "stealth": { "type": "object", "ref": "#definitions/skill" },
-        "survival": { "type": "object", "ref": "#definitions/skill" }
+        "acrobatics": { "type": "object", "$ref": "#definitions/skill" },
+        "animal_handling": { "type": "object", "$ref": "#definitions/skill" },
+        "arcana": { "type": "object", "$ref": "#definitions/skill" },
+        "athletics": { "type": "object", "$ref": "#definitions/skill" },
+        "deception": { "type": "object", "$ref": "#definitions/skill" },
+        "history": { "type": "object", "$ref": "#definitions/skill" },
+        "insight": { "type": "object", "$ref": "#definitions/skill" },
+        "intimidation": { "type": "object", "$ref": "#definitions/skill" },
+        "investigation": { "type": "object", "$ref": "#definitions/skill" },
+        "medicine": { "type": "object", "$ref": "#definitions/skill" },
+        "nature": { "type": "object", "$ref": "#definitions/skill" },
+        "perception": { "type": "object", "$ref": "#definitions/skill" },
+        "performance": { "type": "object", "$ref": "#definitions/skill" },
+        "persuasion": { "type": "object", "$ref": "#definitions/skill" },
+        "religion": { "type": "object", "$ref": "#definitions/skill" },
+        "slight_of_hand": { "type": "object", "$ref": "#definitions/skill" },
+        "stealth": { "type": "object", "$ref": "#definitions/skill" },
+        "survival": { "type": "object", "$ref": "#definitions/skill" }
       }
     },
     "ability_score": {
