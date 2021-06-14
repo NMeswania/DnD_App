@@ -8,6 +8,7 @@ from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
 from dnd_app.utilities.container_utils import FlattenList
 
+from dnd_app.viewer_widgets.abilities_list.abilities_list import AbilitiesList
 from dnd_app.viewer_widgets.ability_scores.ability_scores import AbilityScores
 from dnd_app.viewer_widgets.combat.combat import Combat
 from dnd_app.viewer_widgets.equipment.equipment import Equipment
@@ -63,6 +64,8 @@ class WidgetManager:
       widgets['combat'] = Combat(self._dnd_config, self._character_data['combat'])
     if "proficiencies" in widgets_to_load:
       widgets['proficiencies'] = Proficiencies(self._dnd_config, self._character_data['proficiencies'])
+    if "abilities_list" in widgets_to_load:
+      widgets['abilities_list'] = AbilitiesList(self._dnd_config, self._character_data['abilities_list'])
     if "equipment" in widgets_to_load:
       widgets['equipment'] = Equipment(self._dnd_config, self._character_data['equipment'])
     if "spell_list" in widgets_to_load:

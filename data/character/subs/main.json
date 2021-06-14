@@ -3,6 +3,7 @@
   "spell_list": ".\\subs\\spell_list.json",
   "equipment": "\\subs\\equipment.json",
   "ability_scores": ".\\subs\\ability_scores.json",
+  "abilities_list": ".\\subs\\abilities_list.json",
   "combat": "\\subs\\combat.json",
   "weapon_list": "\\subs\\weapon_list.json",
   "proficiencies": "\\subs\\proficiencies.json"

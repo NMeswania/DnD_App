@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://json-schema.org/draft-07/schema#",
+  "title": "ability_schema",
+  "description": "Schema for representing ability information",
+  "type": "object",
+  "required": [
+    "name",
+    "source",
+    "ability_description"
+  ],
+  "properties": {
+    "name": {
+      "description": "Readable name of the ability",
+      "type": "string"
+    },
+    "source": {
+      "description": "Source of the ability",
+      "type": "object",
+      "ref": "ability_source_schema.json#"
+    },
+    "ability_description": {
+      "description": "Main ability description",
+      "type": "string"
+    }
+  }
+}

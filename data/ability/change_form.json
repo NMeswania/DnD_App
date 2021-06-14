@@ -1,0 +1,8 @@
+{
+  "name": "Change form",
+  "source": {
+    "category": "Race",
+    "name": "Changeling"
+  },
+  "ability_description": "You can change form up to 1+CON per day (any more will gain point of exhaustion), it takes 1 action in combat, to the discerning eye your appearance is faultless."
+}

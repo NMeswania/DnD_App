@@ -1,0 +1,9 @@
+{
+  "name": "Jack of all trades",
+  "source": {
+    "category": "Class",
+    "name": "Bard",
+    "subtype": "Bard of Lore"
+  },
+  "ability_description": "Add half your proficiency bonus, rounded down, to any ability check you make that doesn’t already include your proficiency bonus."
+}
