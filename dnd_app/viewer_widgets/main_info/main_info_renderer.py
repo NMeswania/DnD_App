@@ -3,10 +3,7 @@
 # Lisence: MIT
 ###################################################################################################
 
-from functools import partial
-
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 
@@ -18,7 +15,7 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 ###################################################################################################
 
 
-class EquipmentRenderer(BoxLayout):
+class MainInfoRenderer(BoxLayout):
 
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
@@ -26,7 +23,6 @@ class EquipmentRenderer(BoxLayout):
     self._widget = widget
     self.add_widget(self._AddTitle())
     self.add_widget(self._AddContent())
-    self._equipment_list = []
 
 ###################################################################################################
 
@@ -36,71 +32,78 @@ class EquipmentRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    self._equipment_layout.clear_widgets()
     for child in self.walk(restrict=True):
       if hasattr(child, "id"):
         child.text = ""
-    self._equipment_list = []
 
 ###################################################################################################
 
   def Update(self, data: dict):
     self.Clear()
-    for _, v in data.items():
+
+    for k, v in data.items():
+      value = v
       if isinstance(v, list) and len(v) > 0:
-        for item in v:
-          self._equipment_layout.add_widget(self._AddEquipment(item))
-      elif isinstance(v, dict):
-        for key, value in v.items():
-          for child in self.walk(restrict=True):
-            if hasattr(child, "id") and child.id == key:
-              child.text = str(value)
+        value = self._UpdateClassesLevels(v)
+
+      elif isinstance(v, int):
+        value = str(v)
+
+      for child in self.walk(restrict=True):
+        if hasattr(child, "id") and child.id == k:
+          child.text = value
+          break
 
 ###################################################################################################
 
-  def GetNextEquipmentAndIndex(self, index: int) -> list:
-    idx = index % len(self._equipment_list)
-    return [self._equipment_list[idx], idx]
+  def _UpdateClassesLevels(self, data: dict) -> str:
+    label_text = ""
+    for item in data:
+      if label_text != "":
+        label_text += ", "
+
+      class_level = f"Level {item[2]} {item[0]} ({item[1]})"
+      label_text += class_level
+
+    return label_text
 
 ###################################################################################################
 
   def _AddTitle(self) -> Label:
-    return Label(text="Equipment", font_size="20sp", size_hint=(1, 0.05))
+    label = Label(text="", font_size="25sp", size_hint=(1, 0.1))
+    label.id = "name"
+    return label
 
 ###################################################################################################
 
   def _AddContent(self) -> BoxLayout:
     layout = BoxLayout(orientation="vertical")
-    self._equipment_layout = GridLayout(cols=4, row_default_height=40, row_force_default=True)
-    layout.add_widget(self._AddMoney())
-    layout.add_widget(self._equipment_layout)
+    layout.add_widget(self._AddClassesLevels(0.4))
+    layout.add_widget(self._AddInfoBlock(0.6))
     return layout
 
 ###################################################################################################
 
-  def _AddMoney(self) -> BoxLayout:
-    layout = BoxLayout(orientation="vertical")
-    for value in ["platinum", "gold", "electrum", "silver", "copper"]:
-      internal_layout = BoxLayout(orientation="horizontal")
-      internal_layout.add_widget(Label(text=StrFieldToReadable(value), size_hint=(0.3, 1)))
-      money_label = Label(text="", size_hint=(0.7, 1))
-      money_label.id = value
-      internal_layout.add_widget(money_label)
-      layout.add_widget(internal_layout)
-    return layout
+  def _AddClassesLevels(self, h: float) -> Label:
+    label = Label(text="", font_size="18sp", italic=True, size_hint=(1, h))
+    label.id = "classes_levels"
+    return label
 
 ###################################################################################################
 
-  def _AddEquipment(self, equipment_name: str) -> Button:
-    self._equipment_list.append(equipment_name)
-    btn = Button(text=StrFieldToReadable(equipment_name),
-                 size_hint=(0.9, 1),
-                 font_size="13sp",
-                 padding=(5, 5))
-    AlignWidgetLabelChildren(btn)
-    btn.bind(on_press=partial(self._widget.RequestEquipmentCallback, equipment_name,
-                              len(self._equipment_list)))    # pylint: disable=no-member
-    return btn
+  def _AddInfoBlock(self, h: float) -> GridLayout:
+    layout = GridLayout(rows=1,
+                        cols=4,
+                        row_default_height=40,
+                        row_force_default=True,
+                        size_hint=(1, h))
+    for field in ["race", "background", "alignment", "experience_points"]:
+      label = Label(text="", font_size="16sp")
+      label.id = field
+      layout.add_widget(label)
+
+    return layout
+
 
 ###################################################################################################
 ###################################################################################################

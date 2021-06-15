@@ -34,7 +34,7 @@ class WeaponAttributeRenderer(Popup):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk():
+    for widget in self.walk(restrict=True):
       if hasattr(widget, "id") and isinstance(widget, Label):
         widget.text = ""
 
@@ -52,7 +52,7 @@ class WeaponAttributeRenderer(Popup):
 
   def _UpdateInternal(self, weapon_data: dict):
     for k, v in weapon_data.items():
-      for child in self.walk():
+      for child in self.walk(restrict=True):
         if hasattr(child, "id") and child.id == k:
           child.text = v
           break

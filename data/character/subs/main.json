@@ -1,13 +1,5 @@
 {
-  "main": {
-    "name": "Subarashii Metal",
-    "race": "Changeling",
-    "background": "Forgotten",
-    "alignment": "NG",
-    "classes_levels": [
-      ["Bard", "College of Lore", 7]
-    ]
-  },
+  "main_info": ".\\subs\\main_info.json",
   "abilities_list": ".\\subs\\abilities_list.json",
   "ability_scores": ".\\subs\\ability_scores.json",
   "combat": "\\subs\\combat.json",

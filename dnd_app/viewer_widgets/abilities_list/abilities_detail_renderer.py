@@ -35,7 +35,7 @@ class AbilitiesDetailRenderer(Popup):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk():
+    for widget in self.walk(restrict=True):
       if hasattr(widget, "id"):
         widget.text = ""
 
@@ -56,7 +56,7 @@ class AbilitiesDetailRenderer(Popup):
       value = v
       if isinstance(v, dict):
         value = self._SetSourceText(v)
-      for child in self.walk():
+      for child in self.walk(restrict=True):
         if hasattr(child, "id") and child.id == k:
           child.text = value
           break

@@ -39,7 +39,7 @@ class WeaponDetailRenderer(Popup):
   def Clear(self):
     self._tags = []
     self._tags_layout.clear_widgets()
-    for widget in self.walk():
+    for widget in self.walk(restrict=True):
       if hasattr(widget, "id") and isinstance(widget, Label):
         widget.text = ""
 
@@ -60,7 +60,7 @@ class WeaponDetailRenderer(Popup):
       if isinstance(v, list) and k == "tags":
         self._UpdateTags(v)
       else:
-        for child in self.walk():
+        for child in self.walk(restrict=True):
           if hasattr(child, "id") and child.id == k:
             child.text = v
             break

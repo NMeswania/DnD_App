@@ -1,0 +1,10 @@
+{
+  "name": "Subarashii Metal",
+  "race": "Changeling",
+  "background": "Forgotten",
+  "alignment": "NG",
+  "classes_levels": [
+    ["Bard", "College of Lore", 7]
+  ],
+  "experience_points": 4595
+}

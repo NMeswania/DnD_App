@@ -36,7 +36,7 @@ class CombatRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    for child in self.walk():
+    for child in self.walk(restrict=True):
       if hasattr(child, "id") and isinstance(child, Label):
         child.text = ""
       elif isinstance(child, CheckBox):
@@ -48,7 +48,7 @@ class CombatRenderer(BoxLayout):
     self.Clear()
     flatten_data = FlattenDict(data)
     for k, v in flatten_data.items():
-      for child in self.walk():
+      for child in self.walk(restrict=True):
         if hasattr(child, "id") and child.id == k:
           if isinstance(child, Label):
             child.text = str(v)

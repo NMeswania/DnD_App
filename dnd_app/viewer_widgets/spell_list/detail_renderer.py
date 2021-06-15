@@ -36,7 +36,7 @@ class DetailRenderer(Popup):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk():
+    for widget in self.walk(restrict=True):
       if hasattr(widget, "id"):
         widget.text = ""
 
@@ -57,7 +57,7 @@ class DetailRenderer(Popup):
       if isinstance(v, dict):
         self._UpdateInternal(v)
       else:
-        for child in self.walk():
+        for child in self.walk(restrict=True):
           if hasattr(child, "id") and child.id == k:
             child.text = v
             break

@@ -42,7 +42,7 @@ class AbilityScoresRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk():
+    for widget in self.walk(restrict=True):
       if hasattr(widget, "id"):
         if isinstance(widget, Label):
           widget.text = ""
@@ -60,7 +60,7 @@ class AbilityScoresRenderer(BoxLayout):
     self.Clear()
     flattened_data = FlattenDict(data)
     for k, v in flattened_data.items():
-      for child in self.walk():
+      for child in self.walk(restrict=True):
         if hasattr(child, "id") and child.id == k:
           if isinstance(child, Label):
             logging.debug(f"Set key {k} with value {v}")

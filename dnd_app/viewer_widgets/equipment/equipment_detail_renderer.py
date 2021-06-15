@@ -36,7 +36,7 @@ class EquipmentDetailRenderer(Popup):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk():
+    for widget in self.walk(restrict=True):
       if hasattr(widget, "id"):
         widget.text = ""
     self._tags_layout.clear_widgets()
@@ -59,7 +59,7 @@ class EquipmentDetailRenderer(Popup):
         for item in v:
           self._tags_layout.add_widget(self._AddTag(item))
       else:
-        for child in self.walk():
+        for child in self.walk(restrict=True):
           if hasattr(child, "id") and child.id == k:
             child.text = v
             break

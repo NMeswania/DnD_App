@@ -12,6 +12,7 @@ from dnd_app.viewer_widgets.abilities_list.abilities_list import AbilitiesList
 from dnd_app.viewer_widgets.ability_scores.ability_scores import AbilityScores
 from dnd_app.viewer_widgets.combat.combat import Combat
 from dnd_app.viewer_widgets.equipment.equipment import Equipment
+from dnd_app.viewer_widgets.main_info.main_info import MainInfo
 from dnd_app.viewer_widgets.proficiencies.proficiencies import Proficiencies
 from dnd_app.viewer_widgets.spell_list.spell_list import SpellList
 from dnd_app.viewer_widgets.weapon_list.weapon_list import WeaponList
@@ -58,6 +59,8 @@ class WidgetManager:
   def _LoadWidgets(self) -> dict:
     widgets = {}
     widgets_to_load = self._dnd_config.get("widgets")
+    widgets['main_info'] = MainInfo(self._dnd_config, self._character_data['main_info'])
+
     if "ability_scores" in widgets_to_load:
       widgets['ability_scores'] = AbilityScores(self._dnd_config, self._character_data['ability_scores'])
     if "combat" in widgets_to_load:

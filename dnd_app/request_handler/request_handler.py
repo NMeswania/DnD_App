@@ -37,8 +37,10 @@ class RequestHandler:
       try:
         request_dispatch = self._request_queue.get(
             block=True, timeout=self._config.get_common("queue_get_timeout"))
+        request_id = request_dispatch.request.id()
         response = self._ProcessNewRequest(request_dispatch.request)
         request_dispatch.pipe_connection.send(response)
+        logging.info(f"Processed request: {request_id}")
 
       except queue.Empty:
         pass
