@@ -1,23 +1,31 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://json-schema.org/draft-07/schema#",
   "title": "class_schema",
   "description": "Schema for representing the 13 classes",
-  "type": "string",
-  "enum": [
-    "Artificer",
-    "Barbarian",
-    "Bard",
-    "Blood-hunter",
-    "Cleric",
-    "Druid",
-    "Fighter",
-    "Monk",
-    "Paladin",
-    "Ranger",
-    "Rogue",
-    "Sorcerer",
-    "Warlock",
-    "Wizard"
-  ]
+  "properties": {
+    "class": {
+      "$ref": "#/definitions/class"
+    }
+  },
+  "definitions": {
+    "class": {
+      "type": "string",
+      "enum": [
+        "Artificer",
+        "Barbarian",
+        "Bard",
+        "Blood-hunter",
+        "Cleric",
+        "Druid",
+        "Fighter",
+        "Monk",
+        "Paladin",
+        "Ranger",
+        "Rogue",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ]
+    }
+  }
 }

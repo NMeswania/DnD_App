@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "main_schema",
+  "description": "Schema for representing characters",
+  "type": "object",
+  "required": [
+    "main"
+  ],
+  "properties": {
+    "main": {
+      "type": "object",
+      "required": [
+        "name",
+        "race",
+        "background",
+        "alignment",
+        "classes_levels"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "race": { "type": "string", "minLength": 1 },
+        "background": { "type": "string", "minLength": 1 },
+        "alignment": { "type": "string", "minLength": 1 },
+        "classes_levels": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              { "type": "string", "$ref": "class_schema.json#/definitions/class" },
+              { "type": "string", "minLength": 1 },
+              { "type": "integer", "minimum": 1 }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

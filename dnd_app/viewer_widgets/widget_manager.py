@@ -66,8 +66,8 @@ class WidgetManager:
       widgets['proficiencies'] = Proficiencies(self._dnd_config, self._character_data['proficiencies'])
     if "abilities_list" in widgets_to_load:
       widgets['abilities_list'] = AbilitiesList(self._dnd_config, self._character_data['abilities_list'])
-    if "equipment" in widgets_to_load:
-      widgets['equipment'] = Equipment(self._dnd_config, self._character_data['equipment'])
+    if "equipment_list" in widgets_to_load:
+      widgets['equipment_list'] = Equipment(self._dnd_config, self._character_data['equipment_list'])
     if "spell_list" in widgets_to_load:
       widgets['spell_list'] = SpellList(self._dnd_config, self._character_data['spell_list'])
     if "weapon_list" in widgets_to_load:

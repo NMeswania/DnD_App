@@ -7,7 +7,8 @@ import json
 import logging
 import queue
 
-from jsonschema import validate
+from jsonschema import validate, RefResolver
+from pathlib import PurePath
 
 from multiprocessing import Queue
 
@@ -65,8 +66,9 @@ class RequestHandler:
 
   def _MaybeValidateResponseData(self, response_data: dict, request: Request) -> dict:
     schema = self._GetSchemaForRequestTypeValue(request.type(), request.value())
+    resolver = self._GetSchemaRefResolver(schema)
     try:
-      validate(instance=response_data, schema=schema)
+      validate(instance=response_data, schema=schema, resolver=resolver)
     except Exception as err:
       logging.critical(f"Validation failed, got exception:\n{err}")
       raise FailedToValidateRequestedData
@@ -76,12 +78,27 @@ class RequestHandler:
   def _GetSchemaForRequestTypeValue(self, request_type: str, request_value: str):
     schema_type = request_type
     if request_type == "character":
-      schema_type = f"character/{request_value.split('/')[-1]}"
+      schema_type = f"{request_value.split('/')[-1]}"
     return self._ParseJSONMatchingGlob(f"schemas/{schema_type}_schema.json")
 
 ###################################################################################################
 
+  def _GetSchemaRefResolver(self, schema: dict) -> RefResolver:
+    data_dir = self._config.get_data_dir() / "schemas"
+    data_dir = PurePath(data_dir)
+    data_dir = data_dir.relative_to(data_dir.drive)
+    return RefResolver(referrer=schema, base_uri="file://" + str(data_dir.as_posix()) + "/")
+
+###################################################################################################
+
   def _ParseJSONMatchingGlob(self, pattern: str) -> dict:
+    found_file = self._LoadFileMatchingGlob(pattern)
+    with open(found_file, 'r') as reader:
+      return json.load(reader)
+
+###################################################################################################
+
+  def _LoadFileMatchingGlob(self, pattern: str):
     data_dir = self._config.get_data_dir()
     found_files = sorted(data_dir.glob(pattern))
 
@@ -92,8 +109,7 @@ class RequestHandler:
     elif len(found_files) > 1:
       logging.warning(f"Found {len(found_files)} matching pattern '{pattern}', using first match")
 
-    with open(found_files[0], 'r') as reader:
-      return json.load(reader)
+    return found_files[0]
 
 
 ###################################################################################################

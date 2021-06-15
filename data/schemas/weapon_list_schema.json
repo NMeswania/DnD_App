@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://json-schema.org/draft-07/schema#",
   "title": "weapon_list_schema",
   "description": "Schema for representing characters waepons",
   "type": "object",

@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://json-schema.org/draft-07/schema#",
   "title": "spell_schema",
   "description": "Schema for representing spell information",
   "type": "object",

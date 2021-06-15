@@ -61,7 +61,7 @@ class Equipment(WidgetBase):
 ###################################################################################################
 
   def _LoadData(self, ability_score_path: Path):
-    request = Request(type="character", value="subs/equipment")
+    request = Request(type="character", value="subs/equipment_list")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 

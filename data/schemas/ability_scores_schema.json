@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://json-schema.org/draft-07/schema#",
   "title": "ability_scores_schema",
   "description": "Schema for representing ability scores, saving throws and skills",
   "type": "object",
