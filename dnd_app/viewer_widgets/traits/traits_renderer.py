@@ -41,7 +41,6 @@ class TraitsRenderer(BoxLayout):
   def Update(self, data: dict):
     self.Clear()
     flattened_data = FlattenDict(data)
-    print(flattened_data)
     for k, v in flattened_data.items():
       for child in self.walk(restrict=True):
         if hasattr(child, "id") and child.id == k:
