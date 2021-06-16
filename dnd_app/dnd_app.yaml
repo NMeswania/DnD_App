@@ -7,7 +7,7 @@ dnd_app:
   viewer:
     text_size: 16
   widget_manager:
-    widgets:
+    dont_load_widgets:
       - abilities_list
       - ability_scores
       - combat

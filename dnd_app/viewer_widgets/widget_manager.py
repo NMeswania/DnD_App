@@ -58,22 +58,23 @@ class WidgetManager:
 
   def _LoadWidgets(self) -> dict:
     widgets = {}
-    widgets_to_load = self._dnd_config.get("widgets")
+    widgets_to_load = self._character_data.keys()
+    widgets_to_not_load = self._dnd_config.get("dont_load_widgets")
     widgets['main_info'] = MainInfo(self._dnd_config, self._character_data['main_info'])
 
-    if "ability_scores" in widgets_to_load:
+    if "ability_scores" in widgets_to_load and not "ability_scores" in widgets_to_not_load:
       widgets['ability_scores'] = AbilityScores(self._dnd_config, self._character_data['ability_scores'])
-    if "combat" in widgets_to_load:
+    if "combat" in widgets_to_load and not "combat" in widgets_to_not_load:
       widgets['combat'] = Combat(self._dnd_config, self._character_data['combat'])
-    if "proficiencies" in widgets_to_load:
+    if "proficiencies" in widgets_to_load and not "proficiencies" in widgets_to_not_load:
       widgets['proficiencies'] = Proficiencies(self._dnd_config, self._character_data['proficiencies'])
-    if "abilities_list" in widgets_to_load:
+    if "abilities_list" in widgets_to_load and not "abilities_list" in widgets_to_not_load:
       widgets['abilities_list'] = AbilitiesList(self._dnd_config, self._character_data['abilities_list'])
-    if "equipment_list" in widgets_to_load:
+    if "equipment_list" in widgets_to_load and not "equipment_list" in widgets_to_not_load:
       widgets['equipment_list'] = Equipment(self._dnd_config, self._character_data['equipment_list'])
-    if "spell_list" in widgets_to_load:
+    if "spell_list" in widgets_to_load and not "spell_list" in widgets_to_not_load:
       widgets['spell_list'] = SpellList(self._dnd_config, self._character_data['spell_list'])
-    if "weapon_list" in widgets_to_load:
+    if "weapon_list" in widgets_to_load and not "weapon_list" in widgets_to_not_load:
       widgets['weapon_list'] = WeaponList(self._dnd_config, self._character_data['weapon_list'])
     return widgets
 
