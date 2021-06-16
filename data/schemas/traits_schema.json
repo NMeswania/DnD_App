@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "traits_schema",
+  "description": "Schema for representing characters appearance and personality traits",
+  "type": "object",
+  "required": [
+    "appearance",
+    "traits"
+  ],
+  "properties": {
+    "appearance": {
+      "type": "object",
+      "required": [
+        "age",
+        "height",
+        "weight",
+        "eyes",
+        "skin",
+        "hair"
+      ],
+      "properties": {
+        "age": { "type": "integer" },
+        "height": { "type": "integer" },
+        "weight": { "type": "integer" },
+        "eyes": { "type": "string", "minLength": 1 },
+        "skin": { "type": "string", "minLength": 1 },
+        "hair": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "traits": {
+      "type": "object",
+      "required": [
+        "personality_traits",
+        "ideals",
+        "bonds",
+        "flaws"
+      ],
+      "properties": {
+        "personality_traits": { "type": "string", "minLength": 1 },
+        "ideals": { "type": "string", "minLength": 1 },
+        "bonds": { "type": "string", "minLength": 1 },
+        "flaws": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

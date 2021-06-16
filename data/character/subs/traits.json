@@ -1,0 +1,16 @@
+{
+  "appearance": {
+    "age": 37,
+    "height": 180,
+    "weight": 70,
+    "eyes": "Black",
+    "skin": "White",
+    "hair": "White"
+  },
+  "traits": {
+    "personality_traits": "People always greet me like a stranger, and I enjoy greeting them right back.",
+    "ideals": "Acceptance. If everyone else forgot about me, I might as well too.",
+    "bonds": "I miss my family, maybe I can make amends with them and start anew.",
+    "flaws": "I let the rage from my abandonment get to me and I sometimes push it onto others."
+  }
+}

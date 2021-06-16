@@ -8,19 +8,20 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
+from dnd_app.utilities.container_utils import FlattenDict
+from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChildren
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class MainInfoRenderer(BoxLayout):
+class TraitsRenderer(BoxLayout):
 
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
     self._dnd_config = config
     self._widget = widget
-    self.add_widget(self._AddTitle())
     self.add_widget(self._AddContent())
 
 ###################################################################################################
@@ -39,68 +40,59 @@ class MainInfoRenderer(BoxLayout):
 
   def Update(self, data: dict):
     self.Clear()
-
-    for k, v in data.items():
-      value = v
-      if isinstance(v, list) and len(v) > 0:
-        value = self._UpdateClassesLevels(v)
-
-      elif isinstance(v, int):
-        value = str(v)
-
+    flattened_data = FlattenDict(data)
+    print(flattened_data)
+    for k, v in flattened_data.items():
       for child in self.walk(restrict=True):
         if hasattr(child, "id") and child.id == k:
-          child.text = value
+          child.text = str(v)
           break
-
-###################################################################################################
-
-  def _UpdateClassesLevels(self, data: dict) -> str:
-    label_text = ""
-    for item in data:
-      if label_text != "":
-        label_text += ", "
-
-      class_level = f"Level {item[2]} {item[0]} ({item[1]})"
-      label_text += class_level
-
-    return label_text
-
-###################################################################################################
-
-  def _AddTitle(self) -> Label:
-    label = Label(text="", font_size="25sp", size_hint=(1, 0.1))
-    label.id = "name"
-    return label
 
 ###################################################################################################
 
   def _AddContent(self) -> BoxLayout:
     layout = BoxLayout(orientation="vertical")
-    layout.add_widget(self._AddClassesLevels(0.4))
-    layout.add_widget(self._AddInfoBlock(0.6))
+    layout.add_widget(self._AddAppearance(0.4))
+    layout.add_widget(self._AddTraits(0.6))
     return layout
 
 ###################################################################################################
 
-  def _AddClassesLevels(self, h: float) -> Label:
-    label = Label(text="", font_size="18sp", italic=True, size_hint=(1, h))
-    label.id = "classes_levels"
-    return label
+  def _AddAppearance(self, h: float) -> GridLayout:
+    layout = GridLayout(rows=2, cols=3, size_hint=(1, h))
+    for field in ["age", "height", "weight", "eyes", "skin", "hair"]:
+      layout.add_widget(self._AddAppearanceField(field))
+    return layout
 
 ###################################################################################################
 
-  def _AddInfoBlock(self, h: float) -> GridLayout:
-    layout = GridLayout(rows=1,
-                        cols=4,
-                        row_default_height=40,
-                        row_force_default=True,
-                        size_hint=(1, h))
-    for field in ["race", "background", "alignment", "experience_points"]:
-      label = Label(text="", font_size="16sp")
-      label.id = field
-      layout.add_widget(label)
+  def _AddAppearanceField(self, field: str) -> BoxLayout:
+    layout = BoxLayout(orientation="horizontal")
+    layout.add_widget(
+        Label(text=StrFieldToReadable(field), font_size="13sp", italic=True, size_hint=(0.4, 1)))
+    label = Label(text="", font_size="13sp", size_hint=(0.6, 1))
+    label.id = f"appearance_{field}"
+    layout.add_widget(label)
+    return layout
 
+###################################################################################################
+
+  def _AddTraits(self, h: float) -> GridLayout:
+    layout = GridLayout(cols=1, rows=4, size_hint=(1, h))
+    for field in ["personality_traits", "ideals", "bonds", "flaws"]:
+      layout.add_widget(self._AddTraitField(field))
+    return layout
+
+###################################################################################################
+
+  def _AddTraitField(self, field: str) -> BoxLayout:
+    layout = BoxLayout(orientation="horizontal")
+    layout.add_widget(
+        Label(text=StrFieldToReadable(field), font_size="13sp", italic=True, size_hint=(0.2, 1)))
+    label = Label(text="", font_size="13sp", size_hint=(0.8, 1))
+    label.id = f"traits_{field}"
+    layout.add_widget(label)
+    AlignWidgetLabelChildren(layout)
     return layout
 
 

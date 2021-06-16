@@ -15,6 +15,7 @@ from dnd_app.viewer_widgets.equipment.equipment import Equipment
 from dnd_app.viewer_widgets.main_info.main_info import MainInfo
 from dnd_app.viewer_widgets.proficiencies.proficiencies import Proficiencies
 from dnd_app.viewer_widgets.spell_list.spell_list import SpellList
+from dnd_app.viewer_widgets.traits.traits import Traits
 from dnd_app.viewer_widgets.weapon_list.weapon_list import WeaponList
 
 ###################################################################################################
@@ -74,6 +75,8 @@ class WidgetManager:
       widgets['equipment_list'] = Equipment(self._dnd_config, self._character_data['equipment_list'])
     if "spell_list" in widgets_to_load and not "spell_list" in widgets_to_not_load:
       widgets['spell_list'] = SpellList(self._dnd_config, self._character_data['spell_list'])
+    if "traits" in widgets_to_load and not "traits" in widgets_to_not_load:
+      widgets['traits'] = Traits(self._dnd_config, self._character_data['traits'])
     if "weapon_list" in widgets_to_load and not "weapon_list" in widgets_to_not_load:
       widgets['weapon_list'] = WeaponList(self._dnd_config, self._character_data['weapon_list'])
     return widgets

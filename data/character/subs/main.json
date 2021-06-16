@@ -6,5 +6,6 @@
   "equipment_list": "\\subs\\equipment.json",
   "proficiencies": "\\subs\\proficiencies.json",
   "spell_list": ".\\subs\\spell_list.json",
+  "traits": "\\subs\\traits.json",
   "weapon_list": "\\subs\\weapon_list.json"
 }
