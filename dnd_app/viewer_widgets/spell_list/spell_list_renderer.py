@@ -81,7 +81,8 @@ class SpellListRenderer(BoxLayout):
   def _AddSpellLevel(self, level: str) -> GridLayout:
     layout = GridLayout(cols=1, row_force_default=True, row_default_height=40, padding=5)
     layout.id = level
-    layout.add_widget(Label(text=StrFieldToReadable(level), size_hint=(1, 1)))
+    layout.add_widget(
+        Label(text=StrFieldToReadable(level, strip_end_numbers=False), size_hint=(1, 1)))
     return layout
 
 ###################################################################################################

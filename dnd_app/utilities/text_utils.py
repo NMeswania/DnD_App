@@ -11,15 +11,17 @@ from kivy.uix.label import Label
 ###################################################################################################
 ###################################################################################################
 
-def StrFieldToReadable(input: str, title_case: bool=False) -> str:
-  """Converts string fields like 'dispell_magic' to 'Dispell Magic' or 'Dispell magic'. Also
-     removes '_[0-9]' from the end of the input, e.g. 'silent_dagger_3' to 'Silent Dagger'.
+def StrFieldToReadable(input: str, title_case: bool=False, strip_end_numbers: bool=True) -> str:
+  """Converts string fields like 'dispell_magic' to 'Dispell Magic' or 'Dispell magic'. 
     input: str
       string field to convert
     all_words_upper_case: bool=True
       converts to readable, but all words start with capital letters, otherwise use sentence case
+    strip_end_numbers: bool=True
+      removes '_[0-9]' from the end of the input, e.g. 'silent_dagger_3' to 'silent_dagger'
   """
-  input = re.sub('_[0-9]+$', '', input)
+  if strip_end_numbers:
+    input = re.sub('_[0-9]+$', '', input)
   if title_case:
     return input.replace('_', ' ').capitalize()
   return input.replace('_', ' ').capitalize().title()
