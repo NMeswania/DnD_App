@@ -50,6 +50,12 @@ class SpellListRenderer(BoxLayout):
         for spell in v:
           level_layout.add_widget(self._AddSpell(spell_name=spell))
         self._spell_layout.add_widget(level_layout)
+      elif isinstance(v, dict):
+        for k_, v_ in v.items():
+          for child in self.walk(restrict=True):
+            if hasattr(child, "id") and child.id == k_:
+              child.text = str(v_)
+              break
 
 ###################################################################################################
 
@@ -60,15 +66,35 @@ class SpellListRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddContent(self):
-    self._main_layout = BoxLayout(orientation="horizontal")
+    layout = BoxLayout(orientation="vertical")
+    layout.add_widget(self._AddInfo())
     self._spell_layout = self._AddSpells()
-    self._main_layout.add_widget(self._spell_layout)
-    return self._main_layout
+    layout.add_widget(self._spell_layout)
+    return layout
 
 ###################################################################################################
 
   def _AddTitle(self) -> Label:
     return Label(text="Spells", font_size="20sp", size_hint=(1, 0.05))
+
+###################################################################################################
+
+  def _AddInfo(self) -> BoxLayout:
+    layout = BoxLayout(orientation="horizontal", height=40)
+    for field in ["ability", "save", "attack"]:
+      layout.add_widget(self._AddInfoLabel(field))
+    return layout
+
+###################################################################################################
+
+  def _AddInfoLabel(self, field: str) -> BoxLayout:
+    layout = BoxLayout(orientation="horizontal")
+    layout.add_widget(
+        Label(text=StrFieldToReadable(field), font_size="13sp", italic=True, size_hint=(0.4, 1)))
+    label = Label(text="", font_size="14sp", size_hint=(0.6, 1))
+    label.id = field
+    layout.add_widget(label)
+    return layout
 
 ###################################################################################################
 

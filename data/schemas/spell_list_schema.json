@@ -4,6 +4,19 @@
   "description": "Schema for representing characters known spells",
   "type": "object",
   "properties": {
+    "info": {
+      "type": "object",
+      "required": [
+        "ability",
+        "save",
+        "attack"
+      ],
+      "properties": {
+        "ability": {"type":"string"},
+        "save": {"type":"integer"},
+        "attack": {"type":"integer"}
+      }
+    },
     "cantrip": {"type":"array", "items": { "type": "string"}},
     "level_1": {"type":"array", "items": { "type": "string"}},
     "level_2": {"type":"array", "items": { "type": "string"}},
