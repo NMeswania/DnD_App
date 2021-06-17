@@ -3,36 +3,18 @@
 # Lisence: MIT
 ###################################################################################################
 
-from dnd_app.request_handler.response import Response
 import logging
 import queue
-import threading
 
 from multiprocessing import Process, Queue, Pipe
-from multiprocessing.connection import Connection
 
 from dnd_app.core.config import Config
+from dnd_app.core.thread_safe_singleton import ThreadSafeSingleton
 from dnd_app.request_handler.receipt import Receipt
 from dnd_app.request_handler.request import Request
+from dnd_app.request_handler.response import Response
 from dnd_app.request_handler.request_handler import RequestHandler
 from dnd_app.request_handler.internal.request_dispatch import RequestDispatch
-
-###################################################################################################
-###################################################################################################
-###################################################################################################
-
-class ThreadSafeSingleton(type):
-
-  _instances = {}
-  _lock = threading.Lock()
-
-  def __call__(cls, *args, **kwargs):
-    if cls not in cls._instances:
-      with cls._lock:
-        cls._instances[cls] = super(ThreadSafeSingleton, cls).__call__(*args, **kwargs)
-
-    return cls._instances[cls]
-
 
 ###################################################################################################
 ###################################################################################################
