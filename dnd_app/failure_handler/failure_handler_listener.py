@@ -3,61 +3,54 @@
 # Lisence: MIT
 ###################################################################################################
 
-import uuid
+import logging
+import queue
+
+from multiprocessing import Queue
+
+from dnd_app.core.config import Config
+from dnd_app.failure_handler.failure_renderer import FailureRenderer
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class RequestResponseIDsNotMatching(Exception):
+class FailureHandlerListener():
 
-  def __init__(self, request_id: uuid.UUID, repsonse_id: uuid.UUID):
-    self._message = f"Request ID: {str(request_id)}, Response ID: {str(repsonse_id)}"
-    super().__init__(self._message)
-
-  def __str__(self):
-    return self._message
+  def __init__(self, config: Config, recv_queue: Queue):
+    self._dnd_config = config
+    self._recv_queue = recv_queue
 
 ###################################################################################################
 
-class RequestHandlerException(Exception):
-  """ Base class exceptions for the RequestHandler class. """
-  pass
+  def __del__(self):
+    self._recv_queue.close()
+    del self._renderer
 
 ###################################################################################################
 
-class UnknownRequestType(RequestHandlerException):
-  """ When the type of request is unknown. """
-  def __init__(self, request_type: str):
-    self._type = request_type
-    self._message = "Unknown request type."
-    super().__init__(self._message)
-
-  def __str__(self):
-    return f"{self._message} Type: {self._type}"
+  def LoadRenderer(self):
+    self._BuildRenderers()
 
 ###################################################################################################
 
-class FailedToProcessRequest(RequestHandlerException):
-  """ Generic unable to process request exception. """
-  def __init__(self, exc: Exception):
-    self._exc = exc
-    super().__init__(self._exc)
+  def CheckForUpdates(self):
+    try:
+      data = self._recv_queue.get_nowait()
+      self._renderer.Update(data)
 
-  def __str__(self):
-    return str(self._exc)
+    except queue.Empty:
+      pass
+    
+    except:
+      logging.critical("Could not update renderer")
 
 ###################################################################################################
 
-class FailedToValidateRequestedData(RequestHandlerException):
-  """ jsonschema validation failed """
-  def __init__(self, exc: Exception):
-    self._exc = exc
-    super().__init__(self._exc)
+  def _BuildRenderers(self) -> FailureRenderer:
+    self._renderer = FailureRenderer()
 
-  def __str__(self):
-    return str(self._exc)
 
 ###################################################################################################
 ###################################################################################################

@@ -4,6 +4,7 @@
 ###################################################################################################
 
 from dnd_app.core.config import Config
+from dnd_app.failure_handler.failure_handler_listener import FailureHandlerListener
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
 from dnd_app.utilities.container_utils import FlattenList
@@ -25,19 +26,25 @@ from dnd_app.viewer_widgets.weapon_list.weapon_list import WeaponList
 
 class WidgetManager:
 
-  def __init__(self, config: Config, character: str=""):
+  def __init__(self,
+               config: Config,
+               failure_listener: FailureHandlerListener,
+               character: str = ""):
     self._dnd_config = config
     self._character = character
+    self._failure_listener = failure_listener
 
 ###################################################################################################
 
   def run(self):
     self._character_data = self._GetCharacterData(self._character)
     self._widgets = self._LoadWidgets()
+    self._failure_listener.LoadRenderer()
 
 ###################################################################################################
 
   def CheckForUpdates(self, _):
+    self._failure_listener.CheckForUpdates()
     for widget in self._widgets.values():
       widget.CheckForUpdates()
 

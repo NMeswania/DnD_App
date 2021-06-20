@@ -13,6 +13,7 @@ from pathlib import PurePath
 from multiprocessing import Queue
 
 from dnd_app.core.config import Config
+from dnd_app.failure_handler.log_failure import LogFailure
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.response import Response
 from dnd_app.request_handler.exceptions import RequestHandlerException, \
@@ -26,9 +27,10 @@ from dnd_app.request_handler.exceptions import RequestHandlerException, \
 
 class RequestHandler:
 
-  def __init__(self, config: Config, request_queue: Queue):
+  def __init__(self, config: Config, request_queue: Queue, failure_queue: Queue):
     self._config = config
     self._request_queue = request_queue
+    self._failure_queue = failure_queue
 
 ###################################################################################################
 
@@ -45,9 +47,8 @@ class RequestHandler:
       except queue.Empty:
         pass
 
-      except RequestHandlerException:
-        logging.critical(
-            f"Got exception when trying to handler request. Unable to send requested data.")
+      except RequestHandlerException as err:
+        LogFailure(type="Request Handler", message=err, queue=self._failure_queue)
 
 ###################################################################################################
 
@@ -58,8 +59,8 @@ class RequestHandler:
 
     except Exception as err:
       logging.error(f"Failed to process request: {request.type()}::{request.value()}, "
-                    f"{request.id()}. Got exception: {err}")
-      raise FailedToProcessRequest
+                    f"{request.id()}")
+      raise FailedToProcessRequest(err)
 
     else:
       return Response(request, response_data)
@@ -73,7 +74,7 @@ class RequestHandler:
       validate(instance=response_data, schema=schema, resolver=resolver)
     except Exception as err:
       logging.critical(f"Validation failed, got exception:\n{err}")
-      raise FailedToValidateRequestedData
+      raise FailedToValidateRequestedData(err)
 
 ###################################################################################################
 

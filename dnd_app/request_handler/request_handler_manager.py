@@ -21,7 +21,7 @@ from dnd_app.request_handler.internal.request_dispatch import RequestDispatch
 ###################################################################################################
 
 def GetRequestHandlerManagerSingleton():
-  return RequestHandlerManager(None, None)
+  return RequestHandlerManager(None, None, None)
 
 ###################################################################################################
 ###################################################################################################
@@ -30,9 +30,10 @@ def GetRequestHandlerManagerSingleton():
 
 class RequestHandlerManager(metaclass=ThreadSafeSingleton):
 
-  def __init__(self, config: Config, request_queue: Queue) -> None:
+  def __init__(self, config: Config, request_queue: Queue, failure_queue: Queue) -> None:
     self._config = config
     self._request_queue = request_queue
+    self._failure_queue = failure_queue
 
 ###################################################################################################
 
@@ -79,7 +80,6 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
 
   def _Shutdown(self):
     for process_handler in self._processes_handlers.values():
-      process_handler["process"].terminate()
       process_handler["process"].join()
 
 ###################################################################################################
@@ -91,7 +91,7 @@ class RequestHandlerManager(metaclass=ThreadSafeSingleton):
     for i in range(self._config.get("num_processes")):
       self._processes_handlers[f'process_{i}'] = {}
 
-      request_handler = RequestHandler(self._config(), self._request_queue)
+      request_handler = RequestHandler(self._config(), self._request_queue, self._failure_queue)
       p = Process(target=request_handler)
 
       self._processes_handlers[f'process_{i}']['process'] = p

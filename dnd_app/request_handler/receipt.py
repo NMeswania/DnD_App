@@ -24,7 +24,10 @@ class Receipt:
 ###################################################################################################
 
   def IsResponseReady(self) -> bool:
-    return self._pipe_connection.poll()
+    try:
+      return self._pipe_connection.poll()
+    except:
+      return False
 
 ###################################################################################################
 

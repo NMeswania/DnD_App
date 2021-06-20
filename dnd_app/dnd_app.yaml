@@ -2,6 +2,8 @@ dnd_app:
   common:
     queue_put_timeout: 1
     queue_get_timeout: 1
+  failure_handler:
+    timeout: 0.2
   request_handler_manager:
     num_processes: 4
   viewer:
@@ -9,7 +11,7 @@ dnd_app:
   widget_manager:
     dont_load_widgets:
       - none
-      - abilities_list
+      # - abilities_list
       - ability_scores
       - combat
       - equipment_list
