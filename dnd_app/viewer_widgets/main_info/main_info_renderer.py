@@ -26,6 +26,8 @@ class MainInfoRenderer(BoxLayout):
   ids['alignment'] = ObjectProperty("")
   ids['experience_points'] = ObjectProperty("")
 
+###################################################################################################
+
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
     self._dnd_config = config
@@ -44,9 +46,8 @@ class MainInfoRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    for child in self.walk(restrict=True):
-      if hasattr(child, "id"):
-        child.text = ""
+    for v_ in self.ids.values():
+      v_.text = ""
 
 ###################################################################################################
 

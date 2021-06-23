@@ -1,0 +1,112 @@
+#:kivy 2.0
+
+<TraitsRenderer>:
+  appearance_age: appearance_age
+  appearance_height: appearance_height
+  appearance_weight: appearance_weight
+  appearance_eyes: appearance_eyes
+  appearance_skin: appearance_skin
+  appearance_hair: appearance_hair
+  traits_personality_traits: traits_personality_traits
+  traits_ideals: traits_ideals
+  traits_bonds: traits_bonds
+  traits_flaws: traits_flaws
+
+  BoxLayout:
+    orientation: "vertical"
+
+    # Appearance
+    GridLayout:
+      rows: 2
+      cols: 3
+      size_hint: 1, 0.4
+
+      AppearanceBox:
+        AppearanceKey:
+          text: "Age"
+        AppearanceValue:
+          id: appearance_age
+
+      AppearanceBox:
+        AppearanceKey:
+          text: "Height"
+        AppearanceValue:
+          id: appearance_height
+
+      AppearanceBox:
+        AppearanceKey:
+          text: "Weight"
+        AppearanceValue:
+          id: appearance_weight
+
+      AppearanceBox:
+        AppearanceKey:
+          text: "Eyes"
+        AppearanceValue:
+          id: appearance_eyes
+
+      AppearanceBox:
+        AppearanceKey:
+          text: "Skin"
+        AppearanceValue:
+          id: appearance_skin
+
+      AppearanceBox:
+        AppearanceKey:
+          text: "Hair"
+        AppearanceValue:
+          id: appearance_hair
+
+    # Traits
+    GridLayout:
+      rows: 1
+      cols: 4
+      size_hint: 1, 0.6
+
+      AppearanceBox:
+        TraitKey:
+          text: "Personality traits"
+        TraitValue:
+          id: traits_personality_traits
+
+      AppearanceBox:
+        TraitKey:
+          text: "Ideals"
+        TraitValue:
+          id: traits_ideals
+
+      AppearanceBox:
+        TraitKey:
+          text: "Bonds"
+        TraitValue:
+          id: traits_bonds
+
+      AppearanceBox:
+        TraitKey:
+          text: "Flaws"
+        TraitValue:
+          id: traits_flaws
+
+<AppearanceBox@BoxLayout>:
+  orientation: "horizontal"
+
+<AppearanceKey@Label>:
+  font_size: "13sp"
+  italic: True
+  size_hint: 0.4, 1
+
+<AppearanceValue@Label>:
+  font_size: "13sp"
+  size_hint: 0.6, 1
+
+<TraitKey@Label>:
+  font_size: "13sp"
+  italic: True
+  size_hint: 0.2, 1
+
+<TraitValue@Label>:
+  font_size: "13sp"
+  size_hint: 0.8, 1
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
