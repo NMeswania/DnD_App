@@ -21,4 +21,8 @@ setup(name='dnd_app',
       author='Neal Meswania',
       url='https://github.com/NMeswania/DnD_App',
       license=license,
-      packages=find_packages(exclude=('tests', 'docs')))
+      packages=find_packages(exclude=('tests', 'docs')),
+      package_data={
+        "": ["*.kv"]
+      }
+)
