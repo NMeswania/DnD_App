@@ -8,14 +8,17 @@ dnd_app:
     num_processes: 4
   viewer:
     text_size: 16
+    load_widgets:
+      - traits
+      - main_info
   widget_manager:
     dont_load_widgets:
       - none
-      # - abilities_list
+      - abilities_list
       - ability_scores
       - combat
       - equipment_list
       - proficiencies
       - spell_list
-      - traits
+      # - traits
       - weapon_list

@@ -3,10 +3,11 @@
 # Lisence: MIT
 ###################################################################################################
 
-from multiprocessing import Queue
+from pathlib import PurePath, Path
 
 from kivy.app import App
 from kivy.clock import Clock
+from kivy.lang.builder import Builder
 from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.viewer_widgets.widget_manager import WidgetManager
@@ -26,6 +27,7 @@ class Viewer(App):
     self._responses = []
     Clock.schedule_interval(self._widget_manager.CheckForUpdates, 0.25)
     self._renderers = {}
+    self._LoadKvFiles()
 
 ###################################################################################################
 
@@ -34,6 +36,17 @@ class Viewer(App):
     for renderer in self._widget_manager.GetRenderers():
       layout.add_widget(renderer)
     return layout
+
+###################################################################################################
+
+  def _LoadKvFiles(self):
+    widgets_dir = PurePath(__file__).parent.parent / "viewer_widgets"
+    kv_files = sorted(Path(widgets_dir).glob("**/*.kv"))
+    for widget_to_load in self._dnd_config.get("load_widgets"):
+      for kv_file in kv_files:
+        if widget_to_load in kv_file.as_posix():
+          Builder.load_file(kv_file.as_posix())
+          break
 
 
 ###################################################################################################

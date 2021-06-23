@@ -1,0 +1,45 @@
+#:kivy 2.0
+
+<MainInfoRenderer>:
+  name: name
+  classes_levels: classes_levels
+  race: race
+  background: background
+  alignment: alignment
+  experience_points: experience_points
+
+  Label:
+    id: name
+    text: ""
+    font_size: "25sp"
+    size_hint: 1, 0.1
+
+  Label:
+    id: classes_levels
+    text: ""
+    font_size: "18sp"
+    italic: True
+    size_hint: 1, 0.4
+
+  GridLayout:
+    rows: 1
+    cols: 4
+    row_default_height: 40
+    row_force_default: True
+    size_hint: 1, 0.6
+
+    InfoLabel:
+      id: race
+
+    InfoLabel:
+      id: background
+
+    InfoLabel:
+      id: alignment
+
+    InfoLabel:
+      id: experience_points
+
+<InfoLabel@Label>:
+  text: ""
+  font_size: "16sp"
