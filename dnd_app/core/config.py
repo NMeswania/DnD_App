@@ -14,6 +14,13 @@ import dnd_app.core.config_exceptions as config_exceptions
 ###################################################################################################
 ###################################################################################################
 
+CONFIG = r"dnd_app.yaml"
+DATA_DIR = r"data"
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
 
 class Config:
 
@@ -60,14 +67,15 @@ class Config:
 
 class ConfigParser:
 
-  def __init__(self, config_path: str, data_dir: str):
-    config_abs_path = Path(config_path).resolve()
-    data_dir_abs_path = Path(data_dir).resolve()
+  def __init__(self):
+    app_root_dir = Path(__file__).parent.parent
+    config_abs_path = (app_root_dir / CONFIG).resolve()
+    data_dir_abs_path = (app_root_dir / DATA_DIR).resolve()
 
     assert config_abs_path.is_file(), f"Config is not a file: {config_abs_path}"
     assert data_dir_abs_path.is_dir(), f"Data dir is not a directory: {data_dir_abs_path}"
 
-    with open(config_path, 'r') as stream:
+    with open(config_abs_path, 'r') as stream:
       try:
         config = yaml.safe_load(stream)
 

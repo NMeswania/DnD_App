@@ -13,19 +13,12 @@ from dnd_app.app_runner.app_runner import AppRunner
 ###################################################################################################
 ###################################################################################################
 
-CONFIG_FILE = r"dnd_app\dnd_app.yaml"
-DATA_DIR = r"data"
-
-###################################################################################################
-###################################################################################################
-###################################################################################################
-
 
 def main():
   logging.getLogger().setLevel(logging.INFO)
   logging.info("Launching D&D App")
 
-  config = ConfigParser(CONFIG_FILE, DATA_DIR).GetConfig()
+  config = ConfigParser().GetConfig()
 
   app_runner = AppRunner(config)
   signal_handler = SignalHandler(app_runner)
