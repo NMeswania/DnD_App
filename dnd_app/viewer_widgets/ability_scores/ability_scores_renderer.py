@@ -3,17 +3,14 @@
 # Lisence: MIT
 ###################################################################################################
 
-import logging
-
+from kivy.properties import ObjectProperty    #pylint: disable=no-name-in-module
+from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.checkbox import CheckBox
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
-from dnd_app.request_handler.response import Response
-from dnd_app.utilities.container_utils import FlattenDict
-from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChildren
+from dnd_app.utilities.text_utils import StrFieldToReadable
 
 ###################################################################################################
 ###################################################################################################
@@ -22,17 +19,22 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 
 class AbilityScoresRenderer(BoxLayout):
 
+  ids = {}
+  ids['inspiration'] = ObjectProperty("")
+  ids['proficiency_bonus'] = ObjectProperty("")
+  ids['ability_scores'] = ObjectProperty("")
+  ids['saving_throws'] = ObjectProperty("")
+  ids['skills'] = ObjectProperty("")
+
+  ###################################################################################################
+
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
     self._dnd_config = config
     self._widget = widget
-    self.add_widget(self._AddTitle())
-    self.add_widget(self._AddInspirationAndProficiencyBonus())
-    main_layout = BoxLayout(orientation="horizontal")
-    main_layout.add_widget(self._AddAbilityScores())
-    main_layout.add_widget(self._AddSaves())
-    main_layout.add_widget(self._AddSkills())
-    self.add_widget(main_layout)
+    self._AddAbilityScores()
+    self._AddSaves()
+    self._AddSkills()
 
 ###################################################################################################
 
@@ -42,142 +44,85 @@ class AbilityScoresRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    for widget in self.walk(restrict=True):
-      if hasattr(widget, "id"):
-        if isinstance(widget, Label):
-          widget.text = ""
-        elif isinstance(widget, CheckBox):
-          widget.active = False
-
-###################################################################################################
-
-  def DisplayResponse(self, response: Response):
-    self.Update(response.data())
+    for value in self.ids.values():
+      self._ClearInternal(value)
 
 ###################################################################################################
 
   def Update(self, data: dict):
     self.Clear()
-    flattened_data = FlattenDict(data)
-    for k, v in flattened_data.items():
-      for child in self.walk(restrict=True):
-        if hasattr(child, "id") and child.id == k:
-          if isinstance(child, Label):
-            logging.debug(f"Set key {k} with value {v}")
-            child.text = str(v)
-          elif isinstance(child, CheckBox):
-            logging.debug(f"Set key {k} with value {v}")
-            child.active = v
+    for k, v in data.items():
+      if k in self.ids.keys():
+        self._UpdateInternal(self.ids[k], v)
 
 ###################################################################################################
 
-  def _AddTitle(self) -> Label:
-    return Label(text="Ability Scores & Skills", font_size="20sp", size_hint=(1, 0.05))
+  def _ClearInternal(self, value):
+    if isinstance(value, Label):
+      value.text = ""
+    elif isinstance(value, CheckBox):
+      value.active = False
+    elif hasattr(value, "children") and len(value.children) > 0:
+      for child in value.children:
+        for nested_value in child.ids:
+          self._ClearInternal(nested_value)
 
 ###################################################################################################
 
-  def _AddInspirationAndProficiencyBonus(self) -> BoxLayout:
-    layout = BoxLayout(orientation="horizontal", size_hint=(1, 0.1))
-    checkbox = CheckBox(active=False, size_hint=(0.1, 1))
-    checkbox.id = "inspiration"
-
-    proficiency_bonus_modifer_label = Label(text="", size_hint=(0.2, 1), font_size="20sp")
-    proficiency_bonus_modifer_label.id = "proficiency_bonus"
-    AlignWidgetLabelChildren(proficiency_bonus_modifer_label, valign="center")
-
-    layout.add_widget(checkbox)
-    layout.add_widget(Label(text="Inspiration", size_hint=(0.4, 1), font_size="18sp"))
-    layout.add_widget(proficiency_bonus_modifer_label)
-    layout.add_widget(Label(text="Proficiency Bonus", size_hint=(0.3, 1), font_size="18sp"))
-
-    return layout
+  def _UpdateInternal(self, value, update_value):
+    if isinstance(value, Label):
+      value.text = str(update_value)
+    elif isinstance(value, CheckBox):
+      value.active = update_value
+    elif hasattr(value, "children") and len(value.children) > 0:
+      for k, v in update_value.items():
+        for child in value.children:
+          if k == child.ids['name']:
+            for k_, v_ in v.items():
+              if k_ in child.ids:
+                self._UpdateInternal(child.ids[k_], v_)
+            break
 
 ###################################################################################################
 
-  def _AddAbilityScores(self) -> BoxLayout:
-    layout = BoxLayout(orientation="vertical")
-    layout.add_widget(Label(text="Ability Scores", size_hint=(1, 0.05), font_size="15sp"))
-    grid_layout = GridLayout(rows=len(self._ability_score_names()),
-                             cols=1,
-                             col_default_width=50,
-                             row_default_height=35,
-                             row_force_default=True)
-
+  def _AddAbilityScores(self):
     for ability_score in self._ability_score_names():
-      grid_layout.add_widget(self._AddAbilityScore(ability_score))
+      self.ids['ability_scores'].add_widget(self._AddAbilityScore(ability_score))
 
-    layout.add_widget(grid_layout)
+###################################################################################################
 
+  def _AddAbilityScore(self, ability_score: str):
+    layout = Factory.AbilityScore()
+    layout.ids['name'] = ability_score
+    layout.ids['label'].text = StrFieldToReadable(ability_score)
     return layout
 
 ###################################################################################################
 
-  def _AddAbilityScore(self, ability_score) -> BoxLayout:
-    layout = BoxLayout(orientation="vertical")
-    layout.add_widget(
-        Label(text=StrFieldToReadable(ability_score), size_hint=(1, 0.1), font_size="12sp"))
-
-    modifier = Label(text="", size_hint=(1, 0.6), font_size="18sp")
-    modifier.id = f"ability_scores_{ability_score}_modifier"
-
-    base_number = Label(text="", size_hint=(1, 0.3), font_size="12sp")
-    base_number.id = f"ability_scores_{ability_score}_base_number"
-
-    layout.add_widget(modifier)
-    layout.add_widget(base_number)
-
-    return layout
-
-###################################################################################################
-
-  def _AddSaves(self) -> BoxLayout:
-    layout = BoxLayout(orientation="vertical")
-    layout.add_widget(Label(text="Saving Throws", size_hint=(1, 0.05), font_size="15sp"))
-    grid_layout = GridLayout(rows=len(self._ability_score_names()),
-                             cols=1,
-                             col_default_width=50,
-                             row_default_height=35,
-                             row_force_default=True)
-
+  def _AddSaves(self):
     for ability_score in self._ability_score_names():
-      grid_layout.add_widget(self._AddSkillSave(ability_score, "saving_throws"))
+      self.ids['saving_throws'].add_widget(self._AddSave(ability_score))
 
-    layout.add_widget(grid_layout)
+###################################################################################################
 
+  def _AddSave(self, save: str):
+    layout = Factory.SkillSave()
+    layout.ids['name'] = save
+    layout.ids['label'].text = StrFieldToReadable(save)
     return layout
 
 ###################################################################################################
 
-  def _AddSkills(self) -> BoxLayout:
-    layout = BoxLayout(orientation="vertical")
-    layout.add_widget(Label(text="Skills", size_hint=(1, 0.05), font_size="15sp"))
-    grid_layout = GridLayout(rows=len(self._skill_names()), cols=1, col_default_width=50)
-
+  def _AddSkills(self):
     for skill in self._skill_names():
-      grid_layout.add_widget(self._AddSkillSave(skill, "skills"))
-
-    layout.add_widget(grid_layout)
-
-    return layout
+      self.ids['skills'].add_widget(self._AddSkill(skill))
 
 ###################################################################################################
 
-  def _AddSkillSave(self, skill_save_name: str, id_prefix: str) -> BoxLayout:
-    layout = BoxLayout(orientation="horizontal")
-
-    proficiency_box = CheckBox(active=False, size_hint=(0.1, 1))
-    proficiency_box.id = f"{id_prefix}_{skill_save_name}_proficiency"
-
-    modifier = Label(text="", size_hint=(0.2, 1), font_size="13sp")
-    modifier.id = f"{id_prefix}_{skill_save_name}_modifier"
-
-    label = Label(text=StrFieldToReadable(skill_save_name), size_hint=(0.7, 1), font_size="12sp")
-    AlignWidgetLabelChildren(label)
-
-    layout.add_widget(proficiency_box)
-    layout.add_widget(modifier)
-    layout.add_widget(label)
-
+  def _AddSkill(self, skill):
+    layout = Factory.SkillSave()
+    layout.ids['name'] = skill
+    layout.ids['label'].text = StrFieldToReadable(skill)
     return layout
 
 ###################################################################################################

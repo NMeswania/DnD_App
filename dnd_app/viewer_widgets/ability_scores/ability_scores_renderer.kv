@@ -1,0 +1,147 @@
+#:kivy 2.0
+
+<AbilityScoresRenderer>:
+  inspiration: inspiration
+  proficiency_bonus: proficiency_bonus
+  ability_scores: ability_scores
+  saving_throws: saving_throws
+  skills: skills
+
+  # Title
+  Label:
+    text: "Ability Scores & Skills"
+    font_size: "20sp"
+    size_hint: 1, 0.05
+
+  # Inspiration, proficiency bonus
+  BoxLayout:
+    orientation: "horizontal"
+    size_hint: 1, 0.1
+
+    CheckBox:
+      id: inspiration
+      active: False
+      size_hint: 0.1, 1
+
+    Label:
+      text: "Inspiration"
+      size_hint: 0.4, 1
+      font_size: "18sp"
+
+    Label:
+      id: proficiency_bonus
+      text: ""
+      size_hint: 0.2, 1
+      font_size: "20sp"
+
+    Label:
+      text: "Proficiency Bonus"
+      size_hint: 0.3, 1
+      font_size: "18sp"
+
+  # Main content
+  BoxLayout:
+    orientation: "horizontal"
+
+    # Ability scores
+    BoxLayout:
+      orientation: "vertical"
+
+      Label:
+        text: "Ability Scores"
+        size_hint: 1, 0.05
+        font_size: "15sp"
+
+      GridLayout:
+        id: ability_scores
+        cols: 1
+        col_default_width: 50
+        row_default_height: 35
+        row_force_default: True
+
+    # Saving throws
+    BoxLayout:
+      orientation: "vertical"
+
+      Label:
+        text: "Saving Throws"
+        size_hint: 1, 0.05
+        font_size: "15sp"
+
+      GridLayout:
+        id: saving_throws
+        cols: 1
+        col_default_width: 50
+        row_default_height: 35
+        row_force_default: True
+
+    # Skills
+    BoxLayout:
+      orientation: "vertical"
+
+      Label:
+        text: "Skills"
+        size_hint: 1, 0.05
+        font_size: "15sp"
+
+      GridLayout:
+        id: skills
+        cols: 1
+        col_default_width: 50
+        row_default_height: 35
+        row_force_default: True
+
+<AbilityScore@BoxLayout>:
+  name: name
+  label: label
+  modifier: modifier
+  base_number: base_number
+
+  id: name
+  orientation: "vertical"
+
+  Label:
+    id: label
+    text: ""
+    size_hint: 1, 0.1
+    font_size: "12sp"
+
+  Label:
+    id: modifier
+    text: ""
+    size_hint: 1, 0.6
+    font_size: "18sp"
+
+  Label:
+    id: base_number
+    text: ""
+    size_hint: 1, 0.3
+    font_size: "12sp"
+
+<SkillSave@BoxLayout>:
+  name: name
+  proficiency: proficiency
+  modifier: modifier
+  label: label
+
+  id: name
+  orientation: "horizontal"
+
+  CheckBox:
+    id: proficiency
+    active: False
+    size_hint: 0.1, 1
+
+  Label:
+    id: modifier
+    text: ""
+    size_hint: 0.2, 1
+    font_size: "13sp"
+
+  Label:
+    id: label
+    text: ""
+    size_hint: 0.7, 1
+    font_size: "12sp"
+    halign: "left"
+    text_size: self.size

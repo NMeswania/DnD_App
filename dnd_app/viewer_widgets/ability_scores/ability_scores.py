@@ -41,7 +41,7 @@ class AbilityScores(WidgetBase):
     if self._receipt is not None:
       if self._receipt.IsResponseReady():
         response = self._receipt.GetResponse()
-        self._renderer.DisplayResponse(response)
+        self._renderer.Update(response.data())
         self._receipt = None
 
 ###################################################################################################

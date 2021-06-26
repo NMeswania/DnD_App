@@ -3,7 +3,7 @@
 # Lisence: MIT
 ###################################################################################################
 
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty  #pylint: disable=no-name-in-module
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
