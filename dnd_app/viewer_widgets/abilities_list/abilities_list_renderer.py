@@ -77,7 +77,7 @@ class AbilitiesListRenderer(BoxLayout):
                  padding=(5, 5))
     AlignWidgetLabelChildren(btn)
     btn.bind(
-        on_press=partial(self._widget.RequestCallback, ability_name, len(self._abilities_list)))
+        on_press=partial(self._widget.RequestCallback, ability_name, len(self._abilities_list) - 1))
     return btn
 
 

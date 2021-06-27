@@ -1,0 +1,63 @@
+#:kivy 2.0
+
+<AbilitiesDetailRenderer>:
+  name: name
+  source: source
+  ability_description: ability_description
+
+  title: "Ability Details"
+  size_hint: 0.6, 0.6
+
+  BoxLayout:
+    orientation: "vertical"
+
+    # Ability name
+    Label:
+      id: name
+      text: ""
+      font_size: "18sp"
+      size_hint: 1, 0.1
+
+    # Source
+    Label:
+      id: source
+      text: ""
+      font_size: "13sp"
+      italic: True
+      size_hint: 1, 0.2
+
+    # Description
+    Label:
+      id: ability_description
+      text: ""
+      font_size: "12sp"
+      size_hint: 1, 0.6
+      halign: "left"
+      valign: "top"
+      text_size: self.size
+
+    # Button bar
+    BoxLayout:
+      orientation: "horizontal"
+      size_hint: 1, 0.1
+
+      # Previous item
+      ButtonBarButton:
+        text: "<"
+        on_press: root._widget.RequestNextAbilityCallback(-1)
+
+      # Close
+      ButtonBarButton:
+        text: "Close"
+        size_hint: 0.2, 1
+        on_press: root._Close()
+
+      # Next item
+      ButtonBarButton:
+        text: ">"
+        on_press: root._widget.RequestNextAbilityCallback(1)
+
+<ButtonBarButton@Button>:
+  size_hint: 0.4, 1
+  font_size: "15sp"
+  padding: 5, 5

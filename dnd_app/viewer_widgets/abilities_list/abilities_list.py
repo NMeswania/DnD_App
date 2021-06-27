@@ -49,10 +49,10 @@ class AbilitiesList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestNextAbilityCallback(self, increment: int, instance):
+  def RequestNextAbilityCallback(self, increment: int):
     ability_name, self._ability_list_index = self._renderer.GetNextAbilityAndIndex(
         self._ability_list_index + increment)
-    self.RequestCallback(ability_name, self._ability_list_index, instance)
+    self.RequestCallback(ability_name, self._ability_list_index, None)
 
 ###################################################################################################
 
