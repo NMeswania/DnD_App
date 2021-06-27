@@ -12,15 +12,16 @@ dnd_app:
       # - traits
       # - main_info
       # - ability_scores
-      - combat
+      # - combat
+      - proficiencies
   widget_manager:
     dont_load_widgets:
       - none
       - abilities_list
       - ability_scores
-      # - combat
+      - combat
       - equipment_list
-      - proficiencies
+      # - proficiencies
       - spell_list
       - traits
       - weapon_list

@@ -1,0 +1,36 @@
+#:kivy 2.0
+
+<ProficienciesRenderer>:
+  content: content
+
+  Label:
+    text: "Proficiencies"
+    font_size: "20sp"
+    size_hint: 1, 0.05
+
+  BoxLayout:
+    id: content
+    orientation: "horizontal"
+
+<ProficiencyGroup@GridLayout>:
+  heading: heading
+
+  cols:1
+  row_default_height: 40
+  row_force_default: True
+  padding: 5
+
+  Label:
+    id: heading
+    text: ""
+    font_size: "15sp"
+    bold: True
+    halign: "left"
+    text_size: self.size
+
+<ProficiencyItem@Label>:
+  text: ""
+  font_size: "13sp"
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
