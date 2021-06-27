@@ -1,0 +1,96 @@
+#:kivy 2.0
+
+<CombatRenderer>:
+  main_properties: main_properties
+  hit_points: hit_points
+  hit_die: hit_die
+  death_saves: death_saves
+
+  Label:
+    text: "Combat"
+    font_size: "20sp"
+    size_hint: 1, 0.05
+
+  # Main properties
+  GridLayout:
+    id: main_properties
+    rows: 1
+    cols: 3
+
+  # Hit points
+  GridLayout:
+    id: hit_points
+    rows: 1
+    cols: 4
+
+  # Hit die
+  GridLayout:
+    id: hit_die
+    rows: 1
+    cols: 3
+
+  # Death saves
+  BoxLayout:
+    id: death_saves
+    orientation: "horizontal"
+
+    SectionTitle:
+      text: "Death Saves"
+      size_hint: 0.4, 1
+
+<InfoLabel@BoxLayout>:
+  name: name
+  label: label
+  value: value
+
+  id: name
+  orientation: "vertical"
+
+  Label:
+    id: label
+    text: ""
+    font_size: "12sp"
+    size_hint: 1, 0.3
+
+  Label:
+    id: value
+    text: ""
+    font_size: "15sp"
+    size_hint: 1, 0.7
+
+<SectionTitle@Label>:
+  text: ""
+  font_size: "15sp"
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
+  padding: 5, 5
+
+<DeathSave@BoxLayout>:
+  name: name
+  label: label
+  checkboxes: checkboxes
+
+  id: name
+  orientation: "horizontal"
+
+  Label:
+    id: label
+    text: ""
+    font_size: "13sp"
+
+  GridLayout:
+    id: checkboxes
+    rows: 1
+    cols: 3
+    col_default_width: 40
+    col_force_default: True
+
+    CheckBox:
+      active: False
+
+    CheckBox:
+      active: False
+
+    CheckBox:
+      active: False

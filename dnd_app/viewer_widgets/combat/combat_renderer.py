@@ -3,15 +3,13 @@
 # Lisence: MIT
 ###################################################################################################
 
-import logging
-
+from kivy.properties import ObjectProperty    #pylint: disable=no-name-in-module
+from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.checkbox import CheckBox
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.container_utils import FlattenDict
 from dnd_app.utilities.text_utils import StrFieldToReadable
 
 ###################################################################################################
@@ -21,12 +19,17 @@ from dnd_app.utilities.text_utils import StrFieldToReadable
 
 class CombatRenderer(BoxLayout):
 
+  ids = {}
+  ids['main_properties'] = ObjectProperty("")
+  ids['hit_points'] = ObjectProperty("")
+  ids['hit_die'] = ObjectProperty("")
+  ids['death_saves'] = ObjectProperty("")
+
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
     self._dnd_config = config
     self._widget = widget
-    self.add_widget(self._AddTitle())
-    self.add_widget(self._AddContent())
+    self._AddContent()
 
 ###################################################################################################
 
@@ -36,119 +39,115 @@ class CombatRenderer(BoxLayout):
 ###################################################################################################
 
   def Clear(self):
-    for child in self.walk(restrict=True):
-      if hasattr(child, "id") and isinstance(child, Label):
-        child.text = ""
-      elif isinstance(child, CheckBox):
-        child.active = False
+    for value in self.ids.values():
+      self._ClearInternal(value)
 
 ###################################################################################################
 
   def Update(self, data: dict):
     self.Clear()
-    flatten_data = FlattenDict(data)
-    for k, v in flatten_data.items():
-      for child in self.walk(restrict=True):
-        if hasattr(child, "id") and child.id == k:
-          if isinstance(child, Label):
-            child.text = str(v)
-            break
+    for k, v in data.items():
+      if k == "death_saves":
+        self._UpdateDeathSaves(v)
+        continue
 
-          elif isinstance(child, GridLayout):
-            grandchildren = child.children
-            if len(grandchildren) >= v:
-              for i in range(v):
-                grandchildren[i].active = True
-
-            else:
-              logging.critical(f"Number of {k} ({v}) is more than max saves {len(grandchildren)}")
-
-            break
+      for id, value in self.ids.items():
+        if k == id:
+          self._UpdateInternal(value, v)
+          break
 
 ###################################################################################################
 
-  def _AddTitle(self) -> Label:
-    return Label(text="Combat", font_size="20sp", size_hint=(1, 0.05))
+  def _AddContent(self):
+    self._AddMainProperties()
+    self._AddHitPoints()
+    self._AddHitDie()
+    self._AddDeathSaves()
 
 ###################################################################################################
 
-  def _AddContent(self) -> BoxLayout:
-    layout = BoxLayout(orientation="vertical")
-    layout.add_widget(self._AddMainProperties())
-    layout.add_widget(self._AddHitPoints())
-    layout.add_widget(self._AddHitDie())
-    layout.add_widget(self._AddDeathSaves())
-    return layout
+  def _ClearInternal(self, value):
+    if isinstance(value, Label):
+      value.text = ""
+    elif isinstance(value, CheckBox):
+      value.active = False
+    elif hasattr(value, "children") and len(value.children) > 0:
+      for child in value.children:
+        for nested_value in child.ids:
+          self._ClearInternal(nested_value)
 
 ###################################################################################################
 
-  def _AddMainProperties(self) -> GridLayout:
-    fields = ["armor_class", "initiative", "speed"]
-    return self._GenerateGenericSection(fields)
+  def _UpdateDeathSaves(self, death_saves: dict):
+    for death_save, number in death_saves.items():
+      for child in self.ids['death_saves'].children:
+        if len(child.ids) > 0 and child.ids['name'] == death_save:
+          n = 0
+          for check_box in child.ids['checkboxes'].children:
+            n += 1
+            check_box.active = True
+            if n >= number:
+              break
+          break
 
 ###################################################################################################
 
-  def _AddHitPoints(self) -> GridLayout:
-    fields = ["max", "current", "temporary"]
-    title = "hit_points"
-    return self._GenerateGenericSection(fields, title)
+  def _UpdateInternal(self, widget, data: dict):
+    for k, v in data.items():
+      for child in widget.children:
+        if len(child.ids) > 0 and child.ids['name'] == k:
+          child.ids['value'].text = str(v)
+          break
 
 ###################################################################################################
 
-  def _AddHitDie(self) -> GridLayout:
-    fields = ["total", "current"]
-    title = "hit_die"
-    return self._GenerateGenericSection(fields, title)
+  def _AddMainProperties(self):
+    self._GenerateGenericSection(section_headings=["armor_class", "initiative", "speed"],
+                                 section_title='main_properties')
 
 ###################################################################################################
 
-  def _AddDeathSaves(self) -> BoxLayout:
-    layout = BoxLayout(orientation="horizontal")
-    title = "death_saves"
-    layout.add_widget(Label(text=StrFieldToReadable(title), size_hint=(0.4, 1), font_size="15sp"))
-    layout.add_widget(self._AddDeathSaveSection("successes"))
-    layout.add_widget(self._AddDeathSaveSection("failures"))
-    return layout
+  def _AddHitPoints(self):
+    self._GenerateGenericSection(section_headings=["max", "current", "temporary"],
+                                 section_title='hit_points',
+                                 display_section_title=True)
+
+###################################################################################################
+
+  def _AddHitDie(self):
+    self._GenerateGenericSection(section_headings=["total", "current"],
+                                 section_title='hit_die',
+                                 display_section_title=True)
+
+
+###################################################################################################
+
+  def _AddDeathSaves(self):
+    for field in ["successes", "failures"]:
+      death_save = Factory.DeathSave()
+      death_save.ids['name'] = field
+      death_save.ids['label'].text = StrFieldToReadable(field)
+      self.ids['death_saves'].add_widget(death_save)
 
 ###################################################################################################
 
   def _GenerateGenericSection(self,
                               section_headings: list,
-                              section_title: str = None) -> GridLayout:
+                              section_title: str,
+                              display_section_title: bool=False):
     assert len(section_headings) > 0
-    n_cols = len(section_headings) + ( 1 if section_title is not None else 0)
-    layout = GridLayout(rows=1, cols=n_cols)
+    assert section_title in self.ids.keys()
 
-    id_prefix = ""
-    if section_title is not None:
-      id_prefix = f"{section_title}_"
-      layout.add_widget(Label(text=StrFieldToReadable(section_title), font_size="15sp"))
+    if display_section_title:
+      section_title_label = Factory.SectionTitle()
+      section_title_label.text = StrFieldToReadable(section_title)
+      self.ids[section_title].add_widget(section_title_label)
 
     for field in section_headings:
-      field_layout = BoxLayout(orientation="vertical")
-      field_layout.add_widget(
-          Label(text=StrFieldToReadable(field), size_hint=(1, 0.3), font_size="12sp"))
-      field_label = Label(text="", size_hint=(1, 0.7), font_size="15sp")
-      field_label.id = f"{id_prefix}{field}"
-      field_layout.add_widget(field_label)
-      layout.add_widget(field_layout)
-
-    return layout
-
-###################################################################################################
-
-  def _AddDeathSaveSection(self, section_title: str, id_prefix: str="death_saves_") -> BoxLayout:
-    layout = BoxLayout(orientation="horizontal")
-    layout.add_widget(Label(text=StrFieldToReadable(section_title), font_size="13sp"))
-    grid_layout = GridLayout(rows=1, cols=3, col_force_default=True, col_default_width=40)
-    grid_layout.id = id_prefix + section_title
-
-    for _ in range(3):
-      grid_layout.add_widget(CheckBox(active=False))
-
-    layout.add_widget(grid_layout)
-
-    return layout
+      info_label = Factory.InfoLabel()
+      info_label.ids['name'] = field
+      info_label.ids['label'].text = StrFieldToReadable(field)
+      self.ids[section_title].add_widget(info_label)
 
 
 ###################################################################################################

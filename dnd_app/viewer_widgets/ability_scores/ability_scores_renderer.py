@@ -26,8 +26,6 @@ class AbilityScoresRenderer(BoxLayout):
   ids['saving_throws'] = ObjectProperty("")
   ids['skills'] = ObjectProperty("")
 
-  ###################################################################################################
-
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
     self._dnd_config = config

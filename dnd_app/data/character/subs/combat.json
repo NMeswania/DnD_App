@@ -1,7 +1,9 @@
 {
-  "armor_class": 14,
-  "initiative": 3,
-  "speed": 30,
+  "main_properties": {
+    "armor_class": 14,
+    "initiative": 3,
+    "speed": 30
+  },
   "hit_points": {
     "max": 41,
     "current": 41,
@@ -12,7 +14,7 @@
     "current": "7d8"
   },
   "death_saves": {
-    "successes": 0,
-    "failures": 0
+    "successes": 2,
+    "failures": 1
   }
 }

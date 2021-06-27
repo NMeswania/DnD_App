@@ -3,7 +3,7 @@
 # Lisence: MIT
 ###################################################################################################
 
-from kivy.properties import ObjectProperty  #pylint: disable=no-name-in-module
+from kivy.properties import ObjectProperty    #pylint: disable=no-name-in-module
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -26,8 +26,6 @@ class MainInfoRenderer(BoxLayout):
   ids['alignment'] = ObjectProperty("")
   ids['experience_points'] = ObjectProperty("")
 
-###################################################################################################
-
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")
     self._dnd_config = config
@@ -47,7 +45,8 @@ class MainInfoRenderer(BoxLayout):
 
   def Clear(self):
     for v_ in self.ids.values():
-      v_.text = ""
+      if hasattr(v_, "text"):
+        v_.text = ""
 
 ###################################################################################################
 
@@ -63,7 +62,7 @@ class MainInfoRenderer(BoxLayout):
         value = str(v)
 
       for k_, v_ in self.ids.items():
-        if k == k_:
+        if k == k_ and hasattr(v_, "text"):
           v_.text = value
           break
 
