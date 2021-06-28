@@ -18,7 +18,7 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 ###################################################################################################
 
 
-class EquipmentRenderer(BoxLayout):
+class EquipmentListRenderer(BoxLayout):
 
   def __init__(self, config: Config, widget):
     super().__init__(orientation="vertical")

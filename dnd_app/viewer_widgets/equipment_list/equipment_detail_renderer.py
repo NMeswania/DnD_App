@@ -5,6 +5,8 @@
 
 from functools import partial
 
+from kivy.properties import ObjectProperty    #pylint: disable=no-name-in-module
+from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
@@ -20,10 +22,15 @@ from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChi
 
 class EquipmentDetailRenderer(Popup):
 
+  ids = {}
+  ids['name'] = ObjectProperty("")
+  ids['rarity'] = ObjectProperty("")
+  ids['equipment_description'] = ObjectProperty("")
+  ids['equipment_tags'] = ObjectProperty("")
+
   def __init__(self, widget):
     super().__init__()
     self._widget = widget
-    self.title = "Equipment Details"
     self.content = self._AddContent()
     self._is_open = False
     self.size_hint = (0.6, 0.6)

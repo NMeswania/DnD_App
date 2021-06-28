@@ -12,7 +12,7 @@ from dnd_app.utilities.container_utils import FlattenList
 from dnd_app.viewer_widgets.abilities_list.abilities_list import AbilitiesList
 from dnd_app.viewer_widgets.ability_scores.ability_scores import AbilityScores
 from dnd_app.viewer_widgets.combat.combat import Combat
-from dnd_app.viewer_widgets.equipment.equipment import Equipment
+from dnd_app.viewer_widgets.equipment_list.equipment_list import EquipmentList
 from dnd_app.viewer_widgets.main_info.main_info import MainInfo
 from dnd_app.viewer_widgets.proficiencies.proficiencies import Proficiencies
 from dnd_app.viewer_widgets.spell_list.spell_list import SpellList
@@ -79,7 +79,7 @@ class WidgetManager:
     if "abilities_list" in widgets_to_load and not "abilities_list" in widgets_to_not_load:
       widgets['abilities_list'] = AbilitiesList(self._dnd_config, self._character_data['abilities_list'])
     if "equipment_list" in widgets_to_load and not "equipment_list" in widgets_to_not_load:
-      widgets['equipment_list'] = Equipment(self._dnd_config, self._character_data['equipment_list'])
+      widgets['equipment_list'] = EquipmentList(self._dnd_config, self._character_data['equipment_list'])
     if "spell_list" in widgets_to_load and not "spell_list" in widgets_to_not_load:
       widgets['spell_list'] = SpellList(self._dnd_config, self._character_data['spell_list'])
     if "traits" in widgets_to_load and not "traits" in widgets_to_not_load:

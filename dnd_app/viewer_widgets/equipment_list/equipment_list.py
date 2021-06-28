@@ -10,8 +10,8 @@ from pathlib import Path
 from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
-from dnd_app.viewer_widgets.equipment.equipment_renderer import EquipmentRenderer
-from dnd_app.viewer_widgets.equipment.equipment_detail_renderer import EquipmentDetailRenderer
+from dnd_app.viewer_widgets.equipment_list.equipment_list_renderer import EquipmentListRenderer
+from dnd_app.viewer_widgets.equipment_list.equipment_detail_renderer import EquipmentDetailRenderer
 from dnd_app.viewer_widgets.widget_base import WidgetBase
 
 ###################################################################################################
@@ -19,7 +19,7 @@ from dnd_app.viewer_widgets.widget_base import WidgetBase
 ###################################################################################################
 
 
-class Equipment(WidgetBase):
+class EquipmentList(WidgetBase):
 
   def __init__(self, config: Config, proficiencies_path: Path):
     self._dnd_config = config
@@ -35,7 +35,7 @@ class Equipment(WidgetBase):
 
 ###################################################################################################
 
-  def renderers(self) -> EquipmentRenderer:
+  def renderers(self) -> EquipmentListRenderer:
     return self._renderer
 
 ###################################################################################################
@@ -67,8 +67,8 @@ class Equipment(WidgetBase):
 
 ###################################################################################################
 
-  def _BuildRenderers(self) -> EquipmentRenderer:
-    self._renderer = EquipmentRenderer(self._dnd_config, self)
+  def _BuildRenderers(self) -> EquipmentListRenderer:
+    self._renderer = EquipmentListRenderer(self._dnd_config, self)
     self._detail_renderer = EquipmentDetailRenderer(self)
 
 ###################################################################################################

@@ -9,19 +9,20 @@ dnd_app:
   viewer:
     text_size: 16
     load_widgets:
-      # - traits
       # - main_info
+      # - abilities_list
       # - ability_scores
       # - combat
-      - abilities_list
+      - equipment_list
       # - proficiencies
+      # - traits
   widget_manager:
     dont_load_widgets:
       - none
-      # - abilities_list
+      - abilities_list
       - ability_scores
       - combat
-      - equipment_list
+      # - equipment_list
       - proficiencies
       - spell_list
       - traits
