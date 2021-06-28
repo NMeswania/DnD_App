@@ -46,7 +46,6 @@ class Viewer(App):
       for kv_file in kv_files:
         if widget_to_load in kv_file.as_posix():
           Builder.load_file(kv_file.as_posix())
-          break
 
 
 ###################################################################################################

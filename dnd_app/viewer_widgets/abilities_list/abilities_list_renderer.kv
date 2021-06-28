@@ -1,0 +1,29 @@
+#:kivy 2.0
+
+<AbilitiesListRenderer>:
+  content: content
+
+  orientation: "vertical"
+
+  Label:
+    text: "Abilities"
+    font_size: "20sp"
+    size_hint: 1, 0.1
+
+  GridLayout:
+    id: content
+    cols: 4
+    row_default_height: 40
+    row_force_default: True
+    pading: 5
+
+<AbilitiesListRendererButtonBarButton@Button>:
+  name: name
+  id: name
+  text: ""
+  font_size: "13sp"
+  size_hint: 0.3, 1
+  padding: 5, 5
+  halign: "left"
+  valign: "middle"
+  text_size: self.size

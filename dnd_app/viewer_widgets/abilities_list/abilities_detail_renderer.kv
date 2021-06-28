@@ -42,22 +42,22 @@
       size_hint: 1, 0.1
 
       # Previous item
-      ButtonBarButton:
+      AbilitiesDetailRendererButtonBarButton:
         text: "<"
         on_press: root._widget.RequestNextAbilityCallback(-1)
 
       # Close
-      ButtonBarButton:
+      AbilitiesDetailRendererButtonBarButton:
         text: "Close"
         size_hint: 0.2, 1
         on_press: root._Close()
 
       # Next item
-      ButtonBarButton:
+      AbilitiesDetailRendererButtonBarButton:
         text: ">"
         on_press: root._widget.RequestNextAbilityCallback(1)
 
-<ButtonBarButton@Button>:
+<AbilitiesDetailRendererButtonBarButton@Button>:
   size_hint: 0.4, 1
   font_size: "15sp"
   padding: 5, 5

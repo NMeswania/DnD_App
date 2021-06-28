@@ -41,7 +41,7 @@ class AbilitiesList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestCallback(self, ability_name: str, index: int, instance):
+  def RequestCallback(self, ability_name: str, index: int, *args):
     self._ability_list_index = index
     request = Request(type="ability", value=ability_name)
     request_manager_singleton = GetRequestHandlerManagerSingleton()
@@ -52,7 +52,7 @@ class AbilitiesList(WidgetBase):
   def RequestNextAbilityCallback(self, increment: int):
     ability_name, self._ability_list_index = self._renderer.GetNextAbilityAndIndex(
         self._ability_list_index + increment)
-    self.RequestCallback(ability_name, self._ability_list_index, None)
+    self.RequestCallback(ability_name, self._ability_list_index)
 
 ###################################################################################################
 
