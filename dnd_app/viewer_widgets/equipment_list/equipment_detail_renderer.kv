@@ -1,0 +1,79 @@
+#:kivy 2.0
+
+<EquipmentDetailRenderer>:
+  name: name
+  rarity: rarity
+  equipment_description: equipment_description
+  tags: tags
+
+  title: "Equipment Details"
+  size_hint: 0.6, 0.6
+
+  BoxLayout:
+    orientation: "vertical"
+
+    # Equipment name
+    Label:
+      id: name
+      text: ""
+      font_size: "18sp"
+      size_hint: 1, 0.1
+
+    # Rarity
+    Label:
+      id: rarity
+      text: ""
+      font_size: "13sp"
+      italic: True
+      size_hint: 1, 0.1
+
+    # Description
+    Label:
+      id: equipment_description
+      text: ""
+      font_size: "12sp"
+      size_hint: 1, 0.4
+      halign: "left"
+      valign: "top"
+      text_size: self.size
+
+    # Tags
+    GridLayout:
+      id: tags
+      rows: 5
+      row_default_height: 40
+      row_force_default: True
+      size_hint: 1, 0.3
+
+    # Button bar
+    BoxLayout:
+      orientation: "horizontal"
+      size_hint: 1, 0.1
+
+      # Previous item
+      EquipmentDetailRendererButtonBarButton:
+        text: "<"
+        on_press: root._widget.RequestNextEquipmentCallback(-1)
+
+      # Close
+      EquipmentDetailRendererButtonBarButton:
+        text: "Close"
+        size_hint: 0.2, 1
+        on_press: root._Close()
+
+      # Next item
+      EquipmentDetailRendererButtonBarButton:
+        text: ">"
+        on_press: root._widget.RequestNextEquipmentCallback(1)
+
+<EquipmentDetailRendererTag@Label>:
+  text: ""
+  font_size: "13sp"
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
+
+<EquipmentDetailRendererButtonBarButton@Button>:
+  size_hint: 0.4, 1
+  font_size: "15sp"
+  padding: 5, 5

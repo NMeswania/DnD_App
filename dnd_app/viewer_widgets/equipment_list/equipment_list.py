@@ -73,7 +73,7 @@ class EquipmentList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestEquipmentCallback(self, equipment_name: str, index: int, instance):
+  def RequestEquipmentCallback(self, equipment_name: str, index: int, *args):
     self._equipment_list_index = index
     request = Request(type="equipment", value=equipment_name)
     request_manager_singleton = GetRequestHandlerManagerSingleton()
@@ -81,10 +81,10 @@ class EquipmentList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestNextEquipmentCallback(self, increment: int, instance):
+  def RequestNextEquipmentCallback(self, increment: int):
     equipment_name, self._equipment_list_index = self._renderer.GetNextEquipmentAndIndex(
         self._equipment_list_index + increment)
-    self.RequestEquipmentCallback(equipment_name, self._equipment_list_index, instance)
+    self.RequestEquipmentCallback(equipment_name, self._equipment_list_index)
 
 
 ###################################################################################################
