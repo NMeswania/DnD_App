@@ -1,0 +1,56 @@
+#:kivy 2.0
+
+<EquipmentListRenderer>:
+  money: money
+  equipment: equipment
+
+  orientation: "vertical"
+
+  Label:
+    text: "Equipment"
+    font_size: "20sp"
+    size_hint: 1, 0.1
+
+  # Money
+  BoxLayout:
+    id: money
+    orientation: "vertical"
+
+  GridLayout:
+    id: equipment
+    cols: 4
+    row_default_height: 40
+    row_force_default: True
+    pading: 5
+
+<EquipmentListRendererMoneyLabel@BoxLayout>:
+  name: name
+  demarkation: demarkation
+  value: value
+
+  id: name
+  orientation: "horizontal"
+
+  Label:
+    id: demarkation
+    text: ""
+    size_hint: 0.3, 1
+
+  Label:
+    id: value
+    text: ""
+    size_hint: 0.7, 1
+    halign: "left"
+    valign: "middle"
+    text_size: self.size
+
+<EquipmentListRendererEquipmentButton@Button>:
+  name: name
+  id: name
+  text: ""
+  font_size: "13sp"
+  size_hint: 0.3, 1
+  padding: 5, 5
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
