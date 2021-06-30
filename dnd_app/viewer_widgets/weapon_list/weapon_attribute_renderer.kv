@@ -1,0 +1,33 @@
+#:kivy 2.0
+
+<WeaponAttributeRenderer>:
+  name: name
+  attribute_description: attribute_description
+
+  title: "Weapon Attribbute"
+  size_hint: 0.4, 0.4
+
+  BoxLayout:
+    orientation: "vertical"
+
+    Label:
+      id: name
+      text: ""
+      font_size: "18sp"
+      size_hint: 1, 0.2
+
+    Label:
+      id: attribute_description
+      text: ""
+      font_size: "12sp"
+      size_hint: 1, 0.6
+      halign: "left"
+      valign: "top"
+      text_size: self.size
+
+    Button:
+      text: "Close"
+      size_hint: 1, 0.2
+      font_size: "15sp"
+      padding: 5, 5
+      on_press: root._Close()
