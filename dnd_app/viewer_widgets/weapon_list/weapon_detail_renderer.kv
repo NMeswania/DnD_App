@@ -1,0 +1,54 @@
+#:kivy 2.0
+
+<WeaponDetailRenderer>:
+  name: name
+  weapon_description: weapon_description
+  tags: tags
+
+  title: "Weapon Details"
+  size_hint: 0.6, 0.6
+
+  BoxLayout:
+    orientation: "vertical"
+
+    # Weapon name
+    Label:
+      id: name
+      text: ""
+      font_size: "18sp"
+      size_hint: 1, 0.1
+
+    # Description
+    Label:
+      id: weapon_description
+      text: ""
+      font_size: "12sp"
+      size_hint: 1, 0.4
+      halign: "left"
+      valign: "top"
+      text_size: self.size
+
+    # Tags
+    GridLayout:
+      id: tags
+      cols: 4
+      row_default_height: 40
+      row_force_default: True
+      size_hint: 1, 0.4
+
+    # Close
+    Button:
+      text: "Close"
+      font_size: "15sp"
+      padding: 5, 5
+      size_hint: 1, 0.1
+      on_press: root._Close()
+
+<WeaponDetailRendererTag@Button>:
+  text: ""
+  size_hint: 0.3, 1
+  font_size: "13sp"
+  padding: 5, 5
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
