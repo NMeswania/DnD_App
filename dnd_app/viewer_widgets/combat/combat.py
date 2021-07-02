@@ -5,11 +5,11 @@
 
 import logging
 
-from pathlib import Path
-
 from dnd_app.core.config import Config
+
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
+
 from dnd_app.viewer_widgets.widget_base import WidgetBase
 from dnd_app.viewer_widgets.combat.combat_renderer import CombatRenderer
 
@@ -20,10 +20,10 @@ from dnd_app.viewer_widgets.combat.combat_renderer import CombatRenderer
 
 class Combat(WidgetBase):
 
-  def __init__(self, config: Config, weapon_list_path: Path):
+  def __init__(self, config: Config, character: str):
     self._dnd_config = config
     self._receipt = None
-    self._LoadData(weapon_list_path)
+    self._LoadData(character)
     self._BuildRenderers()
 
 ###################################################################################################
@@ -63,8 +63,8 @@ class Combat(WidgetBase):
 
 ###################################################################################################
 
-  def _LoadData(self, weapon_list_path: Path):
-    request = Request(type="character", value="subs/combat")
+  def _LoadData(self, character: str):
+    request = Request(type="character", value=f"{character}/combat")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 

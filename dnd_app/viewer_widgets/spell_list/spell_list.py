@@ -5,14 +5,14 @@
 
 import logging
 
-from pathlib import Path
-
 from dnd_app.core.config import Config
+
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
-from dnd_app.viewer_widgets.widget_base import WidgetBase
+
 from dnd_app.viewer_widgets.spell_list.spell_detail_renderer import SpellDetailRenderer
 from dnd_app.viewer_widgets.spell_list.spell_list_renderer import SpellListRenderer
+from dnd_app.viewer_widgets.widget_base import WidgetBase
 
 ###################################################################################################
 ###################################################################################################
@@ -21,10 +21,10 @@ from dnd_app.viewer_widgets.spell_list.spell_list_renderer import SpellListRende
 
 class SpellList(WidgetBase):
 
-  def __init__(self, config: Config, spell_list_path: Path):
+  def __init__(self, config: Config, character: str):
     self._dnd_config = config
     self._receipt = None
-    self._LoadData(spell_list_path)
+    self._LoadData(character)
     self._BuildRenderers()
     self._spell_list_index = 0
 
@@ -78,8 +78,8 @@ class SpellList(WidgetBase):
 
 ###################################################################################################
 
-  def _LoadData(self, spell_list_path: Path):
-    request = Request(type="character", value="subs/spell_list")
+  def _LoadData(self, character: str):
+    request = Request(type="character", value=f"{character}/spell_list")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 

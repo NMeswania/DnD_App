@@ -41,9 +41,9 @@ class Viewer(App):
 ###################################################################################################
 
   def _LoadKvFiles(self):
-    widgets_dir = PurePath(__file__).parent.parent / "viewer_widgets"
+    widgets_dir = self._dnd_config.get_data_dir().parent / "viewer_widgets"
     kv_files = sorted(Path(widgets_dir).glob("**/*.kv"))
-    for widget_to_load in self._dnd_config.get("load_widgets"):
+    for widget_to_load in self._widget_manager.GetViewerWidgetsToLoad():
       for kv_file in kv_files:
         if widget_to_load in kv_file.as_posix():
           Builder.load_file(kv_file.as_posix())

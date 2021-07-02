@@ -3,11 +3,11 @@
 # Lisence: MIT
 ###################################################################################################
 
-from pathlib import Path
-
 from dnd_app.core.config import Config
+
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
+
 from dnd_app.viewer_widgets.ability_scores.ability_scores_renderer import AbilityScoresRenderer
 from dnd_app.viewer_widgets.widget_base import WidgetBase
 
@@ -18,10 +18,10 @@ from dnd_app.viewer_widgets.widget_base import WidgetBase
 
 class AbilityScores(WidgetBase):
 
-  def __init__(self, config: Config, ability_score_path: Path):
+  def __init__(self, config: Config, character: str):
     self._dnd_config = config
     self._receipt = None
-    self._LoadData(ability_score_path)
+    self._LoadData(character)
     self._BuildRenderers()
 
 ###################################################################################################
@@ -46,8 +46,8 @@ class AbilityScores(WidgetBase):
 
 ###################################################################################################
 
-  def _LoadData(self, ability_score_path: Path):
-    request = Request(type="character", value="subs/ability_scores")
+  def _LoadData(self, character: str):
+    request = Request(type="character", value=f"character/ability_scores")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 

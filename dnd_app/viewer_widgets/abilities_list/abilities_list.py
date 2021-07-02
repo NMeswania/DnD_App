@@ -5,11 +5,11 @@
 
 import logging
 
-from pathlib import Path
-
 from dnd_app.core.config import Config
+
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
+
 from dnd_app.viewer_widgets.widget_base import WidgetBase
 from dnd_app.viewer_widgets.abilities_list.abilities_list_renderer import AbilitiesListRenderer
 from dnd_app.viewer_widgets.abilities_list.abilities_detail_renderer import AbilitiesDetailRenderer
@@ -21,10 +21,10 @@ from dnd_app.viewer_widgets.abilities_list.abilities_detail_renderer import Abil
 
 class AbilitiesList(WidgetBase):
 
-  def __init__(self, config: Config, weapon_list_path: Path):
+  def __init__(self, config: Config, character: str):
     self._dnd_config = config
     self._receipt = None
-    self._LoadData(weapon_list_path)
+    self._LoadData(character)
     self._BuildRenderers()
     self._ability_list_index = 0
 
@@ -76,8 +76,8 @@ class AbilitiesList(WidgetBase):
 
 ###################################################################################################
 
-  def _LoadData(self, weapon_list_path: Path):
-    request = Request(type="character", value="subs/abilities_list")
+  def _LoadData(self, character: str):
+    request = Request(type="character", value=f"{character}/abilities_list")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 
