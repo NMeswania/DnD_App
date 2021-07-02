@@ -1,0 +1,123 @@
+#:kivy 2.0
+
+<SpellDetailRenderer>:
+  name: name
+  level: level
+  school: school
+  range: range
+  casting_time: casting_time
+  components: components
+  duration: duration
+  descriptions_layout: descriptions_layout
+  spell_description: spell_description
+
+  title: "Spell Details"
+  size_hint: 0.5, 0.5
+
+  BoxLayout:
+    orientation: "vertical"
+
+    # Spell name
+    Label:
+      id: name
+      text: ""
+      font_size: "18sp"
+      size_hint: 1, 0.1
+
+    BoxLayout:
+      orientation: "horizontal"
+      size_hint: 1, 0.1
+
+      SpellDetailRendererSpellLevelLabel:
+        id: level
+      SpellDetailRendererSpellLevelLabel:
+        id: school
+
+    # Basic data
+    GridLayout:
+      rows: 4
+      cols: 2
+      size_hint: 1, 0.3
+
+      SpellDetailRendererBasicDataKey:
+        text: "Range"
+      SpellDetailRendererBasicDataValue:
+        id: range
+
+      SpellDetailRendererBasicDataKey:
+        text: "Casting Time"
+      SpellDetailRendererBasicDataValue:
+        id: casting_time
+
+      SpellDetailRendererBasicDataKey:
+        text: "Components"
+      SpellDetailRendererBasicDataValue:
+        id: components
+
+      SpellDetailRendererBasicDataKey:
+        text: "Duration"
+      SpellDetailRendererBasicDataValue:
+        id: duration
+
+    # Descriptions
+    BoxLayout:
+      id: descriptions_layout
+      orientation: "vertical"
+      size: 1, 0.3
+
+      SpellDetailRendererDescription:
+        id: spell_description
+
+    # Button bar
+    BoxLayout:
+      orientation: "horizontal"
+      size_hint: 1, 0.1
+
+      # Previous item
+      SpellDetailRendererButtonBarButton:
+        text: "<"
+        on_press: root._widget.RequestNextSpellCallback(-1)
+
+      # Close
+      SpellDetailRendererButtonBarButton:
+        text: "Close"
+        size_hint: 0.2, 1
+        on_press: root._Close()
+
+      # Next item
+      SpellDetailRendererButtonBarButton:
+        text: ">"
+        on_press: root._widget.RequestNextSpellCallback(1)
+
+<SpellDetailRendererSpellLevelLabel@Label>:
+  text: ""
+  font_size: "13sp"
+  italic: True
+  size_hint: 0.5, 1
+
+<SpellDetailRendererBasicDataKey@Label>:
+  font_size: "13sp"
+  bold: True
+  size_hint: 0.3, 1
+  halign:"left"
+  valign: "middle"
+  text_size: self.size
+
+<SpellDetailRendererBasicDataValue@Label>:
+  font_size: "13sp"
+  size_hint: 0.7, 1
+  halign:"left"
+  valign: "middle"
+  text_size: self.size
+
+<SpellDetailRendererDescription@Label>:
+  text: ""
+  font_size: "12sp"
+  halign: "left"
+  valign: "top"
+  text_size: self.size
+
+<SpellDetailRendererButtonBarButton@Button>:
+  size_hint: 0.4, 1
+  font_size: "15sp"
+  padding: 5, 5

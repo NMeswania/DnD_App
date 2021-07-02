@@ -15,8 +15,9 @@ dnd_app:
       # - combat
       # - equipment_list
       # - proficiencies
+      - spell_list
       # - traits
-      - weapon_list
+      # - weapon_list
   widget_manager:
     dont_load_widgets:
       - none
@@ -25,6 +26,6 @@ dnd_app:
       - combat
       - equipment_list
       - proficiencies
-      - spell_list
+      # - spell_list
       - traits
-      # - weapon_list
+      - weapon_list

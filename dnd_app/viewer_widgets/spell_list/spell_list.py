@@ -11,7 +11,7 @@ from dnd_app.core.config import Config
 from dnd_app.request_handler.request import Request
 from dnd_app.request_handler.request_handler_manager import GetRequestHandlerManagerSingleton
 from dnd_app.viewer_widgets.widget_base import WidgetBase
-from dnd_app.viewer_widgets.spell_list.detail_renderer import DetailRenderer
+from dnd_app.viewer_widgets.spell_list.spell_detail_renderer import SpellDetailRenderer
 from dnd_app.viewer_widgets.spell_list.spell_list_renderer import SpellListRenderer
 
 ###################################################################################################
@@ -43,7 +43,7 @@ class SpellList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestSpellCallback(self, spell_name: str, index: int, instance):
+  def RequestSpellCallback(self, spell_name: str, index: int, *args):
     self._spell_list_index = index
     request = Request(type="spell", value=spell_name)
     request_manager_singleton = GetRequestHandlerManagerSingleton()
@@ -51,10 +51,10 @@ class SpellList(WidgetBase):
 
 ###################################################################################################
 
-  def RequestNextSpellCallback(self, increment: int, instance):
+  def RequestNextSpellCallback(self, increment: int):
     spell_name, self._spell_list_index = self._spell_list_renderer.GetNextSpellAndIndex(
         self._spell_list_index + increment)
-    self.RequestSpellCallback(spell_name, self._spell_list_index, instance)
+    self.RequestSpellCallback(spell_name, self._spell_list_index)
 
 ###################################################################################################
 
@@ -87,7 +87,7 @@ class SpellList(WidgetBase):
 
   def _BuildRenderers(self):
     self._spell_list_renderer = self._BuildSpellListRenderer()
-    self._detail_renderer = self._BuildDetailRenderer()
+    self._detail_renderer = self._BuildSpellDetailRenderer()
 
 ###################################################################################################
 
@@ -96,8 +96,8 @@ class SpellList(WidgetBase):
 
 ###################################################################################################
 
-  def _BuildDetailRenderer(self) -> DetailRenderer:
-    return DetailRenderer(self)
+  def _BuildSpellDetailRenderer(self) -> SpellDetailRenderer:
+    return SpellDetailRenderer(self)
 
 
 ###################################################################################################
