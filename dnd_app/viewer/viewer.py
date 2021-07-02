@@ -6,6 +6,7 @@
 from pathlib import PurePath, Path
 
 from kivy.app import App
+from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.lang.builder import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -24,7 +25,7 @@ class Viewer(App):
     super().__init__()
     self._dnd_config = config
     self._widget_manager = widget_manager
-    self._responses = []
+    Window.maximize()
     Clock.schedule_interval(self._widget_manager.CheckForUpdates, 0.25)
     self._renderers = {}
     self._LoadKvFiles()
