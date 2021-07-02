@@ -47,7 +47,7 @@ class AbilityScores(WidgetBase):
 ###################################################################################################
 
   def _LoadData(self, character: str):
-    request = Request(type="character", value=f"character/ability_scores")
+    request = Request(type="character", value=f"{character}/ability_scores")
     request_manager_singleton = GetRequestHandlerManagerSingleton()
     self._receipt = request_manager_singleton.Request(request)
 

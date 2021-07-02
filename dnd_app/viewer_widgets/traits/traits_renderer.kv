@@ -21,40 +21,40 @@
       cols: 3
       size_hint: 1, 0.4
 
-      AppearanceBox:
-        AppearanceKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererAppearanceKey:
           text: "Age"
-        AppearanceValue:
+        TraitsRendererAppearanceValue:
           id: appearance_age
 
-      AppearanceBox:
-        AppearanceKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererAppearanceKey:
           text: "Height"
-        AppearanceValue:
+        TraitsRendererAppearanceValue:
           id: appearance_height
 
-      AppearanceBox:
-        AppearanceKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererAppearanceKey:
           text: "Weight"
-        AppearanceValue:
+        TraitsRendererAppearanceValue:
           id: appearance_weight
 
-      AppearanceBox:
-        AppearanceKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererAppearanceKey:
           text: "Eyes"
-        AppearanceValue:
+        TraitsRendererAppearanceValue:
           id: appearance_eyes
 
-      AppearanceBox:
-        AppearanceKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererAppearanceKey:
           text: "Skin"
-        AppearanceValue:
+        TraitsRendererAppearanceValue:
           id: appearance_skin
 
-      AppearanceBox:
-        AppearanceKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererAppearanceKey:
           text: "Hair"
-        AppearanceValue:
+        TraitsRendererAppearanceValue:
           id: appearance_hair
 
     # Traits
@@ -63,48 +63,48 @@
       cols: 4
       size_hint: 1, 0.6
 
-      AppearanceBox:
-        TraitKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererTraitKey:
           text: "Personality traits"
-        TraitValue:
+        TraitsRendererTraitValue:
           id: traits_personality_traits
 
-      AppearanceBox:
-        TraitKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererTraitKey:
           text: "Ideals"
-        TraitValue:
+        TraitsRendererTraitValue:
           id: traits_ideals
 
-      AppearanceBox:
-        TraitKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererTraitKey:
           text: "Bonds"
-        TraitValue:
+        TraitsRendererTraitValue:
           id: traits_bonds
 
-      AppearanceBox:
-        TraitKey:
+      TraitsRendererAppearanceBox:
+        TraitsRendererTraitKey:
           text: "Flaws"
-        TraitValue:
+        TraitsRendererTraitValue:
           id: traits_flaws
 
-<AppearanceBox@BoxLayout>:
+<TraitsRendererAppearanceBox@BoxLayout>:
   orientation: "horizontal"
 
-<AppearanceKey@Label>:
+<TraitsRendererAppearanceKey@Label>:
   font_size: "13sp"
   italic: True
   size_hint: 0.4, 1
 
-<AppearanceValue@Label>:
+<TraitsRendererAppearanceValue@Label>:
   font_size: "13sp"
   size_hint: 0.6, 1
 
-<TraitKey@Label>:
+<TraitsRendererTraitKey@Label>:
   font_size: "13sp"
   italic: True
   size_hint: 0.2, 1
 
-<TraitValue@Label>:
+<TraitsRendererTraitValue@Label>:
   font_size: "13sp"
   size_hint: 0.8, 1
   halign: "left"

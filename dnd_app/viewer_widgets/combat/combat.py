@@ -34,8 +34,8 @@ class Combat(WidgetBase):
 
 ###################################################################################################
 
-  def renderers(self) -> list:
-    return [self._renderer]
+  def renderers(self) -> CombatRenderer:
+    return self._renderer
 
 ###################################################################################################
 

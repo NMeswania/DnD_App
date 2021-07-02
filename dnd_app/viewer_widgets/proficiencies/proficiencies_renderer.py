@@ -46,11 +46,11 @@ class ProficienciesRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddProficiencyGroup(self, group_name: str, group_content: list):
-    layout = Factory.ProficiencyGroup()
+    layout = Factory.ProficienciesRendererProficiencyGroup()
     layout.ids['heading'].text = StrFieldToReadable(group_name)
 
     for item in group_content:
-      label = Factory.ProficiencyItem()
+      label = Factory.ProficienciesRendererProficiencyItem()
       label.text = StrFieldToReadable(item)
       layout.add_widget(label)
 

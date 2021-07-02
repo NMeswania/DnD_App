@@ -38,8 +38,8 @@ class SpellList(WidgetBase):
 
 ###################################################################################################
 
-  def renderers(self) -> list:
-    return [self._spell_list_renderer]
+  def renderers(self) -> SpellListRenderer:
+    return self._spell_list_renderer
 
 ###################################################################################################
 

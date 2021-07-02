@@ -11,11 +11,10 @@ dnd_app:
   widget_manager:
     dont_load_widgets:
       - none
-      - abilities_list
-      - ability_scores
-      - combat
-      - equipment_list
-      - proficiencies
+      # - abilities_list
+      # - ability_scores
+      # - combat
+      # - equipment_list
+      # - proficiencies
       # - spell_list
-      - traits
-      - weapon_list
+      # - traits/

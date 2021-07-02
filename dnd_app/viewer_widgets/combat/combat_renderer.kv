@@ -34,11 +34,11 @@
     id: death_saves
     orientation: "horizontal"
 
-    SectionTitle:
+    CombatRendererSectionTitle:
       text: "Death Saves"
       size_hint: 0.4, 1
 
-<InfoLabel@BoxLayout>:
+<CombatRendererInfoLabel@BoxLayout>:
   name: name
   label: label
   value: value
@@ -58,7 +58,7 @@
     font_size: "15sp"
     size_hint: 1, 0.7
 
-<SectionTitle@Label>:
+<CombatRendererSectionTitle@Label>:
   text: ""
   font_size: "15sp"
   halign: "left"
@@ -66,7 +66,7 @@
   text_size: self.size
   padding: 5, 5
 
-<DeathSave@BoxLayout>:
+<CombatRendererDeathSave@BoxLayout>:
   name: name
   label: label
   checkboxes: checkboxes

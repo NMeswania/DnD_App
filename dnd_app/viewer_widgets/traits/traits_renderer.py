@@ -3,14 +3,11 @@
 # Lisence: MIT
 ###################################################################################################
 
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty    #pylint: disable=no-name-in-module
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
 from dnd_app.utilities.container_utils import FlattenDict
-from dnd_app.utilities.text_utils import StrFieldToReadable, AlignWidgetLabelChildren
 
 ###################################################################################################
 ###################################################################################################

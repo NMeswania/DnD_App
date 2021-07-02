@@ -40,8 +40,8 @@ class WeaponList(WidgetBase):
 
 ###################################################################################################
 
-  def renderers(self) -> list:
-    return [self._weapon_list_renderer]
+  def renderers(self) -> WeaponListRenderer:
+    return self._weapon_list_renderer
 
 ###################################################################################################
 

@@ -90,7 +90,7 @@ class AbilityScoresRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddAbilityScore(self, ability_score: str):
-    layout = Factory.AbilityScore()
+    layout = Factory.AbilityScoresRendererAbilityScore()
     layout.ids['name'] = ability_score
     layout.ids['label'].text = StrFieldToReadable(ability_score)
     return layout
@@ -104,7 +104,7 @@ class AbilityScoresRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSave(self, save: str):
-    layout = Factory.SkillSave()
+    layout = Factory.AbilityScoresRendererSkillSave()
     layout.ids['name'] = save
     layout.ids['label'].text = StrFieldToReadable(save)
     return layout
@@ -118,7 +118,7 @@ class AbilityScoresRenderer(BoxLayout):
 ###################################################################################################
 
   def _AddSkill(self, skill):
-    layout = Factory.SkillSave()
+    layout = Factory.AbilityScoresRendererSkillSave()
     layout.ids['name'] = skill
     layout.ids['label'].text = StrFieldToReadable(skill)
     return layout

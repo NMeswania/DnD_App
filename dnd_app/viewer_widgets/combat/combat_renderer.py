@@ -124,7 +124,7 @@ class CombatRenderer(BoxLayout):
 
   def _AddDeathSaves(self):
     for field in ["successes", "failures"]:
-      death_save = Factory.DeathSave()
+      death_save = Factory.CombatRendererDeathSave()
       death_save.ids['name'] = field
       death_save.ids['label'].text = StrFieldToReadable(field)
       self.ids['death_saves'].add_widget(death_save)
@@ -139,12 +139,12 @@ class CombatRenderer(BoxLayout):
     assert section_title in self.ids.keys()
 
     if display_section_title:
-      section_title_label = Factory.SectionTitle()
+      section_title_label = Factory.CombatRendererSectionTitle()
       section_title_label.text = StrFieldToReadable(section_title)
       self.ids[section_title].add_widget(section_title_label)
 
     for field in section_headings:
-      info_label = Factory.InfoLabel()
+      info_label = Factory.CombatRendererInfoLabel()
       info_label.ids['name'] = field
       info_label.ids['label'].text = StrFieldToReadable(field)
       self.ids[section_title].add_widget(info_label)

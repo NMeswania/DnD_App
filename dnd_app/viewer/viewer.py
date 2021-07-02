@@ -3,7 +3,7 @@
 # Lisence: MIT
 ###################################################################################################
 
-from pathlib import PurePath, Path
+from pathlib import Path
 
 from kivy.app import App
 from kivy.core.window import Window
