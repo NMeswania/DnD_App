@@ -1,0 +1,82 @@
+#:kivy 2.0
+
+<SpellListRenderer>:
+  ability: ability
+  save: save
+  attack: attack
+  spell_layout: spell_layout
+
+  orientation: "vertical"
+
+  Label:
+    text: "Spells"
+    font_size: "20sp"
+    size_hint: 1, 0.1
+
+  BoxLayout:
+    orientation: "horizontal"
+    size_hint: 1, 0.1
+    
+    SpellListRendererInfoLabelLayout:
+      SpellListRendererInfoLabelKey:
+        text: "Ability"
+      SpellListRendererInfoLabelValue:
+        id: ability
+
+      SpellListRendererInfoLabelKey:
+        text: "Save"
+      SpellListRendererInfoLabelValue:
+        id: save
+
+      SpellListRendererInfoLabelKey:
+        text: "Attack"
+      SpellListRendererInfoLabelValue:
+        id: attack
+
+  GridLayout:
+    id: spell_layout
+    cols: 5
+    
+<SpellListRendererInfoLabelLayout@BoxLayout>:
+  orientation: "horizontal"
+
+<SpellListRendererInfoLabelKey@Label>:
+  font_size: "13sp"
+  italic: True
+  size_hint: 0.4, 1
+
+<SpellListRendererInfoLabelValue@Label>:
+  font_size: "14sp"
+  size_hint: 0.6, 1
+
+<SpellListRendererSpellLevel@GridLayout>:
+  spell_level: spell_level
+
+  cols: 1
+  row_default_height: 40
+  row_force_default: True
+  padding: 5
+
+  Label:
+    id: spell_level
+
+<SpellListRendererSpell@BoxLayout>:
+  prepared: prepared
+  name: name
+
+  CheckBox:
+    id: prepared
+    active: False
+    size_hint: 0.1, 1
+
+  SpellListRendererSpellButton:
+    id: name
+
+<SpellListRendererSpellButton@Button>:
+  text: ""
+  font_size: "13sp"
+  size_hint: 0.9, 1
+  padding: 5, 5
+  halign: "left"
+  valign: "middle"
+  text_size: self.size
