@@ -10,7 +10,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.text_utils import StrFieldToReadable
+from dnd_app.utilities.text_utils import StrFieldToReadable, GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -52,6 +52,11 @@ class AbilityScoresRenderer(BoxLayout):
     for k, v in data.items():
       if k in self.ids.keys():
         self._UpdateInternal(self.ids[k], v)
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 ###################################################################################################
 

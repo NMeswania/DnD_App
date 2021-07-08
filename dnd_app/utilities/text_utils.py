@@ -5,6 +5,8 @@
 
 import re
 
+from pathlib import Path
+
 from kivy.uix.label import Label
 
 ###################################################################################################
@@ -38,6 +40,15 @@ def AlignWidgetLabelChildren(widget, halign: str="left", valign: str="middle"):
       w.valign = valign
       w.text_size = w.size
       w.bind(size=w.setter('text_size'))
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
+def GetRendererLabelFromFilename(file_path: str) -> str:
+  """Gets the renderer label from the given file name by removing the '_renderer.py' suffix."""
+  file_name = Path(file_path).stem
+  return file_name.rstrip("_renderer.py")
 
 ###################################################################################################
 ###################################################################################################

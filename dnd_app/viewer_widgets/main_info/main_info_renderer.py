@@ -7,6 +7,7 @@ from kivy.properties import ObjectProperty    #pylint: disable=no-name-in-module
 from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.core.config import Config
+from dnd_app.utilities.text_utils import GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -27,11 +28,6 @@ class MainInfoRenderer(BoxLayout):
     super().__init__(orientation="vertical")
     self._dnd_config = config
     self._widget = widget
-
-###################################################################################################
-
-  def build(self):
-    return self
 
 ###################################################################################################
 
@@ -62,6 +58,11 @@ class MainInfoRenderer(BoxLayout):
         if k == k_ and hasattr(v_, "text"):
           v_.text = value
           break
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 ###################################################################################################
 

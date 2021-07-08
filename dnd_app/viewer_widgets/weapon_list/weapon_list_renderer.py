@@ -10,7 +10,7 @@ from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.text_utils import StrFieldToReadable
+from dnd_app.utilities.text_utils import StrFieldToReadable, GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -48,12 +48,18 @@ class WeaponListRenderer(BoxLayout):
 
 ###################################################################################################
 
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
+
+###################################################################################################
+
   def _AddWeapon(self, weapon_data: dict):
     layout = Factory.WeaponListRendererWeaponRow()
     layout.ids['name'].text = StrFieldToReadable(weapon_data[0])
     layout.ids['attack'].text = StrFieldToReadable(weapon_data[1])
     layout.ids['damage'].text = StrFieldToReadable(weapon_data[2])
-    layout.ids['name'].bind(on_press=partial(self._widget.RequestCallback, "weapon", weapon_data[0]))    # pylint: disable=no-member
+    layout.ids['name'].bind(on_press=partial(self._widget.RequestCallback, "weapon",
+                                             weapon_data[0]))    # pylint: disable=no-member
     self.ids['weapon_table'].add_widget(layout)
 
 

@@ -10,7 +10,7 @@ from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.text_utils import StrFieldToReadable
+from dnd_app.utilities.text_utils import StrFieldToReadable, GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -56,6 +56,11 @@ class SpellListRenderer(BoxLayout):
   def GetNextSpellAndIndex(self, index: int) -> list:
     idx = index % len(self._spells)
     return [self._spells[idx], idx]
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 ###################################################################################################
 

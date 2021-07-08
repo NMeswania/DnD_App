@@ -11,7 +11,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.text_utils import StrFieldToReadable
+from dnd_app.utilities.text_utils import StrFieldToReadable, GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -19,6 +19,8 @@ from dnd_app.utilities.text_utils import StrFieldToReadable
 
 
 class AbilitiesListRenderer(BoxLayout):
+
+  _label = "abilities_list"
 
   ids = {}
   ids['content'] = ObjectProperty("")
@@ -53,6 +55,11 @@ class AbilitiesListRenderer(BoxLayout):
   def GetNextAbilityAndIndex(self, index: int) -> list:
     idx = index % len(self._abilities_list)
     return [self._abilities_list[idx], idx]
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 ###################################################################################################
 

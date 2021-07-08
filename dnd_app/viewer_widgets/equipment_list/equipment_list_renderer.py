@@ -10,7 +10,7 @@ from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.text_utils import StrFieldToReadable
+from dnd_app.utilities.text_utils import StrFieldToReadable, GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -63,6 +63,11 @@ class EquipmentListRenderer(BoxLayout):
   def GetNextEquipmentAndIndex(self, index: int) -> list:
     idx = index % len(self._equipment_list)
     return [self._equipment_list[idx], idx]
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 ###################################################################################################
 

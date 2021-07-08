@@ -16,7 +16,7 @@
   # Inspiration, proficiency bonus
   BoxLayout:
     orientation: "horizontal"
-    size_hint: 1, 0.1
+    size_hint: 1, 0.2
 
     CheckBox:
       id: inspiration
@@ -56,7 +56,7 @@
         id: ability_scores
         cols: 1
         col_default_width: 50
-        row_default_height: 35
+        row_default_height: 70
         row_force_default: True
 
     # Saving throws
@@ -88,7 +88,7 @@
         id: skills
         cols: 1
         col_default_width: 50
-        row_default_height: 35
+        row_default_height: 25
         row_force_default: True
 
 <AbilityScoresRendererAbilityScore@BoxLayout>:
@@ -103,7 +103,7 @@
   Label:
     id: label
     text: ""
-    size_hint: 1, 0.1
+    size_hint: 1, 0.2
     font_size: "12sp"
 
   Label:
@@ -115,7 +115,7 @@
   Label:
     id: base_number
     text: ""
-    size_hint: 1, 0.3
+    size_hint: 1, 0.2
     font_size: "12sp"
 
 <AbilityScoresRendererSkillSave@BoxLayout>:
@@ -144,4 +144,5 @@
     size_hint: 0.7, 1
     font_size: "12sp"
     halign: "left"
+    valign: "middle"
     text_size: self.size

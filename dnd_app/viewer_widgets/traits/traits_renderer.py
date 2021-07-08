@@ -8,6 +8,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.core.config import Config
 from dnd_app.utilities.container_utils import FlattenDict
+from dnd_app.utilities.text_utils import GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -56,6 +57,11 @@ class TraitsRenderer(BoxLayout):
         if k_ == k:
           v_.text = str(v)
           break
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 
 ###################################################################################################

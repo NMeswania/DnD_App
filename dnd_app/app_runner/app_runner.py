@@ -9,7 +9,7 @@ import multiprocessing
 from dnd_app.core.config import Config
 from dnd_app.failure_handler.failure_handler_listener import FailureHandlerListener
 from dnd_app.request_handler.request_handler_manager import RequestHandlerManager
-from dnd_app.viewer.viewer import Viewer
+from dnd_app.viewer.viewer_app import ViewerApp
 from dnd_app.viewer_widgets.widget_manager import WidgetManager
 
 ###################################################################################################
@@ -29,7 +29,7 @@ class AppRunner:
     self._request_handler_manager = RequestHandlerManager(config('request_handler_manager'),
                                                           self._request_queue, self._failure_queue)
     self._widget_manager = WidgetManager(config('widget_manager'), self._failure_listener, "subs")
-    self._viewer = Viewer(config('viewer'), self._widget_manager)
+    self._viewer = ViewerApp(config('viewer'), self._widget_manager)
 
     self._processes = {}
 

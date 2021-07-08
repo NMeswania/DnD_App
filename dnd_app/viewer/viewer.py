@@ -3,50 +3,34 @@
 # Lisence: MIT
 ###################################################################################################
 
-from pathlib import Path
-
-from kivy.app import App
-from kivy.core.window import Window
-from kivy.clock import Clock
-from kivy.lang.builder import Builder
+from kivy.properties import ObjectProperty    #pylint: disable=no-name-in-module
 from kivy.uix.boxlayout import BoxLayout
 
-from dnd_app.viewer_widgets.widget_manager import WidgetManager
-from dnd_app.core.config import Config as DNDConfig
-
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
 
 
-class Viewer(App):
+class Viewer(BoxLayout):
 
-  def __init__(self, config: DNDConfig, widget_manager: WidgetManager):
+  ids = {}
+  ids['scroll_content'] = ObjectProperty("")
+  ids['main_info'] = ObjectProperty("")
+  ids['ability_scores'] = ObjectProperty("")
+
+  def __init__(self):
     super().__init__()
-    self._dnd_config = config
-    self._widget_manager = widget_manager
-    Window.maximize()
-    Clock.schedule_interval(self._widget_manager.CheckForUpdates, 0.25)
-    self._renderers = {}
-    self._LoadKvFiles()
+    self._height = 0
 
 ###################################################################################################
 
-  def build(self):
-    layout = BoxLayout(orientation="vertical", size_hint=(1, 1))
-    for renderer in self._widget_manager.GetRenderers():
-      layout.add_widget(renderer)
-    return layout
+  def add_renderer(self, renderer):
+    renderer_label = renderer.GetLabel()
+    if renderer_label in self.ids.keys():
+      self.ids[renderer_label].add_widget(renderer)
+      self._height += renderer.height
 
-###################################################################################################
-
-  def _LoadKvFiles(self):
-    widgets_dir = self._dnd_config.get_data_dir().parent / "viewer_widgets"
-    kv_files = sorted(Path(widgets_dir).glob("**/*.kv"))
-    for widget_to_load in self._widget_manager.GetViewerWidgetsToLoad():
-      for kv_file in kv_files:
-        if widget_to_load in kv_file.as_posix():
-          Builder.load_file(kv_file.as_posix())
+    self.ids['scroll_content'].height = self._height
 
 
 ###################################################################################################

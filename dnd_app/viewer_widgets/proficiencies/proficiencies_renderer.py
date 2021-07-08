@@ -8,7 +8,7 @@ from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 
 from dnd_app.core.config import Config
-from dnd_app.utilities.text_utils import StrFieldToReadable
+from dnd_app.utilities.text_utils import StrFieldToReadable, GetRendererLabelFromFilename
 
 ###################################################################################################
 ###################################################################################################
@@ -42,6 +42,11 @@ class ProficienciesRenderer(BoxLayout):
     for k, v in data.items():
       if isinstance(v, list) and len(v) > 0:
         self._AddProficiencyGroup(k, v)
+
+###################################################################################################
+
+  def GetLabel(self):
+    return GetRendererLabelFromFilename(__file__)
 
 ###################################################################################################
 
